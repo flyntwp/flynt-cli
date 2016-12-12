@@ -1,0 +1,27 @@
+{
+  "name": "flynt-cli",
+  "version": "0.0.1",
+  "description": "CLI tool for the WordPress Flynt framework",
+  "main": "src/index.js",
+  "repository": "https://github.com/bleech/flynt-cli.git",
+  "author": "bleech",
+  "license": "MIT",
+  "scripts": {
+    "build": "babel src -d lib",
+    "watch": "babel src --watch -d lib"
+  },
+  "bin": {
+    "flynt": "lib/index.js"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-preset-es2015": "^6.18.0"
+  },
+  "dependencies": {
+    "bluebird": "^3.4.6",
+    "hasbin": "^1.2.3",
+    "inquirer": "^1.2.3",
+    "lodash": "^4.17.2",
+    "yargs": "^6.5.0"
+  }
+}
