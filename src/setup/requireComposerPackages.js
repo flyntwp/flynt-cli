@@ -5,26 +5,18 @@ import * as allPrompts from '../prompts'
 import * as allRequirements from '../requirements'
 
 export const requirements = [
-  allRequirements.wpCli
+  allRequirements.composer
 ]
 
 export const prompts = [
-  allPrompts.dbName,
-  allPrompts.dbUser,
-  allPrompts.dbPassword,
-  allPrompts.dbHost,
-  allPrompts.wpEnv,
-  allPrompts.wpHome,
-  allPrompts.wpSiteUrl,
-  allPrompts.wpAdminName,
-  allPrompts.wpAdminEmail,
 ]
 
 export function run (answers) {
   let cmds = [
-    'ls'
+    'composer config repositories.flyntCore git "git@github.com:bleech/wp-starter-plugin.git"',
+    'composer config repositories.acfFieldGroupComposer git "git@github.com:bleech/acf-field-group-composer.git"',
+    'composer require "timber/timber:~1.1" flyntwp/flynt-core:dev-master flyntwp/acf-field-group-composer:dev-master',
   ]
-  console.log('this is setupWordpress')
   return new Promise(function (resolve, reject) {
     let exec = childProcess.exec(cmds.join(' && '), function () {
       resolve()

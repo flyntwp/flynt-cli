@@ -5,7 +5,7 @@ import Promise from 'bluebird'
 import _ from 'lodash'
 
 import * as installBedrock from './setup/installBedrock'
-import * as setupWordpress from './setup/setupWordpress'
+import * as requireComposerPackages from './setup/requireComposerPackages'
 
 // import {builder} from './cmds/setup'
 
@@ -17,17 +17,17 @@ import * as setupWordpress from './setup/setupWordpress'
 
 const requirements = [
   installBedrock,
-  setupWordpress
+  requireComposerPackages
 ].map(task => task.requirements)
 
 const prompts = [
   installBedrock,
-  setupWordpress
+  requireComposerPackages
 ].map(task => task.prompts)
 
 const runs = [
   installBedrock,
-  setupWordpress
+  requireComposerPackages
 ].map(task => task.run)
 
 Promise.all(_.union(...requirements).map(fn => fn()))
