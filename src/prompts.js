@@ -10,6 +10,21 @@ export const projectName = {
   }
 }
 
+export const dbHost = {
+  name: 'dbHost',
+  message: 'Database Host'
+}
+
+export const dbRootUser = {
+  name: 'dbRootUser',
+  message: 'Database Root User'
+}
+
+export const dbRootPassword = {
+  name: 'dbRootPassword',
+  message: 'Database Root Password'
+}
+
 export const dbName = {
   name: 'dbName',
   message: 'Database Name'
@@ -25,11 +40,6 @@ export const dbPassword = {
   message: 'Database Password'
 }
 
-export const dbHost = {
-  name: 'dbHost',
-  message: 'Database Host'
-}
-
 export const wpEnv = {
   name: 'wpEnv',
   message: 'Wordpress Environment (development, staging, production)'
@@ -40,9 +50,14 @@ export const wpHome = {
   message: 'Wordpress Home Url'
 }
 
-export const wpSiteUrl = {
-  name: 'wpSiteUrl',
-  message: 'Wordpress Site Url'
+export const wpSiteurl = {
+  name: 'wpSiteurl',
+  message: 'Wordpress Siteurl'
+}
+
+export const wpTitle = {
+  name: 'wpTitle',
+  message: 'Wordpress Site Title'
 }
 
 export const wpAdminName = {

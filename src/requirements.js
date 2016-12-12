@@ -48,3 +48,15 @@ export function yarn () {
     })
   })
 }
+
+export function mysql () {
+  return new Promise(function (resolve, reject) {
+    hasbin('mysql', function (exists) {
+      if (exists) {
+        resolve()
+      } else {
+        reject("Please have 'mysql' available in your PATH.")
+      }
+    })
+  })
+}
