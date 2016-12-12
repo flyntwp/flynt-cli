@@ -24,3 +24,27 @@ export function wpCli () {
     })
   })
 }
+
+export function git () {
+  return new Promise(function (resolve, reject) {
+    hasbin('git', function (exists) {
+      if (exists) {
+        resolve()
+      } else {
+        reject("Please have 'git' available in your PATH.")
+      }
+    })
+  })
+}
+
+export function yarn () {
+  return new Promise(function (resolve, reject) {
+    hasbin('yarn', function (exists) {
+      if (exists) {
+        resolve()
+      } else {
+        reject("Please have 'yarn' available in your PATH.")
+      }
+    })
+  })
+}

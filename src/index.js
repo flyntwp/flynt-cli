@@ -6,6 +6,7 @@ import _ from 'lodash'
 
 import * as installBedrock from './setup/installBedrock'
 import * as requireComposerPackages from './setup/requireComposerPackages'
+import * as setupTheme from './setup/setupTheme'
 
 // import {builder} from './cmds/setup'
 
@@ -16,18 +17,21 @@ import * as requireComposerPackages from './setup/requireComposerPackages'
 // .argv
 
 const requirements = [
-  installBedrock,
-  requireComposerPackages
+  // installBedrock,
+  // requireComposerPackages
+  setupTheme
 ].map(task => task.requirements)
 
 const prompts = [
-  installBedrock,
-  requireComposerPackages
+  // installBedrock,
+  // requireComposerPackages
+  setupTheme
 ].map(task => task.prompts)
 
 const runs = [
-  installBedrock,
-  requireComposerPackages
+  // installBedrock,
+  // requireComposerPackages
+  setupTheme
 ].map(task => task.run)
 
 Promise.all(_.union(...requirements).map(fn => fn()))
