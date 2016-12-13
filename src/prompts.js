@@ -54,7 +54,7 @@ export const wpHome = {
   message: 'Wordpress Home Url',
   default: function (answers) {
     if (answers.projectName) {
-      return `http://${projectName}.dev`
+      return `http://${answers.projectName}.dev`
     }
   }
 }
@@ -64,7 +64,7 @@ export const wpSiteurl = {
   message: 'Wordpress Siteurl',
   default: function (answers) {
     if (answers.projectName) {
-      return `http://${projectName}.dev/wp`
+      return `http://${answers.projectName}.dev/wp`
     }
   }
 }
@@ -82,4 +82,9 @@ export const wpAdminName = {
 export const wpAdminEmail = {
   name: 'wpAdminEmail',
   message: 'Wordpress Admin Email Address'
+}
+
+export const gitRepo = {
+  name: 'gitRepo',
+  message: 'Git Repository URL (eg. git@github.com:org/repo.git or https://github.com/org/repo.git)',
 }

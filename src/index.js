@@ -4,58 +4,27 @@ import inquirer from 'inquirer'
 import Promise from 'bluebird'
 import _ from 'lodash'
 
-import * as installBedrock from './setup/installBedrock'
-import * as requireComposerPackages from './setup/requireComposerPackages'
-import * as setupTheme from './setup/setupTheme'
-import * as createDb from './setup/createDb'
-import * as setupWordpress from './setup/setupWordpress'
-import * as activateWordpress from './setup/activateWordpress'
-
+import * as setupCmd from './setup/index'
 // import {builder} from './cmds/setup'
 
-// yargs
-// .commandDir('cmds')
-// // .demand(1)
-// .help()
-// .argv
+yargs
+.command(
+  'setup',
+  'Setup a new flynt project',
+  function (yargs) {
+    setupCmd.cmds.forEach(function (cmd) {
+      yargs = yargs.command(cmd, '', {}, handleSetupCmd)
+    return yargs
+  },
+  handleSetupCmd
+)
+.help()
+.argv
 
-const requirements = [
-  // installBedrock,
-  // requireComposerPackages,
-  // setupTheme,
-  // createDb,
-  // setupWordpress,
-  activateWordpress,
-].map(task => task.requirements)
-
-const prompts = [
-  // installBedrock,
-  // requireComposerPackages,
-  // setupTheme,
-  // createDb,
-  // setupWordpress,
-  activateWordpress,
-].map(task => task.prompts)
-
-const runs = [
-  // installBedrock,
-  // requireComposerPackages,
-  // setupTheme,
-  // createDb,
-  // setupWordpress,
-  activateWordpress,
-].map(task => task.run)
-
-Promise.all(_.union(...requirements).map(fn => fn()))
-.then(function () {
-  inquirer.prompt(_.union(...prompts))
-  .then(function (answers) {
-    console.log(answers)
-    console.log(runs)
-    let allRuns = Promise.resolve()
-    runs.forEach(fn => allRuns = allRuns.then(() => fn(answers)))
-    // Promise.all(runs.map(fn => fn(answers)))
-  })
-}, function (err) {
-  console.log(err);
-})
+function handleSetupCmd (argv) {
+  if (argv._.length === 1) {
+    setupCmd.run()
+  } else if (argv._.length === 2) {
+    setupCmd.run(argv._[1])
+  }
+}
