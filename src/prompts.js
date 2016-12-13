@@ -12,17 +12,20 @@ export const projectName = {
 
 export const dbHost = {
   name: 'dbHost',
-  message: 'Database Host'
+  message: 'Database Host',
+  default: 'localhost'
 }
 
 export const dbRootUser = {
   name: 'dbRootUser',
-  message: 'Database Root User'
+  message: 'Database Root User',
+  default: 'root'
 }
 
 export const dbRootPassword = {
   name: 'dbRootPassword',
-  message: 'Database Root Password'
+  message: 'Database Root Password',
+  default: 'root'
 }
 
 export const dbName = {
@@ -42,17 +45,28 @@ export const dbPassword = {
 
 export const wpEnv = {
   name: 'wpEnv',
-  message: 'Wordpress Environment (development, staging, production)'
+  message: 'Wordpress Environment (development, staging, production)',
+  default: 'development'
 }
 
 export const wpHome = {
   name: 'wpHome',
-  message: 'Wordpress Home Url'
+  message: 'Wordpress Home Url',
+  default: function (answers) {
+    if (answers.projectName) {
+      return `http://${projectName}.dev`
+    }
+  }
 }
 
 export const wpSiteurl = {
   name: 'wpSiteurl',
-  message: 'Wordpress Siteurl'
+  message: 'Wordpress Siteurl',
+  default: function (answers) {
+    if (answers.projectName) {
+      return `http://${projectName}.dev/wp`
+    }
+  }
 }
 
 export const wpTitle = {

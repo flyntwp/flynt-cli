@@ -7,8 +7,9 @@
   "author": "bleech",
   "license": "MIT",
   "scripts": {
-    "build": "babel src -d lib",
-    "watch": "babel src --watch -d lib"
+    "build": "npm run clean && babel src -d lib",
+    "watch": "npm run clean && babel src --watch -d lib",
+    "clean": "rm -rf ./lib"
   },
   "bin": {
     "flynt": "lib/index.js"

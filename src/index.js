@@ -7,8 +7,9 @@ import _ from 'lodash'
 import * as installBedrock from './setup/installBedrock'
 import * as requireComposerPackages from './setup/requireComposerPackages'
 import * as setupTheme from './setup/setupTheme'
-import * as setupDb from './setup/setupDb'
+import * as createDb from './setup/createDb'
 import * as setupWordpress from './setup/setupWordpress'
+import * as activateWordpress from './setup/activateWordpress'
 
 // import {builder} from './cmds/setup'
 
@@ -20,26 +21,29 @@ import * as setupWordpress from './setup/setupWordpress'
 
 const requirements = [
   // installBedrock,
-  // requireComposerPackages
-  // setupTheme
-  // setupDb,
-  setupWordpress,
+  // requireComposerPackages,
+  // setupTheme,
+  // createDb,
+  // setupWordpress,
+  activateWordpress,
 ].map(task => task.requirements)
 
 const prompts = [
   // installBedrock,
-  // requireComposerPackages
-  // setupTheme
-  // setupDb,
-  setupWordpress,
+  // requireComposerPackages,
+  // setupTheme,
+  // createDb,
+  // setupWordpress,
+  activateWordpress,
 ].map(task => task.prompts)
 
 const runs = [
   // installBedrock,
-  // requireComposerPackages
-  // setupTheme
-  // setupDb,
-  setupWordpress,
+  // requireComposerPackages,
+  // setupTheme,
+  // createDb,
+  // setupWordpress,
+  activateWordpress,
 ].map(task => task.run)
 
 Promise.all(_.union(...requirements).map(fn => fn()))
