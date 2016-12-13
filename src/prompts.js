@@ -10,6 +10,26 @@ export const projectName = {
   }
 }
 
+export const basePath = {
+  name: 'basePath',
+  message: 'Local Base Path'
+}
+
+export const uploadsPath = {
+  name: 'uploadsPath',
+  message: 'Local Uploads Path'
+}
+
+export const basePathRemote = {
+  name: 'basePathRemote',
+  message: 'Remote Base Path'
+}
+
+export const uploadsPathRemote = {
+  name: 'uploadsPathRemote',
+  message: 'Remote Uploads Path'
+}
+
 export const dbHost = {
   name: 'dbHost',
   message: 'Database Host',
@@ -41,6 +61,53 @@ export const dbUser = {
 export const dbPassword = {
   name: 'dbPassword',
   message: 'Database Password'
+}
+
+export const sshHost = {
+  name: 'sshHost',
+  message: 'SSH Host'
+}
+export const sshUser = {
+  name: 'sshUser',
+  message: 'SSH User'
+}
+export const sshPort = {
+  name: 'sshPort',
+  message: 'SSH Port'
+}
+
+export const dbHostRemote = {
+  name: 'dbHostRemote',
+  message: 'Remote Database Host',
+  default: 'localhost'
+}
+
+export const dbNameRemote = {
+  name: 'dbNameRemote',
+  message: 'Remote Database Name'
+}
+
+export const dbUserRemote = {
+  name: 'dbUserRemote',
+  message: 'Remote Database User Name'
+}
+
+export const dbPasswordRemote = {
+  name: 'dbPasswordRemote',
+  message: 'Remote Database Password'
+}
+
+export const sshHostRemote = {
+  name: 'sshHostRemote',
+  message: 'Remote SSH Host'
+}
+export const sshUserRemote = {
+  name: 'sshUserRemote',
+  message: 'Remote SSH User'
+}
+export const sshPortRemote = {
+  name: 'sshPortRemote',
+  message: 'Remote SSH Port'
 }
 
 export const wpEnv = {

@@ -5,7 +5,35 @@ import yargs from 'yargs'
 import _ from 'lodash'
 
 import * as setupCmd from './setup/index'
+import * as cloneCmd from './clone/index'
 // import {builder} from './cmds/setup'
+
+const configMapping = {
+  projectName: 'projectName',
+  basePath: 'basePath',
+  uploadsPath: 'uploadsPath',
+  dbHost: 'db.host',
+  dbRootUser: 'db.root.user',
+  dbRootPassword: 'db.root.password',
+  dbName: 'db.name',
+  dbUser: 'db.user',
+  dbPassword: 'db.password',
+  sshHost: 'ssh.host',
+  sshUser: 'ssh.user',
+  sshPort: 'ssh.port',
+  wpEnv: 'wp.env',
+  wpHome: 'wp.home',
+  wpSiteurl: 'wp.siteurl',
+  wpTitle: 'wp.title',
+  wpAdminName: 'wp.admin.name',
+  wpAdminEmail: 'wp.admin.email',
+  gitRepo: 'repository'
+}
+
+const configGlobals = [
+  'projectName',
+  'repository'
+]
 
 yargs
 .command(
@@ -18,6 +46,31 @@ yargs
     return yargs
   },
   handleSetupCmd('setup')
+)
+.command(
+  'clone',
+  'Clone database and medie files between environments',
+  function (yargs) {
+    cloneCmd.cmds.forEach(function (cmd) {
+      yargs = yargs.command(cmd, '', {}, handleCloneCmd('cmd'))
+    })
+    return yargs
+    .option('f', {
+      alias: 'from',
+      // global: true,
+      describe: 'Environment to clone from',
+      type: 'string',
+      default: 'development'
+    })
+    .option('t', {
+      alias: 'to',
+      // global: true,
+      describe: 'Environment to clone to',
+      type: 'string',
+      default: 'local'
+    })
+  },
+  handleCloneCmd('clone')
 )
 .option('c', {
   alias: 'config',
@@ -37,34 +90,97 @@ yargs
   describe: 'File to read from and save config to.',
   type: 'string'
 })
+.option('e', {
+  alias: ['env', 'environment'],
+  global: true,
+  default: 'local',
+  describe: 'Specify current environment',
+  type: 'string'
+})
 .help()
 .argv
 
 function handleSetupCmd (location) {
   return function (argv) {
-    console.log(location, argv.c, argv.s, argv.configPath)
-    let config = {}
-    if (argv.c) {
-      try {
-        config = require(path.join(process.cwd(), argv.configPath))
-      } catch (e) {}
-    }
-    let run
     if (location === 'setup' && argv._.length === 1) {
-      run = setupCmd.run(null, config)
+      const config = getConfig(argv)
+      const run = setupCmd.run(null, mapConfigToAnswers(config, argv.env))
+      return run.then(saveConfig(argv, config, argv.env))
     } else if (location === 'cmd' && argv._.length === 2) {
-      run = setupCmd.run(argv._[1], config)
-    } else {
-      return
+      const config = getConfig(argv)
+      const run = setupCmd.run(argv._[1], mapConfigToAnswers(config, argv.env))
+      return run.then(saveConfig(argv, config, argv.env))
     }
-    console.log(run)
-    run.then(function (answers) {
-      console.log('saving', argv.s, answers)
-      if (argv.s) {
-        _.merge(config, answers)
-        const json = JSON.stringify(config, null, 2)
-        fs.writeFileSync(argv.configPath, json, 'utf-8')
-      }
-    })
   }
+}
+
+function handleCloneCmd (location) {
+  return function (argv) {
+    if (location === 'clone' && argv._.length === 1) {
+      const config = getConfig(argv)
+      const run = cloneCmd.run(null, mapConfigToAnswers(config, argv.from, argv.to))
+      return run.then(saveConfig(argv, config, argv.from, argv.to))
+    } else if (location === 'cmd' && argv._.length === 2) {
+      const config = getConfig(argv)
+      const run = cloneCmd.run(argv._[1], mapConfigToAnswers(config, argv.from, argv.to))
+      return run.then(saveConfig(argv, config, argv.from, argv.to))
+    }
+  }
+}
+
+function getConfig (argv) {
+  let config = {}
+  if (argv.c) {
+    try {
+      config = require(path.join(process.cwd(), argv.configPath))
+    } catch (e) {}
+  }
+  return config
+}
+
+function saveConfig (argv, config, env, envRemote = null) {
+  return function (answers) {
+    if (argv.s) {
+      config = _.merge({}, config, mapAnswersToConfig(answers, env, envRemote))
+      const json = JSON.stringify(config, null, 2)
+      fs.writeFileSync(argv.configPath, json, 'utf-8')
+    }
+  }
+}
+
+function mapConfigToAnswers (config, env, envRemote) {
+  const answers = {}
+  _.forEach(configMapping, function (value, key) {
+    const configKey = _.includes(configGlobals, value)
+      ? value : `environments.${env}.${value}`
+    if (_.has(config, configKey)) {
+      _.set(answers, key, _.get(config, configKey))
+    }
+    if (envRemote && !_.includes(configGlobals, value)) {
+      const configKeyRemote = `environments.${envRemote}.${value}`
+      if (_.has(config, configKeyRemote)) {
+        _.set(answers, key + 'Remote', _.get(config, configKeyRemote))
+      }
+    }
+  })
+  return answers
+}
+
+function mapAnswersToConfig (answers, env, envRemote) {
+  const config = {}
+  _.forEach(answers, function (value, key) {
+    const configKey = configMapping[key] || key
+    if (_.includes(configGlobals, configKey)) {
+      _.set(config, configKey, value)
+    } else {
+      if (key.substr(key.length - 'Remote'.length) === 'Remote') {
+        key = key.substr(0, key.length - 'Remote'.length)
+        const configKeyRemote = configMapping[key] || key
+        _.set(config, `environments.${envRemote}.${configKeyRemote}`, value)
+      } else {
+        _.set(config, `environments.${env}.${configKey}`, value)
+      }
+    }
+  })
+  return config
 }

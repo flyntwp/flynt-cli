@@ -1,62 +1,58 @@
 import Promise from 'bluebird'
 import hasbin from 'hasbin'
 
-export function composer () {
+function checkForBinary (cmd) {
   return new Promise(function (resolve, reject) {
-    hasbin('composer', function (exists) {
+    hasbin(cmd, function (exists) {
       if (exists) {
         resolve()
       } else {
-        reject("Please have 'composer' available in your PATH.")
+        reject(`Please have '${cmd}' available in your PATH.`)
       }
     })
   })
+}
+
+export function composer () {
+  return checkForBinary('composer')
 }
 
 export function wpCli () {
-  return new Promise(function (resolve, reject) {
-    hasbin('wp', function (exists) {
-      if (exists) {
-        resolve()
-      } else {
-        reject("Please have 'wp' available in your PATH.")
-      }
-    })
-  })
+  return checkForBinary('wp')
 }
 
 export function git () {
-  return new Promise(function (resolve, reject) {
-    hasbin('git', function (exists) {
-      if (exists) {
-        resolve()
-      } else {
-        reject("Please have 'git' available in your PATH.")
-      }
-    })
-  })
+  return checkForBinary('git')
 }
 
 export function yarn () {
-  return new Promise(function (resolve, reject) {
-    hasbin('yarn', function (exists) {
-      if (exists) {
-        resolve()
-      } else {
-        reject("Please have 'yarn' available in your PATH.")
-      }
-    })
-  })
+  return checkForBinary('yarn')
 }
 
 export function mysql () {
-  return new Promise(function (resolve, reject) {
-    hasbin('mysql', function (exists) {
-      if (exists) {
-        resolve()
-      } else {
-        reject("Please have 'mysql' available in your PATH.")
-      }
-    })
-  })
+  return checkForBinary('mysql')
+}
+
+export function mysqldump () {
+  return checkForBinary('mysqldump')
+}
+
+export function php () {
+  return checkForBinary('php')
+}
+
+export function ssh () {
+  return checkForBinary('ssh')
+}
+
+export function scp () {
+  return checkForBinary('scp')
+}
+
+export function sed () {
+  return checkForBinary('sed')
+}
+
+export function rsync () {
+  return checkForBinary('rsync')
 }

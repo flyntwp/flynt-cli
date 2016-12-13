@@ -2157,6 +2157,10 @@ rx@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/rx/-/rx-4.1.0.tgz#a5f13ff79ef3b740fe30aa803fb09f98805d4782"
 
+search-replace-db@interconnectit/Search-Replace-DB:
+  version "3.1.0"
+  resolved "https://codeload.github.com/interconnectit/Search-Replace-DB/tar.gz/c8dfccb7bf179cb7063a0622cc2a592141411ff3"
+
 "semver@2 || 3 || 4 || 5", semver@~5.3.0:
   version "5.3.0"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.3.0.tgz#9b2ce5d3de02d17c6012ad326aa6b4d0cf54f94f"
