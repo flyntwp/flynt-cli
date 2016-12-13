@@ -17,27 +17,32 @@ const cmdsObject = {
   initGitRepo,
   createDb,
   setupWordpress,
-  activateWordpress,
+  activateWordpress
 }
 
 export const cmds = Object.keys(cmdsObject)
 
-export function run (step) {
+export function run (step, config) {
   let steps = (!step) ? cmds : [].concat(step)
   steps = steps.filter(step => !!cmdsObject[step])
-  const requirements = steps.map(step => cmdsObject[step].requirements)
-  const prompts = steps.map(step => cmdsObject[step].prompts)
+  let requirements = steps.map(step => cmdsObject[step].requirements)
+  requirements = _.union(...requirements)
+  let prompts = steps.map(step => cmdsObject[step].prompts)
+  prompts = _.union(...prompts)
+  .filter(prompt => !_.has(config, prompt.name))
   const runs = steps.map(step => cmdsObject[step].run)
 
-  return Promise.all(_.union(...requirements).map(fn => fn()))
-  .then(function () {
-    inquirer.prompt(_.union(...prompts))
-    .then(function (answers) {
-      let allRuns = Promise.resolve()
-      runs.forEach(fn => allRuns = allRuns.then(() => fn(answers)))
-      return allRuns
+  return Promise.all(requirements.map(fn => fn()))
+  .then(() => inquirer.prompt(prompts))
+  .then(function (answers) {
+    config = _.merge({}, config, answers)
+    let allRuns = Promise.resolve()
+    runs.forEach(function (fn) {
+      allRuns = allRuns.then(() => fn(config))
     })
+    return allRuns
   }, function (err) {
-    console.log(err);
+    console.log(err)
   })
+  .then(() => config)
 }
