@@ -6,7 +6,7 @@ import * as allRequirements from '../requirements'
 
 export const requirements = [
   allRequirements.git,
-  allRequirements.yarn,
+  allRequirements.yarn
 ]
 
 export const prompts = [
@@ -19,7 +19,7 @@ export function run (answers) {
     `git clone --depth=1 "git@github.com:bleech/wp-starter-theme.git" ${themePath}`,
     `cd ${themePath}`,
     'rm -rf .git',
-    'yarn',
+    'yarn'
   ]
   return new Promise(function (resolve, reject) {
     let exec = childProcess.exec(cmds.join(' && '), function () {

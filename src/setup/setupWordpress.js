@@ -18,7 +18,7 @@ export const prompts = [
   allPrompts.wpSiteurl,
   allPrompts.wpTitle,
   allPrompts.wpAdminName,
-  allPrompts.wpAdminEmail,
+  allPrompts.wpAdminEmail
 ]
 
 export function run (answers) {

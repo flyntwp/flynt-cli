@@ -2,7 +2,7 @@ export const projectName = {
   name: 'projectName',
   message: 'What is the project name? (name of folder in current directory)',
   validate: function (input) {
-    if(/^[a-zA-Z0-9-]+$/.exec(input)) {
+    if (/^[a-zA-Z0-9-]+$/.exec(input)) {
       return true
     } else {
       return 'The Project Name may only contain alphanumerical values and dashes.'
@@ -86,5 +86,5 @@ export const wpAdminEmail = {
 
 export const gitRepo = {
   name: 'gitRepo',
-  message: 'Git Repository URL (eg. git@github.com:org/repo.git or https://github.com/org/repo.git)',
+  message: 'Git Repository URL (eg. git@github.com:org/repo.git or https://github.com/org/repo.git)'
 }

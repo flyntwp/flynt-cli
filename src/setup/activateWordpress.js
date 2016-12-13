@@ -5,17 +5,17 @@ import * as allPrompts from '../prompts'
 import * as allRequirements from '../requirements'
 
 export const requirements = [
-  allRequirements.wpCli,
+  allRequirements.wpCli
 ]
 
 export const prompts = [
-  allPrompts.projectName,
+  allPrompts.projectName
 ]
 
 export function run (answers) {
   let cmds = [
     'wp option set blog_public 0',
-    `wp theme activate ${answers.projectName}`,
+    `wp theme activate ${answers.projectName}`
     // 'plugin activate acf-role-selector-field',
     // 'plugin activate advanced-custom-fields-pro',
     // 'plugin activate wp-h5bp-htaccess ',

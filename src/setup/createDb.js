@@ -5,7 +5,7 @@ import * as allPrompts from '../prompts'
 import * as allRequirements from '../requirements'
 
 export const requirements = [
-  allRequirements.mysql,
+  allRequirements.mysql
 ]
 
 export const prompts = [
@@ -14,7 +14,7 @@ export const prompts = [
   allPrompts.dbRootPassword,
   allPrompts.dbName,
   allPrompts.dbUser,
-  allPrompts.dbPassword,
+  allPrompts.dbPassword
 ]
 
 export function run (answers) {
@@ -23,7 +23,7 @@ export function run (answers) {
       "CREATE DATABASE IF NOT EXISTS ${answers.dbName}; \
       CREATE USER '${answers.dbUser}'@'${answers.dbHost}' IDENTIFIED BY '${answers.dbPassword}'; \
       GRANT ALL PRIVILEGES ON ${answers.dbName} . * TO '${answers.dbUser}'@'${answers.dbHost}'; \
-      FLUSH PRIVILEGES;"`,
+      FLUSH PRIVILEGES;"`
   ]
   return new Promise(function (resolve, reject) {
     let exec = childProcess.exec(cmds.join(' && '), function () {

@@ -5,7 +5,7 @@ import * as allPrompts from '../prompts'
 import * as allRequirements from '../requirements'
 
 export const requirements = [
-  allRequirements.git,
+  allRequirements.git
 ]
 
 export const prompts = [
@@ -16,12 +16,12 @@ export function run (answers) {
   let cmds = [
     'git init',
     'git add .',
-    'git commit -m "chore(setup): initial commit"',
+    'git commit -m "chore(setup): initial commit"'
   ]
   if (answers.gitRepo) {
     cmds = cmds.concat([
       `git remote add origin ${answers.gitRepo}`,
-      'git push -u origin master',
+      'git push -u origin master'
     ])
   }
   return new Promise(function (resolve, reject) {
