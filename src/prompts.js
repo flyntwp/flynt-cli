@@ -20,6 +20,11 @@ export const uploadsPath = {
   message: 'Local Uploads Path'
 }
 
+export const deployPath = {
+  name: 'deployPath',
+  message: 'Local Deploy Path'
+}
+
 export const basePathRemote = {
   name: 'basePathRemote',
   message: 'Remote Base Path'
@@ -28,6 +33,41 @@ export const basePathRemote = {
 export const uploadsPathRemote = {
   name: 'uploadsPathRemote',
   message: 'Remote Uploads Path'
+}
+
+export const deployPathRemote = {
+  name: 'deployPathRemote',
+  message: 'Remote Deploy Path'
+}
+
+export const deployExcludes = {
+  name: 'deployExcludes',
+  message: 'Local Deploy Excludes (json array of rsync file patterns to exclude)',
+  default: JSON.stringify([
+    '.git',
+    'node_modules',
+    'web/content/uploads',
+    'web/.htaccess',
+    'web/.htpasswd',
+    'web/usage',
+    '.env',
+    '.flynt.json',
+    '/tmp/',
+    '/backup/',
+    '.DS_Store'
+  ]),
+  filter: function (excludes) {
+    if (excludes) {
+      return JSON.parse(excludes)
+    }
+    return []
+  }
+}
+
+export const rsyncFlags = {
+  name: 'rsyncFlags',
+  message: 'Rsync Flags',
+  default: '-chavzP --stats'
 }
 
 export const dbHost = {

@@ -15,7 +15,6 @@ export const requirements = [
 ]
 
 export const prompts = [
-  allPrompts.projectName,
   allPrompts.basePath,
   allPrompts.dbHost,
   allPrompts.dbUser,

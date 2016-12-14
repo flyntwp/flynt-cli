@@ -6,12 +6,16 @@ import _ from 'lodash'
 
 import * as setupCmd from './setup/index'
 import * as cloneCmd from './clone/index'
+import * as deployCmd from './deploy/index'
 // import {builder} from './cmds/setup'
 
 const configMapping = {
   projectName: 'projectName',
   basePath: 'basePath',
   uploadsPath: 'uploadsPath',
+  deployPath: 'deployPath',
+  deployExcludes: 'deployExcludes',
+  rsyncFlags: 'rsyncFlags',
   dbHost: 'db.host',
   dbRootUser: 'db.root.user',
   dbRootPassword: 'db.root.password',
@@ -72,6 +76,24 @@ yargs
   },
   handleCloneCmd('clone')
 )
+.command(
+  'deploy',
+  'Deploy source code from local to any environment',
+  function (yargs) {
+    cloneCmd.cmds.forEach(function (cmd) {
+      yargs = yargs.command(cmd, '', {}, handleDeployCmd('cmd'))
+    })
+    return yargs
+    .option('t', {
+      alias: 'to',
+      // global: true,
+      describe: 'Environment to clone to',
+      type: 'string',
+      default: 'development'
+    })
+  },
+  handleDeployCmd('deploy')
+)
 .option('c', {
   alias: 'config',
   global: true,
@@ -124,6 +146,20 @@ function handleCloneCmd (location) {
       const config = getConfig(argv)
       const run = cloneCmd.run(argv._[1], mapConfigToAnswers(config, argv.from, argv.to))
       return run.then(saveConfig(argv, config, argv.from, argv.to))
+    }
+  }
+}
+
+function handleDeployCmd (location) {
+  return function (argv) {
+    if (location === 'deploy' && argv._.length === 1) {
+      const config = getConfig(argv)
+      const run = deployCmd.run(null, mapConfigToAnswers(config, 'local', argv.to))
+      return run.then(saveConfig(argv, config, 'local', argv.to))
+    } else if (location === 'cmd' && argv._.length === 2) {
+      const config = getConfig(argv)
+      const run = deployCmd.run(argv._[1], mapConfigToAnswers(config, 'local', argv.to))
+      return run.then(saveConfig(argv, config, 'local', argv.to))
     }
   }
 }
