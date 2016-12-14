@@ -1,5 +1,6 @@
 import Promise from 'bluebird'
 import hasbin from 'hasbin'
+import childProcess from 'child_process'
 
 function checkForBinary (cmd) {
   return new Promise(function (resolve, reject) {
@@ -19,6 +20,18 @@ export function composer () {
 
 export function wpCli () {
   return checkForBinary('wp')
+}
+
+export function wpCliDotenv () {
+  return new Promise(function (resolve, reject) {
+    childProcess.exec('wp dotenv', function (err, stdout, stderr) {
+      if (err) {
+        reject(`Please run 'wp package install aaemnnosttv/wp-cli-dotenv-command'`)
+      } else {
+        resolve()
+      }
+    })
+  })
 }
 
 export function git () {

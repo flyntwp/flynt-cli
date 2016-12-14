@@ -5,7 +5,8 @@ import * as allPrompts from '../prompts'
 import * as allRequirements from '../requirements'
 
 export const requirements = [
-  allRequirements.wpCli
+  allRequirements.wpCli,
+  allRequirements.wpCliDotenv
 ]
 
 export const prompts = [
