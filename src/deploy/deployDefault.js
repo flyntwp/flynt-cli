@@ -38,7 +38,7 @@ export function run (answers) {
   }
   let cmds = []
 
-  let source = path.normalize(`${answers.basePath}/${answers.deployPath}/`)
+  let source = path.normalize(`${answers.basePath}/${answers.deployPath}`)
   if (sourceRemote) {
     source = `${sourceSshId}:${source}`
   }
@@ -47,13 +47,15 @@ export function run (answers) {
     destination = `${destinationSshId}:${destination}`
   }
 
+  const excludes = answers.deployExcludes.map((exclude) => `--exclude=${exclude}`)
+  .join(' ')
   if (destinationRemote && sourceRemote) {
     const tmpDir = './tmp/flynt-cli/deploy'
     cmds.push(`mkdir -p ${tmpDir}`)
     const sshCmdSource = answers.sshPort ? `-e "ssh -p ${answers.sshPort}"` : ''
     const sshCmdDestination = answers.sshPortRemote ? `-e "ssh -p ${answers.sshPortRemote}"` : ''
-    cmds.push(`rsync -chavzP --stats ${sshCmdSource} ${source} ${tmpDir}`)
-    cmds.push(`rsync -chavzP --stats ${sshCmdDestination} ${tmpDir} ${destination}`)
+    cmds.push(`rsync ${answers.rsyncFlags} ${excludes} ${sshCmdSource} ${source} ${tmpDir}`)
+    cmds.push(`rsync ${answers.rsyncFlags} ${excludes} ${sshCmdDestination} ${tmpDir} ${destination}`)
     cmds.push(`rm -rf ${tmpDir}`)
   } else {
     const sshCmd = sourceRemote
@@ -63,7 +65,7 @@ export function run (answers) {
       : answers.sshPortRemote
         ? `-e "ssh -p ${answers.sshPortRemote}"`
         : ''
-    cmds.push(`rsync ${answers.rsyncFlags} ${sshCmd} ${source} ${destination}`)
+    cmds.push(`rsync ${answers.rsyncFlags} ${excludes} ${sshCmd} ${source} ${destination}`)
   }
   console.log(cmds)
   return exec(cmds)
