@@ -4,40 +4,12 @@ import path from 'path'
 import yargs from 'yargs'
 import _ from 'lodash'
 
+import * as configFields from './configFields'
+
 import * as setupCmd from './setup/index'
 import * as cloneCmd from './clone/index'
 import * as deployCmd from './deploy/index'
 // import {builder} from './cmds/setup'
-
-const configMapping = {
-  projectName: 'projectName',
-  basePath: 'basePath',
-  uploadsPath: 'uploadsPath',
-  deployPath: 'deployPath',
-  deployExcludes: 'deployExcludes',
-  rsyncFlags: 'rsyncFlags',
-  dbHost: 'db.host',
-  dbRootUser: 'db.root.user',
-  dbRootPassword: 'db.root.password',
-  dbName: 'db.name',
-  dbUser: 'db.user',
-  dbPassword: 'db.password',
-  sshHost: 'ssh.host',
-  sshUser: 'ssh.user',
-  sshPort: 'ssh.port',
-  wpEnv: 'wp.env',
-  wpHome: 'wp.home',
-  wpSiteurl: 'wp.siteurl',
-  wpTitle: 'wp.title',
-  wpAdminName: 'wp.admin.name',
-  wpAdminEmail: 'wp.admin.email',
-  gitRepo: 'repository'
-}
-
-const configGlobals = [
-  'projectName',
-  'repository'
-]
 
 yargs
 .command(
@@ -186,13 +158,13 @@ function saveConfig (argv, config, env, envRemote = null) {
 
 function mapConfigToAnswers (config, env, envRemote) {
   const answers = {}
-  _.forEach(configMapping, function (value, key) {
-    const configKey = _.includes(configGlobals, value)
+  _.forEach(configFields.mapping, function (value, key) {
+    const configKey = _.includes(configFields.globals, value)
       ? value : `environments.${env}.${value}`
     if (_.has(config, configKey)) {
       _.set(answers, key, _.get(config, configKey))
     }
-    if (envRemote && !_.includes(configGlobals, value)) {
+    if (envRemote && !_.includes(configFields.globals, value)) {
       const configKeyRemote = `environments.${envRemote}.${value}`
       if (_.has(config, configKeyRemote)) {
         _.set(answers, key + 'Remote', _.get(config, configKeyRemote))
@@ -205,13 +177,13 @@ function mapConfigToAnswers (config, env, envRemote) {
 function mapAnswersToConfig (answers, env, envRemote) {
   const config = {}
   _.forEach(answers, function (value, key) {
-    const configKey = configMapping[key] || key
-    if (_.includes(configGlobals, configKey)) {
+    const configKey = configFields.mapping[key] || key
+    if (_.includes(configFields.globals, configKey)) {
       _.set(config, configKey, value)
     } else {
       if (key.substr(key.length - 'Remote'.length) === 'Remote') {
         key = key.substr(0, key.length - 'Remote'.length)
-        const configKeyRemote = configMapping[key] || key
+        const configKeyRemote = configFields.mapping[key] || key
         _.set(config, `environments.${envRemote}.${configKeyRemote}`, value)
       } else {
         _.set(config, `environments.${env}.${configKey}`, value)
