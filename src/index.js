@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import yargs from 'yargs'
 
-import {getConfig, saveConfig, mapConfigToAnswers} from './utils/config'
+import handleCommand from './utils/handleCommand'
 
 import * as setupCmd from './setup/index'
 import * as cloneCmd from './clone/index'
@@ -9,23 +9,21 @@ import * as deployCmd from './deploy/index'
 // import {builder} from './cmds/setup'
 
 yargs
-.command(
-  'setup',
+.command('setup',
   'Setup a new flynt project',
   function (yargs) {
     setupCmd.cmds.forEach(function (cmd) {
-      yargs = yargs.command(cmd, '', {}, handleSetupCmd('cmd'))
+      yargs = yargs.command(cmd, '', {}, handleCommand(setupCmd, 'argv.env', null, cmd))
     })
     return yargs
   },
-  handleSetupCmd('setup')
+  handleCommand(setupCmd, 'argv.env')
 )
-.command(
-  'clone',
+.command('clone',
   'Clone database and medie files between environments',
   function (yargs) {
     cloneCmd.cmds.forEach(function (cmd) {
-      yargs = yargs.command(cmd, '', {}, handleCloneCmd('cmd'))
+      yargs = yargs.command(cmd, '', {}, handleCommand(cloneCmd, 'argv.from', 'argv.to', cmd))
     })
     return yargs
     .option('f', {
@@ -43,14 +41,13 @@ yargs
       default: 'local'
     })
   },
-  handleCloneCmd('clone')
+  handleCommand(cloneCmd, 'argv.from', 'argv.to')
 )
-.command(
-  'deploy',
+.command('deploy',
   'Deploy source code from local to any environment',
   function (yargs) {
     cloneCmd.cmds.forEach(function (cmd) {
-      yargs = yargs.command(cmd, '', {}, handleDeployCmd('cmd'))
+      yargs = yargs.command(cmd, '', {}, handleCommand(deployCmd, 'local', 'argv.to', cmd))
     })
     return yargs
     .option('t', {
@@ -61,7 +58,7 @@ yargs
       default: 'development'
     })
   },
-  handleDeployCmd('deploy')
+  handleCommand(deployCmd, 'local', 'argv.to')
 )
 .option('c', {
   alias: 'config',
@@ -90,45 +87,3 @@ yargs
 })
 .help()
 .argv
-
-function handleSetupCmd (location) {
-  return function (argv) {
-    if (location === 'setup' && argv._.length === 1) {
-      const config = getConfig(argv)
-      const run = setupCmd.run(null, mapConfigToAnswers(config, argv.env))
-      return run.then(saveConfig(argv, config, argv.env))
-    } else if (location === 'cmd' && argv._.length === 2) {
-      const config = getConfig(argv)
-      const run = setupCmd.run(argv._[1], mapConfigToAnswers(config, argv.env))
-      return run.then(saveConfig(argv, config, argv.env))
-    }
-  }
-}
-
-function handleCloneCmd (location) {
-  return function (argv) {
-    if (location === 'clone' && argv._.length === 1) {
-      const config = getConfig(argv)
-      const run = cloneCmd.run(null, mapConfigToAnswers(config, argv.from, argv.to))
-      return run.then(saveConfig(argv, config, argv.from, argv.to))
-    } else if (location === 'cmd' && argv._.length === 2) {
-      const config = getConfig(argv)
-      const run = cloneCmd.run(argv._[1], mapConfigToAnswers(config, argv.from, argv.to))
-      return run.then(saveConfig(argv, config, argv.from, argv.to))
-    }
-  }
-}
-
-function handleDeployCmd (location) {
-  return function (argv) {
-    if (location === 'deploy' && argv._.length === 1) {
-      const config = getConfig(argv)
-      const run = deployCmd.run(null, mapConfigToAnswers(config, 'local', argv.to))
-      return run.then(saveConfig(argv, config, 'local', argv.to))
-    } else if (location === 'cmd' && argv._.length === 2) {
-      const config = getConfig(argv)
-      const run = deployCmd.run(argv._[1], mapConfigToAnswers(config, 'local', argv.to))
-      return run.then(saveConfig(argv, config, 'local', argv.to))
-    }
-  }
-}
