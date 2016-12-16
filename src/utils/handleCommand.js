@@ -1,4 +1,4 @@
-import {getConfig, saveConfig, mapConfigToAnswers} from './utils/config'
+import {getConfig, saveConfig, mapConfigToAnswers} from './config'
 
 export default function handleCommand (commandObject, fromEnv, toEnv, subCommand) {
   return function (argv) {

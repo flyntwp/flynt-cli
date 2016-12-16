@@ -2,6 +2,7 @@
 import yargs from 'yargs'
 
 import handleCommand from './utils/handleCommand'
+import buildArguments from './utils/buildArguments'
 
 import * as setupCmd from './setup/index'
 import * as cloneCmd from './clone/index'
@@ -11,21 +12,13 @@ import * as deployCmd from './deploy/index'
 yargs
 .command('setup',
   'Setup a new flynt project',
-  function (yargs) {
-    setupCmd.cmds.forEach(function (cmd) {
-      yargs = yargs.command(cmd, '', {}, handleCommand(setupCmd, 'argv.env', null, cmd))
-    })
-    return yargs
-  },
+  buildArguments(setupCmd, 'argv.env'),
   handleCommand(setupCmd, 'argv.env')
 )
 .command('clone',
   'Clone database and medie files between environments',
   function (yargs) {
-    cloneCmd.cmds.forEach(function (cmd) {
-      yargs = yargs.command(cmd, '', {}, handleCommand(cloneCmd, 'argv.from', 'argv.to', cmd))
-    })
-    return yargs
+    buildArguments(cloneCmd, 'argv.from', 'argv.to')(yargs)
     .option('f', {
       alias: 'from',
       // global: true,
@@ -46,10 +39,7 @@ yargs
 .command('deploy',
   'Deploy source code from local to any environment',
   function (yargs) {
-    cloneCmd.cmds.forEach(function (cmd) {
-      yargs = yargs.command(cmd, '', {}, handleCommand(deployCmd, 'local', 'argv.to', cmd))
-    })
-    return yargs
+    buildArguments(cloneCmd, 'local', 'argv.to')(yargs)
     .option('t', {
       alias: 'to',
       // global: true,
