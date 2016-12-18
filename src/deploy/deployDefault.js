@@ -1,5 +1,4 @@
-import childProcess from 'child_process'
-import Promise from 'bluebird'
+import exec from '../utils/exec'
 import path from 'path'
 
 import * as allPrompts from '../prompts'
@@ -67,11 +66,5 @@ export function run (answers) {
     cmds.push(`rsync ${answers.rsyncFlags} ${sshCmd} ${source} ${destination}`)
   }
   console.log(cmds)
-  return new Promise(function (resolve, reject) {
-    let exec = childProcess.exec(cmds.join(' && '), function () {
-      resolve()
-    })
-    exec.stdout.pipe(process.stdout)
-    exec.stderr.pipe(process.stderr)
-  })
+  return exec(cmds)
 }
