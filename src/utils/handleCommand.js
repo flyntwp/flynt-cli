@@ -1,3 +1,7 @@
+import _ from 'lodash'
+import Promise from 'bluebird'
+import inquirer from 'inquirer'
+
 import {getConfig, saveConfig, mapConfigToAnswers} from './config'
 
 export default function handleCommand (commandObject, fromEnv, toEnv, subCommand) {
@@ -13,8 +17,14 @@ export default function handleCommand (commandObject, fromEnv, toEnv, subCommand
     toEnv = resolveEnv(toEnv, argv)
 
     const config = getConfig(argv)
-    const run = commandObject.run(subCommand, mapConfigToAnswers(config, fromEnv, toEnv))
-    return run.then(saveConfig(argv, config, argv.env))
+    const commandsToRun = filterValidCommands(commandObject.commands, subCommand)
+    const answersFromConfig = mapConfigToAnswers(config, fromEnv, toEnv)
+
+    Promise.resolve(commandsToRun)
+    .tap(checkRequirements)
+    .then(promptMissingConfig(config, answersFromConfig))
+    .tap(runCommands(commandsToRun), err => console.log(err))
+    .tap(saveConfig(argv, config, fromEnv, toEnv))
   }
 }
 
@@ -23,5 +33,41 @@ function resolveEnv (env, argv) {
     return argv[env.replace('argv.', '')]
   } else {
     return env
+  }
+}
+
+function filterValidCommands (commands, subCommands) {
+  if (!subCommands) {
+    return commands
+  } else {
+    subCommands = [].concat(subCommands)
+    return _.pickBy(commands, (cmd, name) => _.includes(subCommands, name))
+  }
+}
+
+function checkRequirements (commands) {
+  let requirements = _.map(_.values(commands), 'requirements')
+  requirements = _.union(...requirements)
+  return Promise.all(requirements.map(fn => fn()))
+}
+
+function promptMissingConfig (config, answersFromConfig) {
+  return function (commands) {
+    let prompts = _.map(_.values(commands), 'prompts')
+    prompts = _.union(...prompts)
+    .filter(prompt => !_.has(config, prompt.name))
+    return inquirer.prompt(prompts)
+    .then(answers => _.merge({}, config, answers))
+  }
+}
+
+function runCommands (commands) {
+  const runs = _.map(_.values(commands), 'run')
+  return function (answers) {
+    let allRuns = Promise.resolve()
+    runs.forEach(function (fn) {
+      allRuns = allRuns.then(() => fn(answers))
+    })
+    return allRuns
   }
 }

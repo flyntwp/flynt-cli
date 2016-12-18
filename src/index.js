@@ -7,7 +7,6 @@ import buildArguments from './utils/buildArguments'
 import * as setupCmd from './setup/index'
 import * as cloneCmd from './clone/index'
 import * as deployCmd from './deploy/index'
-// import {builder} from './cmds/setup'
 
 yargs
 .command('setup',
@@ -21,14 +20,12 @@ yargs
     buildArguments(cloneCmd, 'argv.from', 'argv.to')(yargs)
     .option('f', {
       alias: 'from',
-      // global: true,
       describe: 'Environment to clone from',
       type: 'string',
       default: 'development'
     })
     .option('t', {
       alias: 'to',
-      // global: true,
       describe: 'Environment to clone to',
       type: 'string',
       default: 'local'
@@ -42,7 +39,6 @@ yargs
     buildArguments(cloneCmd, 'local', 'argv.to')(yargs)
     .option('t', {
       alias: 'to',
-      // global: true,
       describe: 'Environment to clone to',
       type: 'string',
       default: 'development'

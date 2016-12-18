@@ -21,6 +21,7 @@ export function saveConfig (argv, config, env, envRemote = null) {
       const json = JSON.stringify(config, null, 2)
       fs.writeFileSync(argv.configPath, json, 'utf-8')
     }
+    return answers
   }
 }
 
