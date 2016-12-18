@@ -12,37 +12,37 @@ export const projectName = {
 
 export const basePath = {
   name: 'basePath',
-  message: 'Local Base Path'
+  message: 'Source Base Path'
 }
 
 export const uploadsPath = {
   name: 'uploadsPath',
-  message: 'Local Uploads Path'
+  message: 'Source Uploads Path'
 }
 
 export const deployPath = {
   name: 'deployPath',
-  message: 'Local Deploy Path'
+  message: 'Source Deploy Path'
 }
 
 export const basePathRemote = {
   name: 'basePathRemote',
-  message: 'Remote Base Path'
+  message: 'Destination Base Path'
 }
 
 export const uploadsPathRemote = {
   name: 'uploadsPathRemote',
-  message: 'Remote Uploads Path'
+  message: 'Destination Uploads Path'
 }
 
 export const deployPathRemote = {
   name: 'deployPathRemote',
-  message: 'Remote Deploy Path'
+  message: 'Destination Deploy Path'
 }
 
 export const deployExcludes = {
   name: 'deployExcludes',
-  message: 'Local Deploy Excludes (json array of rsync file patterns to exclude)',
+  message: 'Source Deploy Excludes (json array of rsync file patterns to exclude)',
   default: JSON.stringify([
     '.git',
     'node_modules',
@@ -66,88 +66,88 @@ export const deployExcludes = {
 
 export const rsyncFlags = {
   name: 'rsyncFlags',
-  message: 'Rsync Flags',
+  message: 'Source Rsync Flags',
   default: '-chavzP --stats'
 }
 
 export const dbHost = {
   name: 'dbHost',
-  message: 'Database Host',
+  message: 'Source Database Host',
   default: 'localhost'
 }
 
 export const dbRootUser = {
   name: 'dbRootUser',
-  message: 'Database Root User',
+  message: 'Source Database Root User',
   default: 'root'
 }
 
 export const dbRootPassword = {
   name: 'dbRootPassword',
-  message: 'Database Root Password',
+  message: 'Source Database Root Password',
   default: 'root'
 }
 
 export const dbName = {
   name: 'dbName',
-  message: 'Database Name'
+  message: 'Source Database Name'
 }
 
 export const dbUser = {
   name: 'dbUser',
-  message: 'Database User Name'
+  message: 'Source Database User Name'
 }
 
 export const dbPassword = {
   name: 'dbPassword',
-  message: 'Database Password'
+  message: 'Source Database Password'
 }
 
 export const sshHost = {
   name: 'sshHost',
-  message: 'SSH Host'
+  message: 'Source SSH Host'
 }
 export const sshUser = {
   name: 'sshUser',
-  message: 'SSH User'
+  message: 'Source SSH User'
 }
 export const sshPort = {
   name: 'sshPort',
-  message: 'SSH Port'
+  message: 'Source SSH Port'
 }
 
 export const dbHostRemote = {
   name: 'dbHostRemote',
-  message: 'Remote Database Host',
+  message: 'Destination Database Host',
   default: 'localhost'
 }
 
 export const dbNameRemote = {
   name: 'dbNameRemote',
-  message: 'Remote Database Name'
+  message: 'Destination Database Name'
 }
 
 export const dbUserRemote = {
   name: 'dbUserRemote',
-  message: 'Remote Database User Name'
+  message: 'Destination Database User Name'
 }
 
 export const dbPasswordRemote = {
   name: 'dbPasswordRemote',
-  message: 'Remote Database Password'
+  message: 'Destination Database Password'
 }
 
 export const sshHostRemote = {
   name: 'sshHostRemote',
-  message: 'Remote SSH Host'
+  message: 'Destination SSH Host'
 }
 export const sshUserRemote = {
   name: 'sshUserRemote',
-  message: 'Remote SSH User'
+  message: 'Destination SSH User'
 }
 export const sshPortRemote = {
   name: 'sshPortRemote',
-  message: 'Remote SSH Port'
+  message: 'Destination SSH Port'
 }
 
 export const wpEnv = {
