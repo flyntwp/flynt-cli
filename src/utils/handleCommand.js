@@ -22,7 +22,7 @@ export default function handleCommand (commandObject, fromEnv, toEnv, subCommand
 
     Promise.resolve(commandsToRun)
     .tap(checkRequirements)
-    .then(promptMissingConfig(config, answersFromConfig))
+    .then(promptMissingConfig(answersFromConfig))
     .tap(runCommands(commandsToRun), err => console.log(err))
     // TODO: save config before runCommands but make sure to save in right folder
     // relevant for setup command if installBedrock is called because of chdir
@@ -31,7 +31,7 @@ export default function handleCommand (commandObject, fromEnv, toEnv, subCommand
 }
 
 function resolveEnv (env, argv) {
-  if (env && env.indexOf('argv.')) {
+  if (env && env.indexOf('argv.') === 0) {
     return argv[env.replace('argv.', '')]
   } else {
     return env
@@ -53,13 +53,13 @@ function checkRequirements (commands) {
   return Promise.all(requirements.map(fn => fn()))
 }
 
-function promptMissingConfig (config, answersFromConfig) {
+function promptMissingConfig (answersFromConfig) {
   return function (commands) {
     let prompts = _.map(_.values(commands), 'prompts')
     prompts = _.union(...prompts)
-    .filter(prompt => !_.has(config, prompt.name))
+    .filter(prompt => !_.has(answersFromConfig, prompt.name))
     return inquirer.prompt(prompts)
-    .then(answers => _.merge({}, config, answers))
+    .then(answers => _.merge({}, answersFromConfig, answers))
   }
 }
 
