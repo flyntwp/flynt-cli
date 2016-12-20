@@ -1,5 +1,6 @@
 import exec from '../utils/exec'
 
+import * as allPrompts from '../prompts'
 import * as allRequirements from '../requirements'
 
 export const requirements = [
@@ -7,11 +8,14 @@ export const requirements = [
 ]
 
 export const prompts = [
+  allPrompts.projectName
 ]
 
 export function run (answers) {
   let cmds = [
-    `composer create-project roots/bedrock .`
+    `composer create-project roots/bedrock ${answers.projectName}`
   ]
-  return exec(cmds)
+  return exec(cmds).then(function () {
+    process.chdir(answers.projectName)
+  })
 }

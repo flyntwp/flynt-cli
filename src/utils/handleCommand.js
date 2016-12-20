@@ -23,8 +23,10 @@ export default function handleCommand (commandObject, fromEnv, toEnv, subCommand
     Promise.resolve(commandsToRun)
     .tap(checkRequirements)
     .then(promptMissingConfig(answersFromConfig))
-    .tap(saveConfig(argv, config, fromEnv, toEnv))
     .tap(runCommands(commandsToRun), err => console.log(err))
+    // TODO: save config before runCommands but make sure to save in right folder
+    // relevant for setup command if installBedrock is called because of chdir
+    .tap(saveConfig(argv, config, fromEnv, toEnv))
   }
 }
 
