@@ -1,5 +1,6 @@
 import exec from '../utils/exec'
 import path from 'path'
+import _ from 'lodash'
 
 import * as allPrompts from '../prompts'
 import * as allRequirements from '../requirements'
@@ -15,6 +16,7 @@ export const requirements = [
 
 export const prompts = [
   allPrompts.basePath,
+  allPrompts.wpReplace,
   allPrompts.dbHost,
   allPrompts.dbUser,
   allPrompts.dbName,
@@ -23,6 +25,7 @@ export const prompts = [
   allPrompts.sshUser,
   allPrompts.sshPort,
   allPrompts.basePathRemote,
+  allPrompts.wpReplaceRemote,
   allPrompts.dbHostRemote,
   allPrompts.dbUserRemote,
   allPrompts.dbNameRemote,
@@ -33,6 +36,12 @@ export const prompts = [
 ]
 
 export function run (answers) {
+  answers.wpReplace = [].concat(answers.wpReplace)
+  answers.wpReplaceRemote = [].concat(answers.wpReplaceRemote)
+  if (answers.wpReplace.length !== answers.wpReplaceRemote.length) {
+    console.log('Search and Replace terms must have the same number of arguments.')
+    return
+  }
   const tmpDir = './tmp/flynt-cli'
   const backupDir = './backup'
   const backupTransferFile = 'tmp_backup.sql'
@@ -87,10 +96,16 @@ export function run (answers) {
   const srdbPath = require.resolve('search-replace-db')
   if (destinationRemote) {
     cmds.push(`scp -r ${answers.sshPortRemote ? `-P ${answers.sshPortRemote}` : ''} ${path.join(srdbPath, '..')} ${destinationSshId}:${answers.basePathRemote}/${tmpDir}`)
-    const destinationReplaceCmd = `php ${path.join(answers.basePathRemote, tmpDir, 'search-replace-db', path.basename(srdbPath))} -h ${answers.dbHostRemote} -u ${answers.dbUserRemote} -p ${answers.dbPasswordRemote} -n ${answers.dbNameRemote} -s '${answers.wpHome}' -r '${answers.wpHomeRemote}'`
-    cmds.push(`ssh ${answers.sshPortRemote ? `-p ${answers.sshPortRemote}` : ''} -t ${destinationSshId} '${destinationReplaceCmd}'`)
+    answers.wpReplace.forEach(function (searchString, i) {
+      const replaceString = answers.wpReplaceRemote[i]
+      const destinationReplaceCmd = `php ${path.join(answers.basePathRemote, tmpDir, 'search-replace-db', path.basename(srdbPath))} -h ${answers.dbHostRemote} -u ${answers.dbUserRemote} -p ${answers.dbPasswordRemote} -n ${answers.dbNameRemote} -s '${searchString}' -r '${replaceString}'`
+      cmds.push(`ssh ${answers.sshPortRemote ? `-p ${answers.sshPortRemote}` : ''} -t ${destinationSshId} '${destinationReplaceCmd}'`)
+    })
   } else {
-    cmds.push(`php ${srdbPath} -h ${answers.dbHostRemote} -u ${answers.dbUserRemote} -p ${answers.dbPasswordRemote} -n ${answers.dbNameRemote} -s '${answers.wpHome}' -r '${answers.wpHomeRemote}'`)
+    answers.wpReplace.forEach(function (searchString, i) {
+      const replaceString = answers.wpReplaceRemote[i]
+      cmds.push(`php ${srdbPath} -h ${answers.dbHostRemote} -u ${answers.dbUserRemote} -p ${answers.dbPasswordRemote} -n ${answers.dbNameRemote} -s '${searchString}' -r '${replaceString}'`)
+    })
   }
 
   return exec(cmds)
