@@ -201,38 +201,6 @@ export const wpAdminEmail = {
   message: 'Wordpress Admin Email Address'
 }
 
-export const wpReplace = {
-  name: 'wpReplace',
-  message: 'Strings to find in DB on clone for replacement (json array)',
-  default: function (answers) {
-    if (answers.projectName) {
-      return JSON.stringify(`${[answers.projectName]}.staging`)
-    }
-  },
-  filter: function (replaceStrings) {
-    if (replaceStrings) {
-      return JSON.parse(replaceStrings)
-    }
-    return []
-  }
-}
-
-export const wpReplaceRemote = {
-  name: 'wpReplaceRemote',
-  message: 'Strings to replace found matches in DB on clone (json array)',
-  default: function (answers) {
-    if (answers.projectName) {
-      return JSON.stringify(`${[answers.projectName]}.dev`)
-    }
-  },
-  filter: function (replaceStrings) {
-    if (replaceStrings) {
-      return JSON.parse(replaceStrings)
-    }
-    return []
-  }
-}
-
 export const gitRepo = {
   name: 'gitRepo',
   message: 'Git Repository URL (eg. git@github.com:org/repo.git or https://github.com/org/repo.git)'

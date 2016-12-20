@@ -20,7 +20,6 @@ export const mapping = {
   wpTitle: 'wp.title',
   wpAdminName: 'wp.admin.name',
   wpAdminEmail: 'wp.admin.email',
-  wpReplace: 'wp.replace',
   gitRepo: 'repository'
 }
 
