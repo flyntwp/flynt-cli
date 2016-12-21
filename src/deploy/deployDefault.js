@@ -1,4 +1,4 @@
-import exec from '../utils/exec'
+import exec from '../utils/executeCommand'
 import path from 'path'
 
 import * as allPrompts from '../prompts'
