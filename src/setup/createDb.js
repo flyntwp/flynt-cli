@@ -18,7 +18,7 @@ export const prompts = [
 
 export function run (answers) {
   let cmds = [
-    `mysql --host=${answers.dbHost} -u${answers.dbRootUser} -p${answers.dbRootPassword} -e \
+    `mysql --host=${answers.dbHost} --user=${answers.dbRootUser} --password=${answers.dbRootPassword} -e \
       "CREATE DATABASE IF NOT EXISTS ${answers.dbName}; \
       CREATE USER '${answers.dbUser}'@'${answers.dbHost}' IDENTIFIED BY '${answers.dbPassword}'; \
       GRANT ALL PRIVILEGES ON ${answers.dbName} . * TO '${answers.dbUser}'@'${answers.dbHost}'; \
