@@ -1,4 +1,4 @@
-import exec from '../utils/exec'
+import exec from '../utils/executeCommand'
 
 import * as allRequirements from '../requirements'
 
