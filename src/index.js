@@ -17,32 +17,34 @@ yargs
 .command('clone',
   'Clone database and medie files between environments',
   function (yargs) {
-    buildArguments(cloneCmd, 'argv.from', 'argv.to')(yargs)
-    .option('f', {
-      alias: 'from',
-      describe: 'Environment to clone from',
-      type: 'string',
-      default: 'development'
-    })
-    .option('t', {
-      alias: 'to',
-      describe: 'Environment to clone to',
-      type: 'string',
-      default: 'local'
-    })
+    buildArguments(cloneCmd, 'argv.from', 'argv.to', {
+      from: {
+        alias: 'f',
+        describe: 'Environment to clone from',
+        type: 'string',
+        default: 'development'
+      },
+      to: {
+        alias: 't',
+        describe: 'Environment to clone to',
+        type: 'string',
+        default: 'local'
+      }
+    })(yargs)
   },
   handleCommand(cloneCmd, 'argv.from', 'argv.to')
 )
 .command('deploy',
   'Deploy source code from local to any environment',
   function (yargs) {
-    buildArguments(cloneCmd, 'local', 'argv.to')(yargs)
-    .option('t', {
-      alias: 'to',
-      describe: 'Environment to clone to',
-      type: 'string',
-      default: 'development'
-    })
+    buildArguments(cloneCmd, 'local', 'argv.to', {
+      to: {
+        alias: 't',
+        describe: 'Environment to clone to',
+        type: 'string',
+        default: 'development'
+      }
+    })(yargs)
   },
   handleCommand(deployCmd, 'local', 'argv.to')
 )
