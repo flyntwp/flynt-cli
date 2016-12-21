@@ -38,7 +38,7 @@ export function run (answers) {
   }
   let cmds = []
 
-  let source = path.normalize(`${answers.basePath}/${answers.deployPath}`)
+  let source = path.normalize(`${answers.basePath}/${answers.deployPath}`).replace(/\/$/, '')
   if (sourceRemote) {
     source = `${sourceSshId}:${source}`
   }
