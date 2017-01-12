@@ -1,11 +1,16 @@
 import _ from 'lodash'
 import Promise from 'bluebird'
 import inquirer from 'inquirer'
+import getRootPath from './getRootPath'
 
 import {getConfig, saveConfig, mapConfigToAnswers} from './config'
 
-export default function handleCommand (commandObject, fromEnv, toEnv, subCommand) {
+export default function handleCommand (commandObject, fromEnv, toEnv, subCommand, skipRootExecution) {
   return function (argv) {
+    if (!skipRootExecution && !argv.force) {
+      const rootPath = getRootPath()
+      process.chdir(rootPath)
+    }
     // return if subcommand was called but handler was registered to main command
     // in this case yarg first calls the handler for the subcommand and afterwards
     // for main.

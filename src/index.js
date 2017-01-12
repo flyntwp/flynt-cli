@@ -17,7 +17,7 @@ yargs
 .command('create',
   'Create a new flynt project',
   buildArguments(createCmd, 'argv.env'),
-  handleCommand(createCmd, 'argv.env')
+  handleCommand(createCmd, 'argv.env', null, null, true)
 )
 .command('setup',
   'Setup an existing flynt project',
@@ -49,13 +49,11 @@ yargs
   function (yargs) {
     buildArguments(cloneCmd, 'argv.from', 'argv.to', {
       from: {
-        alias: 'f',
         describe: 'Environment to clone from',
         type: 'string',
         default: 'development'
       },
       to: {
-        alias: 't',
         describe: 'Environment to clone to',
         type: 'string',
         default: 'local'
@@ -69,7 +67,6 @@ yargs
   function (yargs) {
     buildArguments(cloneCmd, 'local', 'argv.to', {
       to: {
-        alias: 't',
         describe: 'Environment to clone to',
         type: 'string',
         default: 'development'
@@ -102,6 +99,12 @@ yargs
   default: 'local',
   describe: 'Specify current environment',
   type: 'string'
+})
+.option('f', {
+  alias: 'force',
+  global: true,
+  describe: 'Force execution in current directory',
+  type: 'boolean'
 })
 .help()
 .argv
