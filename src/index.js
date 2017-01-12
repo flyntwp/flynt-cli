@@ -8,6 +8,7 @@ import * as createCmd from './create'
 import * as installCmd from './install'
 import * as upgradeCmd from './upgrade'
 import * as watchCmd from './watch'
+import * as buildCmd from './build'
 import * as cloneCmd from './clone'
 import * as deployCmd from './deploy'
 
@@ -31,6 +32,11 @@ yargs
   'Run yarn watch for flynt theme',
   buildArguments(watchCmd, 'argv.env'),
   handleCommand(watchCmd, 'argv.env')
+)
+.command('build',
+  'Run yarn build for flynt theme',
+  buildArguments(buildCmd, 'argv.env'),
+  handleCommand(buildCmd, 'argv.env')
 )
 .command('clone',
   'Clone database and medie files between environments',
