@@ -5,6 +5,7 @@ import handleCommand from './utils/handleCommand'
 import buildArguments from './utils/buildArguments'
 
 import * as createCmd from './create'
+import * as setupCmd from './setup'
 import * as installCmd from './install'
 import * as upgradeCmd from './upgrade'
 import * as watchCmd from './watch'
@@ -17,6 +18,11 @@ yargs
   'Create a new flynt project',
   buildArguments(createCmd, 'argv.env'),
   handleCommand(createCmd, 'argv.env')
+)
+.command('setup',
+  'Setup an existing flynt project',
+  buildArguments(setupCmd, 'argv.env'),
+  handleCommand(setupCmd, 'argv.env')
 )
 .command('install',
   'Install flynt dependencies (yarn, composer)',
