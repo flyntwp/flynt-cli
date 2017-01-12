@@ -4,15 +4,15 @@ import yargs from 'yargs'
 import handleCommand from './utils/handleCommand'
 import buildArguments from './utils/buildArguments'
 
-import * as setupCmd from './setup/index'
-import * as cloneCmd from './clone/index'
-import * as deployCmd from './deploy/index'
+import * as createCmd from './create'
+import * as cloneCmd from './clone'
+import * as deployCmd from './deploy'
 
 yargs
-.command('setup',
-  'Setup a new flynt project',
-  buildArguments(setupCmd, 'argv.env'),
-  handleCommand(setupCmd, 'argv.env')
+.command('create',
+  'Create a new flynt project',
+  buildArguments(createCmd, 'argv.env'),
+  handleCommand(createCmd, 'argv.env')
 )
 .command('clone',
   'Clone database and medie files between environments',

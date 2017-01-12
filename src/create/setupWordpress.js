@@ -33,6 +33,5 @@ export function run (answers) {
     `wp dotenv set WP_SITEURL ${answers.wpSiteurl}`,
     `wp core install --url=${answers.wpHome} --title='${answers.wpTitle}' --admin_user=${answers.wpAdminName} --admin_email=${answers.wpAdminEmail}`
   ]
-  console.log('this is setupWordpress')
   return exec(cmds)
 }
