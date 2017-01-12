@@ -7,6 +7,7 @@ import buildArguments from './utils/buildArguments'
 import * as createCmd from './create'
 import * as installCmd from './install'
 import * as upgradeCmd from './upgrade'
+import * as watchCmd from './watch'
 import * as cloneCmd from './clone'
 import * as deployCmd from './deploy'
 
@@ -25,6 +26,11 @@ yargs
   'Upgrade flynt dependencies (yarn, composer)',
   buildArguments(upgradeCmd, 'argv.env'),
   handleCommand(upgradeCmd, 'argv.env')
+)
+.command('watch',
+  'Run yarn watch for flynt theme',
+  buildArguments(watchCmd, 'argv.env'),
+  handleCommand(watchCmd, 'argv.env')
 )
 .command('clone',
   'Clone database and medie files between environments',

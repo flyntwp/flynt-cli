@@ -42,6 +42,10 @@ export function yarn () {
   return checkForBinary('yarn')
 }
 
+export function gulp () {
+  return checkForBinary('gulp')
+}
+
 export function mysql () {
   return checkForBinary('mysql')
 }
