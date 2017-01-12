@@ -6,6 +6,7 @@ import buildArguments from './utils/buildArguments'
 
 import * as createCmd from './create'
 import * as installCmd from './install'
+import * as upgradeCmd from './upgrade'
 import * as cloneCmd from './clone'
 import * as deployCmd from './deploy'
 
@@ -19,6 +20,11 @@ yargs
   'Install flynt dependencies (yarn, composer)',
   buildArguments(installCmd, 'argv.env'),
   handleCommand(installCmd, 'argv.env')
+)
+.command('upgrade',
+  'Upgrade flynt dependencies (yarn, composer)',
+  buildArguments(upgradeCmd, 'argv.env'),
+  handleCommand(upgradeCmd, 'argv.env')
 )
 .command('clone',
   'Clone database and medie files between environments',
