@@ -8,7 +8,7 @@ import * as createCmd from './create'
 import * as setupCmd from './setup'
 import * as installCmd from './install'
 import * as upgradeCmd from './upgrade'
-import * as watchCmd from './watch'
+import * as startCmd from './start'
 import * as buildCmd from './build'
 import * as cloneCmd from './clone'
 import * as deployCmd from './deploy'
@@ -34,10 +34,10 @@ yargs
   buildArguments(upgradeCmd, 'argv.env'),
   handleCommand(upgradeCmd, 'argv.env')
 )
-.command('watch',
-  'Run yarn watch for flynt theme',
-  buildArguments(watchCmd, 'argv.env'),
-  handleCommand(watchCmd, 'argv.env')
+.command('start',
+  'Run yarn start for flynt theme',
+  buildArguments(startCmd, 'argv.env'),
+  handleCommand(startCmd, 'argv.env')
 )
 .command('build',
   'Run yarn build for flynt theme',
