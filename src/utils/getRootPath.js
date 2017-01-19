@@ -1,6 +1,27 @@
-import childProcess from 'child_process'
+import path from 'path'
+import fs from 'fs'
 
-export default function getRootPath () {
-  const rootPath = childProcess.execSync('git rev-parse --show-toplevel').toString()
-  return rootPath.substr(0, rootPath.length - 1)
+function isFileInPath (file, dir) {
+  try {
+    fs.statSync(path.join(dir, file))
+    return true
+  } catch (e) {
+    return false
+  }
+}
+
+export default function getRootPath (start = process.cwd()) {
+  if (typeof start === 'string') {
+    if (start[start.length - 1] !== path.sep) {
+      start += path.sep
+    }
+    start = start.split(path.sep)
+  }
+  if (!start.length) return false
+  start.pop()
+  const dir = start.join(path.sep)
+  if (isFileInPath('.flynt.json', dir)) return dir
+  if (isFileInPath('composer.json', dir)) return dir
+  if (isFileInPath('.git', dir)) return dir
+  return getRootPath(start)
 }

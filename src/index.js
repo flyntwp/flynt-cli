@@ -45,7 +45,7 @@ yargs
   handleCommand(buildCmd, 'argv.env')
 )
 .command('clone',
-  'Clone database and medie files between environments',
+  'Clone database and media files between environments',
   function (yargs) {
     buildArguments(cloneCmd, 'argv.from', 'argv.to', {
       from: {
