@@ -14,7 +14,9 @@ export const prompts = [
 export function run (answers) {
   let cmds = [
     'wp option set blog_public 0',
-    `wp theme activate ${answers.projectName}`
+    `wp theme activate ${answers.projectName}`,
+    'echo "apache_modules:\n  - mod_rewrite\n" >> wp-cli.yml',
+    'wp rewrite flush --hard'
     // 'plugin activate acf-role-selector-field',
     // 'plugin activate advanced-custom-fields-pro',
     // 'plugin activate wp-h5bp-htaccess ',

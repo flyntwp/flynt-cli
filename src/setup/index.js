@@ -1,19 +1,11 @@
-import * as installBedrock from './installBedrock'
-import * as requireComposerPackages from './requireComposerPackages'
-import * as setupTheme from './setupTheme'
-import * as initGitRepo from './initGitRepo'
-import * as createDb from './createDb'
-import * as setupWordpress from './setupWordpress'
-import * as activateWordpress from './activateWordpress'
+import * as composerInstall from '../install/composerInstall'
+import * as yarnInstall from '../install/yarnInstall'
+import * as createDb from '../create/createDb'
 
 export const commands = {
-  installBedrock,
-  requireComposerPackages,
-  setupTheme,
-  initGitRepo,
-  createDb,
-  setupWordpress,
-  activateWordpress
+  composerInstall,
+  yarnInstall,
+  createDb
 }
 
 export const cmds = Object.keys(commands)

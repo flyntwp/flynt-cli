@@ -10,14 +10,12 @@ export default function (cmds) {
       spawn = childProcess.spawn(
         'cmd.exe',
         ['/s', '/c', '"' + cmds.join(' && ') + '"'],
-        { windowsVerbatimArguments: true, stdio: [process.stdin, 'pipe', 'pipe'] }
+        { windowsVerbatimArguments: true, stdio: 'inherit' }
       )
     } else {
-      spawn = childProcess.spawn('/bin/sh', ['-c', cmds.join(' && ')])
+      spawn = childProcess.spawn('/bin/sh', ['-c', cmds.join(' && ')], {stdio: 'inherit'})
     }
 
-    spawn.stdout.pipe(process.stdout)
-    spawn.stderr.pipe(process.stderr)
     spawn.on('exit', function () {
       resolve()
     })

@@ -1,32 +1,37 @@
 import _ from 'lodash'
 import Promise from 'bluebird'
 import inquirer from 'inquirer'
+import getRootPath from './getRootPath'
 
 import {getConfig, saveConfig, mapConfigToAnswers} from './config'
 
-export default function handleCommand (commandObject, fromEnv, toEnv, subCommand) {
+export default function handleCommand (commandObject, fromEnv, toEnv, subCommand, skipRootExecution) {
   return function (argv) {
-    // return if subcommand was called but handler was registered to main command
-    // in this case yarg first calls the handler for the subcommand and afterwards
-    // for main.
-    // however, this handler should only be executed once
-    if (!subCommand && argv._.length !== 1) {
-      return Promise.resolve()
-    }
-    fromEnv = resolveEnv(fromEnv, argv)
-    toEnv = resolveEnv(toEnv, argv)
+    switchToRoot(skipRootExecution || argv.force)
+    .then(function () {
+      // return if subcommand was called but handler was registered to main command
+      // in this case yarg first calls the handler for the subcommand and afterwards
+      // for main.
+      // however, this handler should only be executed once
+      if (!subCommand && argv._.length !== 1) {
+        return Promise.resolve()
+      }
+      fromEnv = resolveEnv(fromEnv, argv)
+      toEnv = resolveEnv(toEnv, argv)
 
-    const config = getConfig(argv)
-    const commandsToRun = filterValidCommands(commandObject.commands, subCommand)
-    const answersFromConfig = mapConfigToAnswers(config, fromEnv, toEnv)
+      const config = getConfig(argv)
+      const commandsToRun = filterValidCommands(commandObject.commands, subCommand)
+      const answersFromConfig = mapConfigToAnswers(config, fromEnv, toEnv)
 
-    Promise.resolve(commandsToRun)
-    .tap(checkRequirements)
-    .then(promptMissingConfig(answersFromConfig))
-    .tap(runCommands(commandsToRun), err => console.log(err))
-    // TODO: save config before runCommands but make sure to save in right folder
-    // relevant for setup command if installBedrock is called because of chdir
-    .tap(saveConfig(argv, config, fromEnv, toEnv))
+      Promise.resolve(commandsToRun)
+      .tap()
+      .tap(checkRequirements)
+      .then(promptMissingConfig(answersFromConfig))
+      .tap(runCommands(commandsToRun), err => console.log(err))
+      // TODO: save config before runCommands but make sure to save in right folder
+      // relevant for setup command if installBedrock is called because of chdir
+      .tap(saveConfig(argv, config, fromEnv, toEnv))
+    })
   }
 }
 
@@ -72,4 +77,21 @@ function runCommands (commands) {
     })
     return allRuns
   }
+}
+
+function switchToRoot (force) {
+  if (!force) {
+    const rootPath = getRootPath()
+    if (rootPath !== process.cwd()) {
+      return inquirer.prompt([{
+        type: 'confirm',
+        name: 'switchToRoot',
+        message: `Do you want to switch to ${rootPath} to execute the command?`,
+        default: true
+      }]).then(function (answers) {
+        if (answers.switchToRoot) process.chdir(rootPath)
+      })
+    }
+  }
+  return Promise.resolve()
 }

@@ -1,6 +1,5 @@
 import exec from '../utils/executeCommand'
 import path from 'path'
-import _ from 'lodash'
 
 import * as allPrompts from '../prompts'
 import * as allRequirements from '../requirements'
