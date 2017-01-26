@@ -1,15 +1,6 @@
 import path from 'path'
 import fs from 'fs'
 
-function isFileInPath (file, dir) {
-  try {
-    fs.statSync(path.join(dir, file))
-    return true
-  } catch (e) {
-    return false
-  }
-}
-
 export default function getRootPath (start = process.cwd()) {
   if (typeof start === 'string') {
     if (start[start.length - 1] !== path.sep) {
@@ -20,8 +11,8 @@ export default function getRootPath (start = process.cwd()) {
   if (!start.length) return false
   start.pop()
   const dir = start.join(path.sep)
-  if (isFileInPath('.flynt.json', dir)) return dir
-  if (isFileInPath('composer.json', dir)) return dir
-  if (isFileInPath('.git', dir)) return dir
+  if (fs.existsSync(path.join(dir, '.flynt.json'))) return dir
+  if (fs.existsSync(path.join(dir, 'composer.json'))) return dir
+  if (fs.existsSync(path.join(dir, '.git'))) return dir
   return getRootPath(start)
 }
