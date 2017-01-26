@@ -12,7 +12,5 @@ export default function getRootPath (start = process.cwd()) {
   start.pop()
   const dir = start.join(path.sep)
   if (fs.existsSync(path.join(dir, '.flynt.json'))) return dir
-  if (fs.existsSync(path.join(dir, 'composer.json'))) return dir
-  if (fs.existsSync(path.join(dir, '.git'))) return dir
   return getRootPath(start)
 }
