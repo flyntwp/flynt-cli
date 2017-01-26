@@ -13,7 +13,7 @@ export const prompts = [
 
 export function run (answers) {
   let cmds = [
-    `composer create-project roots/bedrock ${answers.projectName}`
+    `composer create-project roots/bedrock="1.7.4" ${answers.projectName}`
   ]
   return exec(cmds).then(function () {
     process.chdir(answers.projectName)
