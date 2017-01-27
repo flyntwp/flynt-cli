@@ -27,6 +27,7 @@
     "hasbin": "^1.2.3",
     "inquirer": "^1.2.3",
     "lodash": "^4.17.2",
+    "replace-in-file": "^2.2.2",
     "search-replace-db": "interconnectit/Search-Replace-DB",
     "yargs": "^6.5.0"
   },
@@ -35,5 +36,11 @@
     "ignore": [
       "/lib/"
     ]
+  },
+  "phpDependencies": {
+    "roots/bedrock": "1.7.4",
+    "timber/timber": "~1.1",
+    "flyntwp/flynt-core": "dev-master",
+    "flyntwp/acf-field-group-composer": "dev-master"
   }
 }
