@@ -205,3 +205,13 @@ export const gitRepo = {
   name: 'gitRepo',
   message: 'Git Repository URL (eg. git@github.com:org/repo.git or https://github.com/org/repo.git)'
 }
+
+export const acfProKey = {
+  name: 'acfProKey',
+  message: 'ACF Pro License Key'
+}
+
+export const migrateDbProKey = {
+  name: 'migrateDbProKey',
+  message: 'WP Migrate DB Pro License Key'
+}
