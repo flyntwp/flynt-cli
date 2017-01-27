@@ -1,4 +1,4 @@
-import replace from 'replace-in-file'
+import replaceInFiles from '../utils/replaceInFiles'
 
 export const requirements = [
 ]
@@ -7,9 +7,13 @@ export const prompts = [
 ]
 
 export function run (answers) {
-  return replace({
-    files: '.gitignore',
-    replace: /\.env\n/g,
-    with: ''
-  })
+  return replaceInFiles(getReplacements())
+}
+
+function getReplacements () {
+  return {
+    '.gitignore': {
+      '.env\n': ''
+    }
+  }
 }
