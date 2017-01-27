@@ -18,7 +18,19 @@ export const prompts = [
 
 export function run (answers) {
   const composerJson = require(path.join(process.cwd(), 'composer.json'))
-  composerJson.repositories = Object.assign(composerJson.repositories, repos)
+  composerJson.repositories.push(
+    repos.flyntCore,
+    repos.acfFieldGroupComposer
+  )
+  if (answers.acfProKey) {
+    composerJson.repositories.push(repos.acfPro)
+  }
+  if (answers.migrateDbProKey) {
+    composerJson.repositories.push(
+      repos.migrateDbPro,
+      repos.migrateDbProMediaFiles
+    )
+  }
   composerJson.extra['installer-paths']['web/app/mu-plugins/{$name}/'].push(
     'flyntwp/flynt-core',
     'flyntwp/acf-field-group-composer'

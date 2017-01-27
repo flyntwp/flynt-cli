@@ -21,3 +21,5 @@ export function run (answers) {
     process.chdir(answers.projectName)
   })
 }
+
+export const notInRootFolder = true

@@ -17,7 +17,7 @@ yargs
 .command('create',
   'Create a new flynt project',
   buildArguments(createCmd, 'argv.env'),
-  handleCommand(createCmd, 'argv.env', null, null, true)
+  handleCommand(createCmd, 'argv.env')
 )
 .command('setup',
   'Setup an existing flynt project',
