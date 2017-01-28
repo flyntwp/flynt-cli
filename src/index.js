@@ -17,7 +17,7 @@ yargs
 .command('create',
   'Create a new flynt project',
   buildArguments(createCmd, 'argv.env'),
-  handleCommand(createCmd, 'argv.env', null, null, true)
+  handleCommand(createCmd, 'argv.env')
 )
 .command('setup',
   'Setup an existing flynt project',
@@ -75,16 +75,14 @@ yargs
   },
   handleCommand(deployCmd, 'local', 'argv.to')
 )
-.option('c', {
-  alias: 'config',
+.option('skipReadConfig', {
   global: true,
-  describe: 'Read config from file?',
+  describe: 'Do not read config from file',
   type: 'boolean'
 })
-.option('s', {
-  alias: 'saveConfig',
+.option('skipWriteConfig', {
   global: true,
-  describe: 'Write config to file?',
+  describe: 'Do not write config to file',
   type: 'boolean'
 })
 .option('configPath', {

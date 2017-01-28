@@ -6,7 +6,7 @@ import * as configFields from '../configFields'
 
 export function getConfig (argv) {
   let config = {}
-  if (argv.c) {
+  if (!argv.skipReadConfig) {
     try {
       config = require(path.join(process.cwd(), argv.configPath))
     } catch (e) {}
@@ -16,7 +16,7 @@ export function getConfig (argv) {
 
 export function saveConfig (argv, config, env, envRemote = null) {
   return function (answers) {
-    if (argv.s) {
+    if (!argv.skipWriteConfig) {
       config = _.merge({}, config, mapAnswersToConfig(answers, env, envRemote))
       const json = JSON.stringify(config, null, 2)
       fs.writeFileSync(argv.configPath, json, 'utf-8')

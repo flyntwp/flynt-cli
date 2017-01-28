@@ -5,32 +5,34 @@ import getRootPath from './getRootPath'
 
 import {getConfig, saveConfig, mapConfigToAnswers} from './config'
 
-export default function handleCommand (commandObject, fromEnv, toEnv, subCommand, skipRootExecution) {
+export default function handleCommand (commandObject, fromEnv, toEnv, subCommand) {
   return function (argv) {
-    switchToRoot(skipRootExecution || argv.force)
-    .then(function () {
-      // return if subcommand was called but handler was registered to main command
-      // in this case yarg first calls the handler for the subcommand and afterwards
-      // for main.
-      // however, this handler should only be executed once
-      if (!subCommand && argv._.length !== 1) {
-        return Promise.resolve()
-      }
-      fromEnv = resolveEnv(fromEnv, argv)
-      toEnv = resolveEnv(toEnv, argv)
+    // return if subcommand was called but handler was registered to main command
+    // in this case yarg first calls the handler for the subcommand and afterwards
+    // for main.
+    // however, this handler should only be executed once
+    if (!subCommand && argv._.length !== 1) {
+      return Promise.resolve()
+    }
+    fromEnv = resolveEnv(fromEnv, argv)
+    toEnv = resolveEnv(toEnv, argv)
 
+    const validCommands = filterValidCommands(commandObject.commands, subCommand)
+    const validCommandsValues = _.values(validCommands)
+    const commandsToRun = _.map(validCommandsValues, 'run')
+
+    switchToRoot(validCommandsValues[0].notInRootFolder || argv.force)
+    .then(function () {
       const config = getConfig(argv)
-      const commandsToRun = filterValidCommands(commandObject.commands, subCommand)
       const answersFromConfig = mapConfigToAnswers(config, fromEnv, toEnv)
 
-      Promise.resolve(commandsToRun)
-      .tap()
+      const whenToSaveConfigIndex = getWhenToSaveConfigIndex(validCommandsValues)
+      commandsToRun.splice(whenToSaveConfigIndex, 0, saveConfig(argv, config, fromEnv, toEnv))
+
+      Promise.resolve(validCommandsValues)
       .tap(checkRequirements)
       .then(promptMissingConfig(answersFromConfig))
       .tap(runCommands(commandsToRun), err => console.log(err))
-      // TODO: save config before runCommands but make sure to save in right folder
-      // relevant for setup command if installBedrock is called because of chdir
-      .tap(saveConfig(argv, config, fromEnv, toEnv))
     })
   }
 }
@@ -69,11 +71,10 @@ function promptMissingConfig (answersFromConfig) {
 }
 
 function runCommands (commands) {
-  const runs = _.map(_.values(commands), 'run')
   return function (answers) {
     let allRuns = Promise.resolve()
-    runs.forEach(function (fn) {
-      allRuns = allRuns.then(() => fn(answers))
+    commands.forEach(function (command) {
+      allRuns = allRuns.then(() => command(answers))
     })
     return allRuns
   }
@@ -94,4 +95,14 @@ function switchToRoot (force) {
     }
   }
   return Promise.resolve()
+}
+
+function getWhenToSaveConfigIndex (commands) {
+  for (const index in commands) {
+    const command = commands[index]
+    if (!command.notInRootFolder) {
+      return index
+    }
+  }
+  return commands.length
 }
