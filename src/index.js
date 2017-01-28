@@ -77,12 +77,12 @@ yargs
 )
 .option('skipReadConfig', {
   global: true,
-  describe: 'Do not read config from file?',
+  describe: 'Do not read config from file',
   type: 'boolean'
 })
 .option('skipWriteConfig', {
   global: true,
-  describe: 'Do not write config to file?',
+  describe: 'Do not write config to file',
   type: 'boolean'
 })
 .option('configPath', {
