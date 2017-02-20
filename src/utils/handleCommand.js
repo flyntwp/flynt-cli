@@ -32,7 +32,7 @@ export default function handleCommand (commandObject, fromEnv, toEnv, subCommand
       Promise.resolve(validCommandsValues)
       .tap(checkRequirements)
       .then(promptMissingConfig(answersFromConfig, fromEnv, toEnv))
-      .tap(runCommands(commandsToRun), err => console.log(err))
+      .tap(runCommands(commandsToRun, argv), err => console.log(err))
     })
   }
 }
@@ -76,11 +76,11 @@ function promptMissingConfig (answersFromConfig, fromEnv, toEnv) {
   }
 }
 
-function runCommands (commands) {
+function runCommands (commands, argv) {
   return function (answers) {
     let allRuns = Promise.resolve()
     commands.forEach(function (command) {
-      allRuns = allRuns.then(() => command(answers))
+      allRuns = allRuns.then(() => command(answers, argv))
     })
     return allRuns
   }

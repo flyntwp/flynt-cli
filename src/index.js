@@ -70,6 +70,11 @@ yargs
         describe: 'Environment to clone to',
         type: 'string',
         default: 'development'
+      },
+      n: {
+        alias: 'dry-run',
+        describe: 'Perform trial run',
+        type: 'boolean'
       }
     })(yargs)
   },

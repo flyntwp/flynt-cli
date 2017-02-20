@@ -109,7 +109,7 @@ export const deployExcludes = {
 export const rsyncFlags = {
   name: 'rsyncFlags',
   message: 'Source Rsync Flags',
-  default: '-chavzP --stats'
+  default: '-chavzP --stats --delete'
 }
 
 export const wpSiteurl = {
