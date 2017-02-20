@@ -24,7 +24,7 @@ export const prompts = [
 ]
 
 export function run (answers) {
-  let cmds = [
+  const cmds = [
     'wp dotenv init --with-salts',
     `wp dotenv set DB_NAME ${answers.dbName}`,
     `wp dotenv set DB_USER ${answers.dbUser}`,
@@ -32,10 +32,16 @@ export function run (answers) {
     `wp dotenv set DB_HOST ${answers.dbHost}`,
     `wp dotenv set WP_ENV ${answers.wpEnv}`,
     `wp dotenv set WP_HOME ${answers.wpHome}`,
-    `wp dotenv set WP_SITEURL ${answers.wpSiteurl}`,
-    `wp dotenv set ACF_PRO_KEY ${answers.acfProKey}`,
-    `wp dotenv set WPM_PRO_KEY ${answers.migrateDbProKey}`,
-    `wp core install --url=${answers.wpHome} --title='${answers.wpTitle}' --admin_user=${answers.wpAdminName} --admin_email=${answers.wpAdminEmail}`
+    `wp dotenv set WP_SITEURL ${answers.wpSiteurl}`
   ]
+  if (answers.acfProKey) {
+    cmds.push(`wp dotenv set ACF_PRO_KEY ${answers.acfProKey}`)
+  }
+  if (answers.migrateDbProKey) {
+    cmds.push(`wp dotenv set WPM_PRO_KEY ${answers.migrateDbProKey}`)
+  }
+  cmds.push(
+    `wp core install --url=${answers.wpHome} --title='${answers.wpTitle}' --admin_user=${answers.wpAdminName} --admin_email=${answers.wpAdminEmail}`
+  )
   return exec(cmds)
 }
