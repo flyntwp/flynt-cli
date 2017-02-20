@@ -1,11 +1,28 @@
 export const projectName = {
   name: 'projectName',
-  message: 'What is the project name? (name of folder in current directory)',
+  message: 'What is the project name? (name of newly created directory in current folder)',
   validate: function (input) {
     if (/^[a-zA-Z0-9-]+$/.exec(input)) {
       return true
     } else {
       return 'The Project Name may only contain alphanumerical values and dashes.'
+    }
+  }
+}
+
+export const themeName = {
+  name: 'themeName',
+  message: 'What is name of the theme folder?',
+  validate: function (input) {
+    if (/^[a-zA-Z0-9-]+$/.exec(input)) {
+      return true
+    } else {
+      return 'The Project Name may only contain alphanumerical values and dashes.'
+    }
+  },
+  default: function (answers) {
+    if (answers.projectName) {
+      return answers.projectName
     }
   }
 }
