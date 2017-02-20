@@ -1,6 +1,6 @@
 export const projectName = {
   name: 'projectName',
-  message: 'What is the project name? (name of newly created directory in current folder)',
+  message: 'project (folder) name (will be created)',
   validate: function (input) {
     if (/^[a-zA-Z0-9-]+$/.exec(input)) {
       return true
@@ -12,7 +12,7 @@ export const projectName = {
 
 export const themeName = {
   name: 'themeName',
-  message: 'What is name of the theme folder?',
+  message: 'theme (folder) name',
   validate: function (input) {
     if (/^[a-zA-Z0-9-]+$/.exec(input)) {
       return true
@@ -66,13 +66,13 @@ export const wpHomeRemote = multiEnvPrompt('wpHome', wpHomeConfigFn, true)
 
 export const wpEnv = {
   name: 'wpEnv',
-  message: 'Wordpress Environment (development, staging, production)',
+  message: 'WordPress environment (development, staging, production)',
   default: 'development'
 }
 
 export const deployExcludes = {
   name: 'deployExcludes',
-  message: 'Source Deploy Excludes (json array of rsync file patterns to exclude)',
+  message: 'deploy excludes (json array of rsync file patterns to exclude)',
   default: JSON.stringify([
     '.DS_Store',
     '.git',
@@ -108,13 +108,13 @@ export const deployExcludes = {
 
 export const rsyncFlags = {
   name: 'rsyncFlags',
-  message: 'Source Rsync Flags',
+  message: 'rsync flags',
   default: '-chavzP --stats --delete'
 }
 
 export const wpSiteurl = {
   name: 'wpSiteurl',
-  message: 'Wordpress Siteurl',
+  message: 'WordPress site url',
   default: function (answers) {
     if (answers.projectName) {
       return `http://${answers.projectName}.dev/wp`
@@ -124,32 +124,32 @@ export const wpSiteurl = {
 
 export const wpTitle = {
   name: 'wpTitle',
-  message: 'Wordpress Site Title'
+  message: 'WordPress site title'
 }
 
 export const wpAdminName = {
   name: 'wpAdminName',
-  message: 'Wordpress Admin User Name'
+  message: 'WordPress admin user name'
 }
 
 export const wpAdminEmail = {
   name: 'wpAdminEmail',
-  message: 'Wordpress Admin Email Address'
+  message: 'WordPress admin email address'
 }
 
 export const gitRepo = {
   name: 'gitRepo',
-  message: 'Git Repository URL (eg. git@github.com:org/repo.git or https://github.com/org/repo.git)'
+  message: 'git repository url (eg. git@github.com:org/repo.git or https://github.com/org/repo.git)'
 }
 
 export const acfProKey = {
   name: 'acfProKey',
-  message: 'ACF Pro License Key'
+  message: 'ACF Pro license key'
 }
 
 export const migrateDbProKey = {
   name: 'migrateDbProKey',
-  message: 'WP Migrate DB Pro License Key'
+  message: 'WP Migrate DB Pro license key'
 }
 
 function basePathConfigFn (env, isRemote) {
