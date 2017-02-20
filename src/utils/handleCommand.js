@@ -64,13 +64,13 @@ function promptMissingConfig (answersFromConfig, fromEnv, toEnv) {
   return function (commands) {
     let prompts = _.map(_.values(commands), 'prompts')
     prompts = _.union(...prompts)
-    .filter(prompt => !_.has(answersFromConfig, prompt.name))
     .map(function (prompt) {
       if (_.isFunction(prompt)) {
         return prompt(fromEnv, toEnv)
       }
       return prompt
     })
+    .filter(prompt => !_.has(answersFromConfig, prompt.name))
     return inquirer.prompt(prompts)
     .then(answers => _.merge({}, answersFromConfig, answers))
   }
