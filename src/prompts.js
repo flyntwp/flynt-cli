@@ -5,7 +5,7 @@ export const projectName = {
     if (/^[a-zA-Z0-9-]+$/.exec(input)) {
       return true
     } else {
-      return 'The Project Name may only contain alphanumerical values and dashes.'
+      return 'The project name may only contain alphanumerical values and dashes.'
     }
   }
 }
@@ -17,7 +17,7 @@ export const themeName = {
     if (/^[a-zA-Z0-9-]+$/.exec(input)) {
       return true
     } else {
-      return 'The Project Name may only contain alphanumerical values and dashes.'
+      return 'The theme name may only contain alphanumerical values and dashes.'
     }
   },
   default: function (answers) {
