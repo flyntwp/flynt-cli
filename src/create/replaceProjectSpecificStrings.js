@@ -5,7 +5,7 @@ export const requirements = [
 ]
 
 export const prompts = [
-  allPrompts.projectName,
+  allPrompts.themeName,
   allPrompts.wpHome
 ]
 
@@ -16,9 +16,9 @@ export function run (answers) {
 
 function getReplacements (answers) {
   return {
-    [`web/app/themes/${answers.projectName}/gulpfile.js/config.js`]: {
+    [`web/app/themes/${answers.themeName}/gulpfile.js/config.js`]: {
       "const host = 'flynt.dev'": `const host = '${answers.wpHome}'`,
-      "sourceRoot: '/app/themes/flynt-theme/'": `sourceRoot: 'app/themes/${answers.projectName}'`
+      "sourceRoot: '/app/themes/flynt-theme/'": `sourceRoot: 'app/themes/${answers.themeName}'`
     }
   }
 }

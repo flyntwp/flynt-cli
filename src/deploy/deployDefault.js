@@ -23,8 +23,9 @@ export const prompts = [
   allPrompts.rsyncFlags
 ]
 
-export function run (answers) {
-  console.log(answers)
+export function run (answers, argv) {
+  let rsyncFlags = answers.rsyncFlags || ''
+  if (argv.dryRun) rsyncFlags += ' --dry-run'
   let sourceRemote, sourceSshId, destinationRemote, destinationSshId
   if (answers.sshHost) {
     sourceRemote = true
@@ -54,8 +55,8 @@ export function run (answers) {
     cmds.push(`mkdir -p ${tmpDir}`)
     const sshCmdSource = answers.sshPort ? `-e "ssh -p ${answers.sshPort}"` : ''
     const sshCmdDestination = answers.sshPortRemote ? `-e "ssh -p ${answers.sshPortRemote}"` : ''
-    cmds.push(`rsync ${answers.rsyncFlags} ${excludes} ${sshCmdSource} ${source} ${tmpDir}`)
-    cmds.push(`rsync ${answers.rsyncFlags} ${excludes} ${sshCmdDestination} ${tmpDir} ${destination}`)
+    cmds.push(`rsync ${rsyncFlags} ${excludes} ${sshCmdSource} ${source} ${tmpDir}`)
+    cmds.push(`rsync ${rsyncFlags} ${excludes} ${sshCmdDestination} ${tmpDir} ${destination}`)
     cmds.push(`rm -rf ${tmpDir}`)
   } else {
     const sshCmd = sourceRemote
@@ -65,8 +66,7 @@ export function run (answers) {
       : answers.sshPortRemote
         ? `-e "ssh -p ${answers.sshPortRemote}"`
         : ''
-    cmds.push(`rsync ${answers.rsyncFlags} ${excludes} ${sshCmd} ${source} ${destination}`)
+    cmds.push(`rsync ${rsyncFlags} ${excludes} ${sshCmd} ${source} ${destination}`)
   }
-  console.log(cmds)
   return exec(cmds)
 }

@@ -1,5 +1,6 @@
 export const mapping = {
   projectName: 'projectName',
+  themeName: 'themeName',
   basePath: 'basePath',
   uploadsPath: 'uploadsPath',
   deployPath: 'deployPath',
@@ -27,6 +28,7 @@ export const mapping = {
 
 export const globals = [
   'projectName',
+  'themeName',
   'repository',
   'acfProKey',
   'migrateDbProKey'

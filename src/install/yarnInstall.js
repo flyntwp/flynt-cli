@@ -8,11 +8,11 @@ export const requirements = [
 ]
 
 export const prompts = [
-  allPrompts.projectName
+  allPrompts.themeName
 ]
 
 export function run (answers) {
-  const themePath = `web/app/themes/${answers.projectName}`
+  const themePath = `web/app/themes/${answers.themeName}`
   let cmds = [
     `cd ${themePath}`,
     'yarn'

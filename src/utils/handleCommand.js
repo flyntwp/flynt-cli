@@ -31,8 +31,8 @@ export default function handleCommand (commandObject, fromEnv, toEnv, subCommand
 
       Promise.resolve(validCommandsValues)
       .tap(checkRequirements)
-      .then(promptMissingConfig(answersFromConfig))
-      .tap(runCommands(commandsToRun), err => console.log(err))
+      .then(promptMissingConfig(answersFromConfig, fromEnv, toEnv))
+      .tap(runCommands(commandsToRun, argv), err => console.log(err))
     })
   }
 }
@@ -60,21 +60,27 @@ function checkRequirements (commands) {
   return Promise.all(requirements.map(fn => fn()))
 }
 
-function promptMissingConfig (answersFromConfig) {
+function promptMissingConfig (answersFromConfig, fromEnv, toEnv) {
   return function (commands) {
     let prompts = _.map(_.values(commands), 'prompts')
     prompts = _.union(...prompts)
+    .map(function (prompt) {
+      if (_.isFunction(prompt)) {
+        return prompt(fromEnv, toEnv)
+      }
+      return prompt
+    })
     .filter(prompt => !_.has(answersFromConfig, prompt.name))
     return inquirer.prompt(prompts)
     .then(answers => _.merge({}, answersFromConfig, answers))
   }
 }
 
-function runCommands (commands) {
+function runCommands (commands, argv) {
   return function (answers) {
     let allRuns = Promise.resolve()
     commands.forEach(function (command) {
-      allRuns = allRuns.then(() => command(answers))
+      allRuns = allRuns.then(() => command(answers, argv))
     })
     return allRuns
   }

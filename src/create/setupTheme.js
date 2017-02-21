@@ -9,11 +9,11 @@ export const requirements = [
 ]
 
 export const prompts = [
-  allPrompts.projectName
+  allPrompts.themeName
 ]
 
 export function run (answers) {
-  const themePath = `web/app/themes/${answers.projectName}`
+  const themePath = `web/app/themes/${answers.themeName}`
   let cmds = [
     `git clone --depth=1 "git@github.com:bleech/wp-starter-theme.git" ${themePath}`,
     `cd ${themePath}`,
