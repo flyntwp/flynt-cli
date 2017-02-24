@@ -22,14 +22,12 @@ export const mapping = {
   wpAdminName: 'wp.admin.name',
   wpAdminEmail: 'wp.admin.email',
   gitRepo: 'repository',
-  acfProKey: 'acfProKey',
-  migrateDbProKey: 'migrateDbProKey'
+  acfProKey: 'acfProKey'
 }
 
 export const globals = [
   'projectName',
   'themeName',
   'repository',
-  'acfProKey',
-  'migrateDbProKey'
+  'acfProKey'
 ]

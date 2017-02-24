@@ -147,11 +147,6 @@ export const acfProKey = {
   message: 'ACF Pro license key'
 }
 
-export const migrateDbProKey = {
-  name: 'migrateDbProKey',
-  message: 'WP Migrate DB Pro license key'
-}
-
 function basePathConfigFn (env, isRemote) {
   return {
     name: `basePath${isRemote ? 'Remote' : ''}`,
