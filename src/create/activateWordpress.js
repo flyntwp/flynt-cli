@@ -16,13 +16,8 @@ export function run (answers) {
     'wp option set blog_public 0',
     `wp theme activate ${answers.themeName}`,
     'echo "apache_modules:\n  - mod_rewrite\n" >> wp-cli.yml',
-    'wp rewrite flush --hard'
-    // 'plugin activate acf-role-selector-field',
-    // 'plugin activate advanced-custom-fields-pro',
-    // 'plugin activate wp-h5bp-htaccess ',
-    // 'plugin activate wp-migrate-db-pro',
-    // 'plugin activate wp-migrate-db-pro-cli',
-    // 'plugin activate wp-migrate-db-pro-media-files',
+    'wp rewrite flush --hard',
+    'wp plugin activate --all'
   ]
   return exec(cmds)
 }
