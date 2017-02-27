@@ -15,11 +15,11 @@ export const commands = {
   requireComposerPackages,
   setupTheme,
   replaceProjectSpecificStrings,
-  initGitRepo,
   createDb,
   setupWordpress,
   yarnBuild,
-  activateWordpress
+  activateWordpress,
+  initGitRepo
 }
 
 export const cmds = Object.keys(commands)
