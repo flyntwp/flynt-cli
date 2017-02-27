@@ -1,6 +1,8 @@
 import path from 'path'
 import fs from 'fs'
 import exec from '../utils/executeCommand'
+import unionWith from 'lodash/unionWith'
+import isEqual from 'lodash/isEqual'
 
 import * as allRequirements from '../requirements'
 import * as allPrompts from '../prompts'
@@ -19,12 +21,14 @@ export const prompts = [
 
 export function run (answers) {
   const composerJson = require(path.join(process.cwd(), 'composer.json'))
-  composerJson.repositories.push(
+  composerJson.repositories = unionWith(composerJson.repositories, [
     repos.flyntCore,
     repos.acfFieldGroupComposer
-  )
+  ], isEqual)
   if (answers.acfProKey) {
-    composerJson.repositories.push(repos.acfPro)
+    composerJson.repositories = unionWith(composerJson.repositories, [
+      repos.acfPro
+    ], isEqual)
   }
   if (answers.composerRepos) {
     const composerRepos = answers.composerRepos.map(function (repo) {
@@ -33,14 +37,16 @@ export function run (answers) {
         url: repo
       }
     })
-    composerJson.repositories.push.apply(
+    composerJson.repositories = unionWith(
       composerJson.repositories,
-      composerRepos
+      composerRepos,
+      isEqual
     )
   }
-  composerJson.extra['installer-paths']['web/app/mu-plugins/{$name}/'].push(
-    'flyntwp/flynt-core',
-    'flyntwp/acf-field-group-composer'
+  composerJson.extra['installer-paths']['web/app/mu-plugins/{$name}/'] = unionWith(
+    composerJson.extra['installer-paths']['web/app/mu-plugins/{$name}/'],
+    ['flyntwp/flynt-core', 'flyntwp/acf-field-group-composer'],
+    isEqual
   )
   fs.writeFileSync(path.join(process.cwd(), 'composer.json'), JSON.stringify(composerJson, null, 2))
   const cmds = []
