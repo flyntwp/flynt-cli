@@ -12,6 +12,8 @@ export const requirements = [
 ]
 
 export const prompts = [
+  allPrompts.composerRepos,
+  allPrompts.composerPackages,
   allPrompts.acfProKey
 ]
 
@@ -24,17 +26,35 @@ export function run (answers) {
   if (answers.acfProKey) {
     composerJson.repositories.push(repos.acfPro)
   }
+  if (answers.composerRepos) {
+    const composerRepos = answers.composerRepos.map(function (repo) {
+      return {
+        type: 'composer',
+        url: repo
+      }
+    })
+    composerJson.repositories.push.apply(
+      composerJson.repositories,
+      composerRepos
+    )
+  }
   composerJson.extra['installer-paths']['web/app/mu-plugins/{$name}/'].push(
     'flyntwp/flynt-core',
     'flyntwp/acf-field-group-composer'
   )
   fs.writeFileSync(path.join(process.cwd(), 'composer.json'), JSON.stringify(composerJson, null, 2))
+  const cmds = []
   const composerRequire = [
     `"timber/timber:${phpDependencies['timber/timber']}"`,
     `"flyntwp/flynt-core:${phpDependencies['flyntwp/flynt-core']}"`,
     `"flyntwp/acf-field-group-composer:${phpDependencies['flyntwp/acf-field-group-composer']}"`
   ]
-  const cmds = []
+  if (answers.composerPackages) {
+    composerRequire.push.apply(
+      composerRequire,
+      answers.composerPackages
+    )
+  }
   if (answers.acfProKey) {
     composerRequire.push('"advanced-custom-fields/advanced-custom-fields-pro:*"')
     cmds.push(`export ACF_PRO_KEY="${answers.acfProKey}"`)
