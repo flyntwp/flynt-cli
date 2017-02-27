@@ -6,6 +6,7 @@ import * as replaceProjectSpecificStrings from './replaceProjectSpecificStrings'
 import * as initGitRepo from './initGitRepo'
 import * as createDb from './createDb'
 import * as setupWordpress from './setupWordpress'
+import * as yarnBuild from '../build/yarnBuild'
 import * as activateWordpress from './activateWordpress'
 
 export const commands = {
@@ -17,6 +18,7 @@ export const commands = {
   initGitRepo,
   createDb,
   setupWordpress,
+  yarnBuild,
   activateWordpress
 }
 
