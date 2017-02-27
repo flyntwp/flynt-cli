@@ -23,7 +23,8 @@ export const mapping = {
   wpAdminEmail: 'wp.admin.email',
   gitRepo: 'repository',
   acfProKey: 'acfProKey',
-  migrateDbProKey: 'migrateDbProKey'
+  migrateDbProKey: 'migrateDbProKey',
+  searchReplaceStrings: 'searchReplaceStrings'
 }
 
 export const globals = [

@@ -1,5 +1,7 @@
 import exec from '../utils/executeCommand'
 import path from 'path'
+import unionWith from 'lodash/unionWith'
+import isEqual from 'lodash/isEqual'
 
 import * as allPrompts from '../prompts'
 import * as allRequirements from '../requirements'
@@ -15,26 +17,34 @@ export const requirements = [
 
 export const prompts = [
   allPrompts.basePath,
+  allPrompts.basePathRemote,
   allPrompts.wpHome,
+  allPrompts.wpHomeRemote,
+  allPrompts.searchReplaceStrings,
+  allPrompts.searchReplaceStringsRemote,
+  allPrompts.sshHost,
+  allPrompts.sshUser,
+  allPrompts.sshPort,
   allPrompts.dbHost,
   allPrompts.dbUser,
   allPrompts.dbName,
   allPrompts.dbPassword,
-  allPrompts.sshHost,
-  allPrompts.sshUser,
-  allPrompts.sshPort,
-  allPrompts.basePathRemote,
-  allPrompts.wpHomeRemote,
+  allPrompts.sshHostRemote,
+  allPrompts.sshUserRemote,
+  allPrompts.sshPortRemote,
   allPrompts.dbHostRemote,
   allPrompts.dbUserRemote,
   allPrompts.dbNameRemote,
-  allPrompts.dbPasswordRemote,
-  allPrompts.sshHostRemote,
-  allPrompts.sshUserRemote,
-  allPrompts.sshPortRemote
+  allPrompts.dbPasswordRemote
 ]
 
 export function run (answers) {
+  if (answers.searchReplaceStrings.length !== answers.searchReplaceStringsRemote.length) {
+    const cmds = [
+      'echo "\x1B[0;31mError in cloneDb. Number of search and replace strings do not match."'
+    ]
+    return exec(cmds)
+  }
   const tmpDir = './tmp/flynt-cli'
   const backupDir = './backup'
   const backupTransferFile = 'tmp_backup.sql'
@@ -86,14 +96,15 @@ export function run (answers) {
     cmds.push(destinationImportCmd)
   }
 
-  const searchStrings = [
+  const searchStrings = unionWith([
     answers.wpHome,
     path.resolve(answers.basePath)
-  ]
-  const replaceStrings = [
+  ], answers.searchReplaceStrings, isEqual)
+  const replaceStrings = unionWith([
     answers.wpHomeRemote,
     path.resolve(answers.basePathRemote)
-  ]
+  ], answers.searchReplaceStringsRemote, isEqual)
+
   const srdbPath = require.resolve('search-replace-db')
   if (destinationRemote) {
     cmds.push(`scp -r ${answers.sshPortRemote ? `-P ${answers.sshPortRemote}` : ''} ${path.join(srdbPath, '..')} ${destinationSshId}:${answers.basePathRemote}/${tmpDir}`)
