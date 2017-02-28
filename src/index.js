@@ -65,7 +65,7 @@ yargs
 .command('deploy',
   'Deploy source code from local to any environment',
   function (yargs) {
-    buildArguments(cloneCmd, 'local', 'argv.to', {
+    buildArguments(deployCmd, 'local', 'argv.to', {
       to: {
         describe: 'Environment to clone to',
         type: 'string',
