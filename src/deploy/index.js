@@ -1,7 +1,7 @@
-import * as deployDefault from './deployDefault'
+import * as deployDefault from './default'
 
 export const commands = {
-  deployDefault
+  default: deployDefault
 }
 
 export const cmds = Object.keys(commands)

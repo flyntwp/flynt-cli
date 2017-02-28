@@ -1,11 +1,11 @@
-import * as composerInstall from './composerInstall'
-import * as yarnInstall from './yarnInstall'
-import * as bowerInstall from './bowerInstall'
+import * as composer from './composer'
+import * as yarn from './yarn'
+import * as bower from './bower'
 
 export const commands = {
-  composerInstall,
-  yarnInstall,
-  bowerInstall
+  composer,
+  yarn,
+  bower
 }
 
 export const cmds = Object.keys(commands)

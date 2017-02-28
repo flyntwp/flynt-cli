@@ -1,7 +1,7 @@
-import * as yarnBuild from './yarnBuild'
+import * as yarn from './yarn'
 
 export const commands = {
-  yarnBuild
+  yarn
 }
 
 export const cmds = Object.keys(commands)

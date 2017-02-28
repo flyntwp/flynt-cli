@@ -1,10 +1,10 @@
-import * as composerInstall from '../install/composerInstall'
-import * as yarnInstall from '../install/yarnInstall'
-import * as createDb from '../create/createDb'
+import * as installComposer from '../install/composer'
+import * as installYarn from '../install/yarn'
+import * as createDb from '../create/db'
 
 export const commands = {
-  composerInstall,
-  yarnInstall,
+  installComposer,
+  installYarn,
   createDb
 }
 

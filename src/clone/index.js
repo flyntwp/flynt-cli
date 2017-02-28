@@ -1,9 +1,9 @@
-import * as cloneDb from './cloneDb'
-import * as cloneUploads from './cloneUploads'
+import * as db from './db'
+import * as uploads from './uploads'
 
 export const commands = {
-  cloneDb,
-  cloneUploads
+  db,
+  uploads
 }
 
 export const cmds = Object.keys(commands)

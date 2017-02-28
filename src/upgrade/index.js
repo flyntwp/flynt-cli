@@ -1,11 +1,11 @@
-import * as composerUpdate from './composerUpdate'
-import * as yarnUpgrade from './yarnUpgrade'
-import * as bowerUpdate from './bowerUpdate'
+import * as composer from './composer'
+import * as yarn from './yarn'
+import * as bower from './bower'
 
 export const commands = {
-  composerUpdate,
-  yarnUpgrade,
-  bowerUpdate
+  composer,
+  yarn,
+  bower
 }
 
 export const cmds = Object.keys(commands)

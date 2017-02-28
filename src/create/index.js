@@ -4,9 +4,9 @@ import * as requireComposerPackages from './requireComposerPackages'
 import * as setupTheme from './setupTheme'
 import * as replaceProjectSpecificStrings from './replaceProjectSpecificStrings'
 import * as initGitRepo from './initGitRepo'
-import * as createDb from './createDb'
+import * as db from './db'
 import * as setupWordpress from './setupWordpress'
-import * as yarnBuild from '../build/yarnBuild'
+import * as buildYarn from '../build/yarn'
 import * as activateWordpress from './activateWordpress'
 
 export const commands = {
@@ -15,9 +15,9 @@ export const commands = {
   requireComposerPackages,
   setupTheme,
   replaceProjectSpecificStrings,
-  createDb,
+  db,
   setupWordpress,
-  yarnBuild,
+  buildYarn,
   activateWordpress,
   initGitRepo
 }
