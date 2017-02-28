@@ -1,6 +1,8 @@
 import path from 'path'
 import fs from 'fs'
 import exec from '../utils/executeCommand'
+import unionWith from 'lodash/unionWith'
+import isEqual from 'lodash/isEqual'
 
 import * as allRequirements from '../requirements'
 import * as allPrompts from '../prompts'
@@ -12,46 +14,56 @@ export const requirements = [
 ]
 
 export const prompts = [
-  allPrompts.acfProKey,
-  allPrompts.migrateDbProKey
+  allPrompts.composerRepos,
+  allPrompts.composerPackages,
+  allPrompts.acfProKey
 ]
 
 export function run (answers) {
   const composerJson = require(path.join(process.cwd(), 'composer.json'))
-  composerJson.repositories.push(
+  composerJson.repositories = unionWith(composerJson.repositories, [
     repos.flyntCore,
     repos.acfFieldGroupComposer
-  )
+  ], isEqual)
   if (answers.acfProKey) {
-    composerJson.repositories.push(repos.acfPro)
+    composerJson.repositories = unionWith(composerJson.repositories, [
+      repos.acfPro
+    ], isEqual)
   }
-  if (answers.migrateDbProKey) {
-    composerJson.repositories.push(
-      repos.migrateDbPro,
-      repos.migrateDbProMediaFiles
+  if (answers.composerRepos) {
+    const composerRepos = answers.composerRepos.map(function (repo) {
+      return {
+        type: 'composer',
+        url: repo
+      }
+    })
+    composerJson.repositories = unionWith(
+      composerJson.repositories,
+      composerRepos,
+      isEqual
     )
   }
-  composerJson.extra['installer-paths']['web/app/mu-plugins/{$name}/'].push(
-    'flyntwp/flynt-core',
-    'flyntwp/acf-field-group-composer'
+  composerJson.extra['installer-paths']['web/app/mu-plugins/{$name}/'] = unionWith(
+    composerJson.extra['installer-paths']['web/app/mu-plugins/{$name}/'],
+    ['flyntwp/flynt-core', 'flyntwp/acf-field-group-composer'],
+    isEqual
   )
   fs.writeFileSync(path.join(process.cwd(), 'composer.json'), JSON.stringify(composerJson, null, 2))
+  const cmds = []
   const composerRequire = [
     `"timber/timber:${phpDependencies['timber/timber']}"`,
     `"flyntwp/flynt-core:${phpDependencies['flyntwp/flynt-core']}"`,
     `"flyntwp/acf-field-group-composer:${phpDependencies['flyntwp/acf-field-group-composer']}"`
   ]
-  const cmds = []
+  if (answers.composerPackages) {
+    composerRequire.push.apply(
+      composerRequire,
+      answers.composerPackages
+    )
+  }
   if (answers.acfProKey) {
     composerRequire.push('"advanced-custom-fields/advanced-custom-fields-pro:*"')
     cmds.push(`export ACF_PRO_KEY="${answers.acfProKey}"`)
-  }
-  if (answers.migrateDbProKey) {
-    composerRequire.push(
-      '"deliciousbrains/wp-migrate-db-pro:*"',
-      '"deliciousbrains/wp-migrate-db-pro-media-files:*"'
-    )
-    cmds.push(`export WPM_PRO_KEY="${answers.migrateDbProKey}"`)
   }
   cmds.push(`composer require ${composerRequire.join(' ')}`)
 
@@ -79,38 +91,6 @@ const repos = {
       },
       require: {
         'philippbaschke/acf-pro-installer': phpDependencies['philippbaschke/acf-pro-installer'],
-        'composer/installers': phpDependencies['composer/installers']
-      }
-    }
-  },
-  migrateDbPro: {
-    type: 'package',
-    package: {
-      name: 'deliciousbrains/wp-migrate-db-pro',
-      type: 'wordpress-plugin',
-      version: phpDependencies['deliciousbrains/wp-migrate-db-pro'],
-      dist: {
-        type: 'zip',
-        url: 'https://deliciousbrains.com/dl/wp-migrate-db-pro-latest.zip?'
-      },
-      require: {
-        'igniteonline/wpm-pro-installer': phpDependencies['igniteonline/wpm-pro-installer'],
-        'composer/installers': phpDependencies['composer/installers']
-      }
-    }
-  },
-  migrateDbProMediaFiles: {
-    type: 'package',
-    package: {
-      name: 'deliciousbrains/wp-migrate-db-pro-media-files',
-      type: 'wordpress-plugin',
-      version: phpDependencies['deliciousbrains/wp-migrate-db-pro-media-files'],
-      dist: {
-        type: 'zip',
-        url: 'https://deliciousbrains.com/dl/wp-migrate-db-pro-media-files-latest.zip?'
-      },
-      require: {
-        'igniteonline/wpm-pro-installer': phpDependencies['igniteonline/wpm-pro-installer'],
         'composer/installers': phpDependencies['composer/installers']
       }
     }
