@@ -17,8 +17,7 @@ export function run (answers) {
   let cmds = [
     `git clone --depth=1 "git@github.com:bleech/wp-starter-theme.git" ${themePath}`,
     `cd ${themePath}`,
-    'rm -rf .git',
-    'yarn'
+    'rm -rf .git'
   ]
   return exec(cmds)
 }
