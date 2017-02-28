@@ -6,6 +6,7 @@ import * as replaceProjectSpecificStrings from './replaceProjectSpecificStrings'
 import * as initGitRepo from './initGitRepo'
 import * as createDb from './createDb'
 import * as setupWordpress from './setupWordpress'
+import * as yarnBuild from '../build/yarnBuild'
 import * as activateWordpress from './activateWordpress'
 
 export const commands = {
@@ -14,10 +15,11 @@ export const commands = {
   requireComposerPackages,
   setupTheme,
   replaceProjectSpecificStrings,
-  initGitRepo,
   createDb,
   setupWordpress,
-  activateWordpress
+  yarnBuild,
+  activateWordpress,
+  initGitRepo
 }
 
 export const cmds = Object.keys(commands)
