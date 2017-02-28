@@ -18,11 +18,7 @@ export function run (answers) {
     'echo "apache_modules:\n  - mod_rewrite\n" >> wp-cli.yml',
     'wp rewrite flush --hard'
     // 'plugin activate acf-role-selector-field',
-    // 'plugin activate advanced-custom-fields-pro',
-    // 'plugin activate wp-h5bp-htaccess ',
-    // 'plugin activate wp-migrate-db-pro',
-    // 'plugin activate wp-migrate-db-pro-cli',
-    // 'plugin activate wp-migrate-db-pro-media-files',
+    // 'plugin activate advanced-custom-fields-pro'
   ]
   return exec(cmds)
 }

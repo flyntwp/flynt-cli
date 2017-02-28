@@ -147,9 +147,16 @@ export const acfProKey = {
   message: 'ACF Pro license key'
 }
 
-export const migrateDbProKey = {
-  name: 'migrateDbProKey',
-  message: 'WP Migrate DB Pro license key'
+export const composerRepos = {
+  name: 'composerRepos',
+  message: 'additional PHP composer repositories (separated by space)',
+  filter: (input) => input.length ? input.split(' ') : null
+}
+
+export const composerPackages = {
+  name: 'composerPackages',
+  message: 'additional PHP composer packages (separated by space)',
+  filter: (input) => input.length ? input.split(' ') : null
 }
 
 function basePathConfigFn (env, isRemote) {
