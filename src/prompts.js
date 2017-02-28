@@ -1,3 +1,7 @@
+function filterJsonArray (input) {
+  return input ? JSON.parse(input) : []
+}
+
 export const projectName = {
   name: 'projectName',
   message: 'project (folder) name (will be created)',
@@ -64,6 +68,9 @@ export const sshPortRemote = multiEnvPrompt('sshPort', sshPortConfigFn, true)
 export const wpHome = multiEnvPrompt('wpHome', wpHomeConfigFn)
 export const wpHomeRemote = multiEnvPrompt('wpHome', wpHomeConfigFn, true)
 
+export const searchReplaceStrings = multiEnvPrompt('searchReplaceStrings', searchReplaceStringsConfigFn)
+export const searchReplaceStringsRemote = multiEnvPrompt('searchReplaceStrings', searchReplaceStringsConfigFn, true)
+
 export const wpEnv = {
   name: 'wpEnv',
   message: 'WordPress environment (development, staging, production)',
@@ -98,12 +105,7 @@ export const deployExcludes = {
     'bower_components',
     'node_modules'
   ]),
-  filter: function (excludes) {
-    if (excludes) {
-      return JSON.parse(excludes)
-    }
-    return []
-  }
+  filter: filterJsonArray
 }
 
 export const rsyncFlags = {
@@ -147,9 +149,16 @@ export const acfProKey = {
   message: 'ACF Pro license key'
 }
 
-export const migrateDbProKey = {
-  name: 'migrateDbProKey',
-  message: 'WP Migrate DB Pro license key'
+export const composerRepos = {
+  name: 'composerRepos',
+  message: 'additional PHP composer repositories (separated by space)',
+  filter: (input) => input.length ? input.split(' ') : null
+}
+
+export const composerPackages = {
+  name: 'composerPackages',
+  message: 'additional PHP composer packages (separated by space)',
+  filter: (input) => input.length ? input.split(' ') : null
 }
 
 function basePathConfigFn (env, isRemote) {
@@ -254,6 +263,14 @@ function wpHomeConfigFn (env, isRemote) {
         return `http://${answers.projectName}.dev`
       }
     }
+  }
+}
+
+function searchReplaceStringsConfigFn (env, isRemote) {
+  return {
+    name: `searchReplaceStrings${isRemote ? 'Remote' : ''}`,
+    message: `${isRemote ? 'replace' : 'search'} strings for db search & replace, in addition to wpHome and basePath (JSON array of strings)`,
+    filter: filterJsonArray
   }
 }
 

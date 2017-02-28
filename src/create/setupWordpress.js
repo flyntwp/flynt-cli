@@ -19,8 +19,7 @@ export const prompts = [
   allPrompts.wpTitle,
   allPrompts.wpAdminName,
   allPrompts.wpAdminEmail,
-  allPrompts.acfProKey,
-  allPrompts.migrateDbProKey
+  allPrompts.acfProKey
 ]
 
 export function run (answers) {
@@ -36,9 +35,6 @@ export function run (answers) {
   ]
   if (answers.acfProKey) {
     cmds.push(`wp dotenv set ACF_PRO_KEY ${answers.acfProKey}`)
-  }
-  if (answers.migrateDbProKey) {
-    cmds.push(`wp dotenv set WPM_PRO_KEY ${answers.migrateDbProKey}`)
   }
   cmds.push(
     `wp core install --url=${answers.wpHome} --title='${answers.wpTitle}' --admin_user=${answers.wpAdminName} --admin_email=${answers.wpAdminEmail}`
