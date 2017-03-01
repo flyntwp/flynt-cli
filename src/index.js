@@ -4,58 +4,29 @@ import yargs from 'yargs'
 import handleCommand from './utils/handleCommand'
 import buildArguments from './utils/buildArguments'
 
-import * as createCmd from './create'
-import * as setupCmd from './setup'
-import * as installCmd from './install'
-import * as upgradeCmd from './upgrade'
-import * as startCmd from './start'
-import * as buildCmd from './build'
-import * as cloneCmd from './clone'
-import * as deployCmd from './deploy'
+const commands = [
+  'create',
+  'setup',
+  'install',
+  'upgrade',
+  'start',
+  'build',
+  'clone',
+  'deploy'
+]
 
-yargs
+let cli = yargs
 .usage('Usage: $0 <command> [<subcommand>] [options]')
-.command('create',
-  createCmd.description,
-  buildArguments(createCmd, 'argv.env'),
-  handleCommand(createCmd, 'argv.env')
-)
-.command('setup',
-  setupCmd.description,
-  buildArguments(setupCmd, 'argv.env'),
-  handleCommand(setupCmd, 'argv.env')
-)
-.command('install',
-  installCmd.description,
-  buildArguments(installCmd, 'argv.env'),
-  handleCommand(installCmd, 'argv.env')
-)
-.command('upgrade',
-  upgradeCmd.description,
-  buildArguments(upgradeCmd, 'argv.env'),
-  handleCommand(upgradeCmd, 'argv.env')
-)
-.command('start',
-  startCmd.description,
-  buildArguments(startCmd, 'argv.env'),
-  handleCommand(startCmd, 'argv.env')
-)
-.command('build',
-  buildCmd.description,
-  buildArguments(buildCmd, 'argv.env'),
-  handleCommand(buildCmd, 'argv.env')
-)
-.command('clone',
-  cloneCmd.description,
-  buildArguments(cloneCmd, 'argv.from', 'argv.to', cloneCmd.options),
-  handleCommand(cloneCmd, 'argv.from', 'argv.to')
-)
-.command('deploy',
-  deployCmd.description,
-  buildArguments(deployCmd, 'local', 'argv.to', deployCmd.options),
-  handleCommand(deployCmd, 'local', 'argv.to')
-)
-.option('skipReadConfig', {
+
+commands.forEach(function (command) {
+  const cmdObject = require(`./${command}`)
+  cli = cli.command(command,
+    cmdObject.description,
+    buildArguments(cmdObject, cmdObject.srcEnv || 'argv.env', cmdObject.destEnv, cmdObject.options),
+    handleCommand(cmdObject, cmdObject.srcEnv || 'argv.env', cmdObject.destEnv)
+  )
+})
+cli.option('skipReadConfig', {
   global: true,
   describe: 'Do not read config from file',
   type: 'boolean'

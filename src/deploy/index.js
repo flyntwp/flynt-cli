@@ -20,3 +20,7 @@ export const options = {
     type: 'boolean'
   }
 }
+
+export const srcEnv = 'local'
+
+export const destEnv = 'argv.to'

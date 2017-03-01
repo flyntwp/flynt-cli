@@ -22,3 +22,7 @@ export const options = {
     default: 'local'
   }
 }
+
+export const srcEnv = 'argv.from'
+
+export const destEnv = 'argv.to'
