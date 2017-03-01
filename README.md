@@ -29,7 +29,7 @@ The `create` command uses [Root's Bedrock](https://roots.io/bedrock/) composer p
 
 ## Install
 
-The initial installation only requires [node](https://nodejs.org), [npm](https://npmjs.com). In order to be able to use all commands, the following is also required:
+The initial installation only requires [node](https://nodejs.org) and [npm](https://npmjs.com). In order to be able to use all commands, the following is also required:
 
 - [php](https://secure.php.net/)
 - [mysql](https://www.mysql.com/)
@@ -57,7 +57,7 @@ $ yarn global add git+ssh://git@github.com/bleech/flynt-cli
 
 ## Usage
 
-flynt-cli consists of several commands. A command is a collection of subcommands that are executed. If you do not specify a subcommand, all subcommands are executed in the correct order. It is also possible to execute a single subcommand.
+flynt-cli consists of several commands. A command is a collection of subcommands that are executed. If you do not specify a subcommand, all subcommands are executed in the pre-defined order. It is also possible to execute a single subcommand.
 
 The `--help` flag displays a general help or help for a specific command, including all subcommands in the correct order.
 
