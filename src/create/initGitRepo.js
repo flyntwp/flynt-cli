@@ -3,6 +3,8 @@ import exec from '../utils/executeCommand'
 import * as allPrompts from '../prompts'
 import * as allRequirements from '../requirements'
 
+export const description = 'initialize new git repo and push to origin'
+
 export const requirements = [
   allRequirements.git
 ]

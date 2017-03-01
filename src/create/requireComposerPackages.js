@@ -9,6 +9,8 @@ import * as allPrompts from '../prompts'
 
 import phpDependencies from '../utils/phpDependencies'
 
+export const description = 'install additional PHP composer packages'
+
 export const requirements = [
   allRequirements.composer
 ]

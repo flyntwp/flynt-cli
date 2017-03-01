@@ -4,6 +4,8 @@ import path from 'path'
 import * as allPrompts from '../prompts'
 import * as allRequirements from '../requirements'
 
+export const description = 'deploy source code from local to any environment'
+
 export const requirements = [
   allRequirements.rsync
 ]

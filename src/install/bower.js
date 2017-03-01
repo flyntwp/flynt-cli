@@ -4,6 +4,8 @@ import exec from '../utils/executeCommand'
 
 import * as allPrompts from '../prompts'
 
+export const description = 'install theme dependencies with bower'
+
 export const requirements = [
 ]
 

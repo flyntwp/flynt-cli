@@ -3,6 +3,8 @@ import exec from '../utils/executeCommand'
 import * as allPrompts from '../prompts'
 import * as allRequirements from '../requirements'
 
+export const description = 'activate WordPress theme and plugins'
+
 export const requirements = [
   allRequirements.wpCli
 ]

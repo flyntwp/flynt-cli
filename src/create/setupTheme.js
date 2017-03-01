@@ -3,6 +3,8 @@ import exec from '../utils/executeCommand'
 import * as allPrompts from '../prompts'
 import * as allRequirements from '../requirements'
 
+export const description = 'setup new theme from flynt-theme repo'
+
 export const requirements = [
   allRequirements.git,
   allRequirements.yarn

@@ -3,6 +3,8 @@ import exec from '../utils/executeCommand'
 import * as allPrompts from '../prompts'
 import * as allRequirements from '../requirements'
 
+export const description = 'set dotenv values and isntall WordPress db'
+
 export const requirements = [
   allRequirements.wpCli,
   allRequirements.wpCliDotenv

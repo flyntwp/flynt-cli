@@ -1,6 +1,8 @@
 import replaceInFiles from '../utils/replaceInFiles'
 import * as allPrompts from '../prompts'
 
+export const description = 'replace project specific strings in theme files'
+
 export const requirements = [
 ]
 
