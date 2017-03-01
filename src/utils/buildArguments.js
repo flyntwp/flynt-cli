@@ -4,6 +4,9 @@ import handleCommand from './handleCommand'
 
 export default function buildArguments (commandObject, fromEnv, toEnv, options = {}) {
   return function (yargs) {
+    Object.keys(options).forEach(function (optionKey) {
+      options[optionKey].group = 'Command Specific Option:'
+    })
     commandObject.cmds.forEach(function (cmd) {
       const cmdObject = commandObject.commands[cmd]
       yargs = yargs.command(cmd, cmdObject.description, options, handleCommand(commandObject, fromEnv, toEnv, cmd))
