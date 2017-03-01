@@ -24,7 +24,8 @@ export const mapping = {
   gitRepo: 'repository',
   acfProKey: 'acfProKey',
   composerRepos: 'composerRepos',
-  composerPackages: 'composerPackages'
+  composerPackages: 'composerPackages',
+  searchReplaceStrings: 'searchReplaceStrings'
 }
 
 export const globals = [
