@@ -14,6 +14,7 @@ import * as cloneCmd from './clone'
 import * as deployCmd from './deploy'
 
 yargs
+.usage('Usage: $0 <command> [<subcommand>] [options]')
 .command('create',
   'Create a new flynt project',
   buildArguments(createCmd, 'argv.env'),
@@ -109,5 +110,6 @@ yargs
   describe: 'Force execution in current directory',
   type: 'boolean'
 })
+.locale('en')
 .help()
 .argv
