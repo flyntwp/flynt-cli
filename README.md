@@ -9,7 +9,6 @@
 - [Background](#background)
 - [Install](#install)
 - [Usage](#usage)
-- [API](#api)
 - [Maintainers](#maintainers)
 - [Contribute](#contribute)
 - [License](#license)
@@ -56,7 +55,6 @@ Otherwise you can use yarn as well:
 $ yarn global add git+ssh://git@github.com/bleech/flynt-cli
 ```
 
-
 ## Usage
 
 flynt-cli consists of several commands. A command is a collection of subcommands that are executed. If you do not specify a subcommand, all subcommands are executed in the correct order. It is also possible to execute a single subcommand.
@@ -74,8 +72,6 @@ To display instructions on how to use a certain command use
 ```bash
 $ flynt [<command>] --help
 ```
-
-## API
 
 ## Maintainers
 
