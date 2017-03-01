@@ -6,4 +6,6 @@ export const commands = {
 
 export const cmds = Object.keys(commands)
 
+export const name = 'build'
+
 export const description = 'run yarn build for flynt theme'

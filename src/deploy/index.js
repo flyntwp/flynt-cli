@@ -6,6 +6,8 @@ export const commands = {
 
 export const cmds = Object.keys(commands)
 
+export const name = 'deploy'
+
 export const description = 'deploy source code from local to any environment'
 
 export const options = {

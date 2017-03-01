@@ -28,4 +28,6 @@ export const commands = {
 
 export const cmds = Object.keys(commands)
 
+export const name = 'create'
+
 export const description = 'create a new flynt project'
