@@ -7,6 +7,8 @@ import * as allRequirements from '../requirements'
 
 import phpDependencies from '../utils/phpDependencies'
 
+export const description = 'composer create-project with roots/bedrock'
+
 export const requirements = [
   allRequirements.composer
 ]

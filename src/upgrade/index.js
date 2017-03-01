@@ -9,3 +9,7 @@ export const commands = {
 }
 
 export const cmds = Object.keys(commands)
+
+export const name = 'upgrade'
+
+export const description = 'upgrade flynt dependencies (composer, yarn, bower)'

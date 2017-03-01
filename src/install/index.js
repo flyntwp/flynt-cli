@@ -9,3 +9,7 @@ export const commands = {
 }
 
 export const cmds = Object.keys(commands)
+
+export const name = 'install'
+
+export const description = 'install flynt dependencies (composer, yarn, bower)'

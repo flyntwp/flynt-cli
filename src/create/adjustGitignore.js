@@ -1,5 +1,7 @@
 import replaceInFiles from '../utils/replaceInFiles'
 
+export const description = 'add paths to gitignore'
+
 export const requirements = [
 ]
 

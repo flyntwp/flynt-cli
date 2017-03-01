@@ -6,6 +6,8 @@ import isEqual from 'lodash/isEqual'
 import * as allPrompts from '../prompts'
 import * as allRequirements from '../requirements'
 
+export const description = 'clone database content between environments'
+
 export const requirements = [
   allRequirements.mysql,
   allRequirements.mysqldump,

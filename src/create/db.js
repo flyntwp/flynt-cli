@@ -3,6 +3,8 @@ import exec from '../utils/executeCommand'
 import * as allPrompts from '../prompts'
 import * as allRequirements from '../requirements'
 
+export const description = 'create the database with root user for specified user'
+
 export const requirements = [
   allRequirements.mysql
 ]
