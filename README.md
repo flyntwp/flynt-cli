@@ -26,7 +26,7 @@ The `clone` and `deploy` commands are especially useful if you follow the propos
 
 To use all features of the CLI there are a couple of OS dependencies. There are checks with feedback for all required binaries when you run a command.
 
-The `create` command uses Soil's Bedrock composer package to set the foundation for a new Flynt project.
+The `create` command uses [Root's Bedrock](https://roots.io/bedrock/) composer package to set the foundation for a new Flynt project.
 
 ## Install
 
