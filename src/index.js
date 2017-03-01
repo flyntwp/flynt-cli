@@ -16,37 +16,37 @@ import * as deployCmd from './deploy'
 yargs
 .usage('Usage: $0 <command> [<subcommand>] [options]')
 .command('create',
-  'Create a new flynt project',
+  createCmd.description,
   buildArguments(createCmd, 'argv.env'),
   handleCommand(createCmd, 'argv.env')
 )
 .command('setup',
-  'Setup an existing flynt project',
+  setupCmd.description,
   buildArguments(setupCmd, 'argv.env'),
   handleCommand(setupCmd, 'argv.env')
 )
 .command('install',
-  'Install flynt dependencies (yarn, composer)',
+  installCmd.description,
   buildArguments(installCmd, 'argv.env'),
   handleCommand(installCmd, 'argv.env')
 )
 .command('upgrade',
-  'Upgrade flynt dependencies (yarn, composer)',
+  upgradeCmd.description,
   buildArguments(upgradeCmd, 'argv.env'),
   handleCommand(upgradeCmd, 'argv.env')
 )
 .command('start',
-  'Run yarn start for flynt theme',
+  startCmd.description,
   buildArguments(startCmd, 'argv.env'),
   handleCommand(startCmd, 'argv.env')
 )
 .command('build',
-  'Run yarn build for flynt theme',
+  buildCmd.description,
   buildArguments(buildCmd, 'argv.env'),
   handleCommand(buildCmd, 'argv.env')
 )
 .command('clone',
-  'Clone database and media files between environments',
+  cloneCmd.description,
   function (yargs) {
     buildArguments(cloneCmd, 'argv.from', 'argv.to', {
       from: {
@@ -64,7 +64,7 @@ yargs
   handleCommand(cloneCmd, 'argv.from', 'argv.to')
 )
 .command('deploy',
-  'Deploy source code from local to any environment',
+  deployCmd.description,
   function (yargs) {
     buildArguments(deployCmd, 'local', 'argv.to', {
       to: {
