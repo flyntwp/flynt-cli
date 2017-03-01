@@ -47,38 +47,12 @@ yargs
 )
 .command('clone',
   cloneCmd.description,
-  function (yargs) {
-    buildArguments(cloneCmd, 'argv.from', 'argv.to', {
-      from: {
-        describe: 'Environment to clone from',
-        type: 'string',
-        default: 'development'
-      },
-      to: {
-        describe: 'Environment to clone to',
-        type: 'string',
-        default: 'local'
-      }
-    })(yargs)
-  },
+  buildArguments(cloneCmd, 'argv.from', 'argv.to', cloneCmd.options),
   handleCommand(cloneCmd, 'argv.from', 'argv.to')
 )
 .command('deploy',
   deployCmd.description,
-  function (yargs) {
-    buildArguments(deployCmd, 'local', 'argv.to', {
-      to: {
-        describe: 'Environment to clone to',
-        type: 'string',
-        default: 'development'
-      },
-      n: {
-        alias: 'dry-run',
-        describe: 'Perform trial run',
-        type: 'boolean'
-      }
-    })(yargs)
-  },
+  buildArguments(deployCmd, 'local', 'argv.to', deployCmd.options),
   handleCommand(deployCmd, 'local', 'argv.to')
 )
 .option('skipReadConfig', {
