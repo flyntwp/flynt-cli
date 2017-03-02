@@ -57,4 +57,5 @@ cli.option('skipReadConfig', {
 })
 .locale('en')
 .help()
+.wrap()
 .argv
