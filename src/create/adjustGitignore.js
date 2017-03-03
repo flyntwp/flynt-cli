@@ -17,7 +17,8 @@ export function run (answers) {
 function getReplacements () {
   return {
     '.gitignore': {
-      '.env\n': ''
+      '.env\n': '',
+      'web/.htaccess\n': ''
     }
   }
 }
