@@ -19,7 +19,7 @@ export function saveConfig (argv, config, env, envRemote = null) {
     if (!argv.skipWriteConfig) {
       config = _.merge({}, config, mapAnswersToConfig(answers, env, envRemote))
       const json = JSON.stringify(config, null, 2)
-      fs.writeFileSync(argv.configPath, json, 'utf-8')
+      fs.writeFileSync(argv.configPath, json + '\n', 'utf-8')
     }
     return answers
   }
