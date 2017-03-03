@@ -98,8 +98,6 @@ export const deployExcludes = {
     '/tmp',
     '/web/.htaccess',
     '/web/.htpasswd',
-    '/web/app/themes/hernie-website/Components',
-    '/web/app/themes/hernie-website/gulpfile.js',
     '/web/app/uploads',
     '/web/usage',
     'bower_components',
