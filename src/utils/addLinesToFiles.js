@@ -45,7 +45,7 @@ function getContent (filePath) {
   if (fs.existsSync(filePath)) {
     return readFile(filePath, 'utf-8')
   } else {
-    return Promise.reject(new Error(`File ${filePath} does not exists`))
+    return Promise.reject(new Error(`File ${filePath} does not exist`))
   }
 }
 
