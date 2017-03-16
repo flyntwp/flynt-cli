@@ -42,7 +42,7 @@
     "roots/bedrock": "1.7.4",
     "timber/timber": "~1.1",
     "flyntwp/flynt-core": "dev-master",
-    "flyntwp/acf-field-group-composer": "dev-master",
+    "flyntwp/acf-field-group-composer": "1.0.0",
     "composer/installers": "^1.0",
     "philippbaschke/acf-pro-installer": "^1.0",
     "igniteonline/wpm-pro-installer": "^1.0.2",
