@@ -24,8 +24,7 @@ export const prompts = [
 export function run (answers) {
   const composerJson = require(path.join(process.cwd(), 'composer.json'))
   composerJson.repositories = unionWith(composerJson.repositories, [
-    repos.flyntCore,
-    repos.acfFieldGroupComposer
+    repos.flyntCore
   ], isEqual)
   if (answers.acfProKey) {
     composerJson.repositories = unionWith(composerJson.repositories, [
@@ -76,10 +75,6 @@ const repos = {
   flyntCore: {
     type: 'git',
     url: 'git@github.com:bleech/wp-starter-plugin.git'
-  },
-  acfFieldGroupComposer: {
-    type: 'git',
-    url: 'git@github.com:bleech/acf-field-group-composer.git'
   },
   acfPro: {
     type: 'package',
