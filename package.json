@@ -46,7 +46,7 @@
     "composer/installers": "^1.0",
     "philippbaschke/acf-pro-installer": "^1.0",
     "igniteonline/wpm-pro-installer": "^1.0.2",
-    "advanced-custom-fields/advanced-custom-fields-pro": "5.5.3",
+    "advanced-custom-fields/advanced-custom-fields-pro": "5.5.12",
     "deliciousbrains/wp-migrate-db-pro": "1.7.1",
     "deliciousbrains/wp-migrate-db-pro-media-files": "1.4.7"
   }
