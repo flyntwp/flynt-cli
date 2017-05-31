@@ -2,20 +2,22 @@ import childProcess from 'child_process'
 import Promise from 'bluebird'
 import * as log from './log'
 import {SubcommandError} from './Errors'
+import _ from 'lodash'
 
-export default function (cmds) {
+export default function (cmds, notify) {
   return new Promise(function (resolve, reject) {
     let spawn
-    let options = {}
-
-    if (log.is('DEBUG')) {
-      options['stdio'] = 'inherit'
-      console.log('')
-    } else {
-      options['stdio'] = 'ignore'
+    let options = {
+      stdio: 'pipe',
+      env: _.assign({}, process.env, {
+        'FORCE_COLOR': true,
+        'SHELL_PIPE': false
+      })
     }
 
-    options['stdio'] = log.is('DEBUG') ? 'inherit' : 'ignore'
+    if (log.is('DEBUG')) {
+      console.log('')
+    }
 
     const isWin = process.platform === 'win32'
     if (isWin) {
@@ -30,11 +32,24 @@ export default function (cmds) {
     }
 
     spawn.on('exit', function (code) {
+      if (log.is('DEBUG')) {
+        log.default('')
+      }
       if (code === 0) {
         resolve()
       } else {
         reject(new SubcommandError())
       }
     })
+
+    if (log.is('DEBUG')) {
+      spawn.stdout.pipe(process.stdout)
+      spawn.stdin.pipe(process.stdin)
+      spawn.stderr.pipe(process.stderr)
+    }
+
+    if (_.isFunction(notify)) {
+      notify(spawn.stdout, spawn.stderr)
+    }
   })
 }

@@ -5,6 +5,7 @@ import ora from 'ora'
 import getRootPath from './getRootPath'
 import {SubcommandSkip, SubcommandError} from './Errors'
 import log, {setLevel as setLogLevel, is as logIs} from './log'
+import * as notifier from './notifier'
 
 import {getConfig, saveConfig, mapConfigToAnswers} from './config'
 
@@ -42,6 +43,7 @@ export default function handleCommand (commandObject, fromEnv, toEnv, subCommand
       .tap(checkRequirements)
       .then(promptMissingConfig(answersFromConfig, fromEnv, toEnv))
       .tap(runCommands(commandsToRun, argv, commandObject), err => console.log(err))
+      .tap(notify)
     })
   }
 }
@@ -156,4 +158,8 @@ function getWhenToSaveConfigIndex (commands) {
     }
   }
   return commands.length
+}
+
+function notify () {
+  notifier.echo()
 }

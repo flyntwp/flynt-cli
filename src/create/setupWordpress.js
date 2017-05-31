@@ -1,4 +1,7 @@
+import _ from 'lodash'
+
 import exec from '../utils/executeCommand'
+import * as notifier from '../utils/notifier'
 
 import * as allPrompts from '../prompts'
 import * as allRequirements from '../requirements'
@@ -41,5 +44,15 @@ export function run (answers) {
   cmds.push(
     `wp core install --url=${answers.wpHome} --title='${answers.wpTitle}' --admin_user=${answers.wpAdminName} --admin_email=${answers.wpAdminEmail}`
   )
-  return exec(cmds)
+  return exec(cmds, notify)
+}
+
+function notify (stdout, stderr) {
+  const stdoutCallback = function (data) {
+    const line = data.toString()
+    if (_.includes(line, 'Admin password:')) {
+      notifier.addData(line)
+    }
+  }
+  stdout.on('data', stdoutCallback)
 }
