@@ -1,7 +1,10 @@
 import _ from 'lodash'
 import Promise from 'bluebird'
 import inquirer from 'inquirer'
+import ora from 'ora'
 import getRootPath from './getRootPath'
+import {SubcommandSkip, SubcommandError} from './Errors'
+import log, {setLevel as setLogLevel, is as logIs} from './log'
 
 import {getConfig, saveConfig, mapConfigToAnswers} from './config'
 
@@ -17,22 +20,28 @@ export default function handleCommand (commandObject, fromEnv, toEnv, subCommand
     fromEnv = resolveEnv(fromEnv, argv)
     toEnv = resolveEnv(toEnv, argv)
 
-    const validCommands = filterValidCommands(commandObject.commands, subCommand)
-    const validCommandsValues = _.values(validCommands)
-    const commandsToRun = _.map(validCommandsValues, 'run')
+    if (argv.verbose) {
+      setLogLevel('DEBUG')
+    }
 
-    switchToRoot(validCommandsValues[0].notInRootFolder || argv.force)
+    const validCommandsValues = filterValidCommands(commandObject.commands, subCommand)
+    const commandsToRun = _.map(validCommandsValues)
+
+    switchToRoot(_.values(validCommandsValues)[0].notInRootFolder || argv.force)
     .then(function () {
       const config = getConfig(argv)
       const answersFromConfig = mapConfigToAnswers(config, fromEnv, toEnv)
 
       const whenToSaveConfigIndex = getWhenToSaveConfigIndex(validCommandsValues)
-      commandsToRun.splice(whenToSaveConfigIndex, 0, saveConfig(argv, config, fromEnv, toEnv))
+      commandsToRun.splice(whenToSaveConfigIndex, 0, {
+        run: saveConfig(argv, config, fromEnv, toEnv),
+        name: 'saveConfig'
+      })
 
       Promise.resolve(validCommandsValues)
       .tap(checkRequirements)
       .then(promptMissingConfig(answersFromConfig, fromEnv, toEnv))
-      .tap(runCommands(commandsToRun, argv), err => console.log(err))
+      .tap(runCommands(commandsToRun, argv, commandObject), err => console.log(err))
     })
   }
 }
@@ -46,12 +55,14 @@ function resolveEnv (env, argv) {
 }
 
 function filterValidCommands (commands, subCommands) {
+  let validCommands
   if (!subCommands) {
-    return commands
+    validCommands = commands
   } else {
     subCommands = [].concat(subCommands)
-    return _.pickBy(commands, (cmd, name) => _.includes(subCommands, name))
+    validCommands = _.pickBy(commands, (cmd, name) => _.includes(subCommands, name))
   }
+  return _.map(validCommands, (command, name) => _.assign({}, command, {name: name}))
 }
 
 function checkRequirements (commands) {
@@ -76,13 +87,47 @@ function promptMissingConfig (answersFromConfig, fromEnv, toEnv) {
   }
 }
 
-function runCommands (commands, argv) {
+function runCommands (commands, argv, commandObject) {
   return function (answers) {
     let allRuns = Promise.resolve()
-    commands.forEach(function (command) {
-      allRuns = allRuns.then(() => command(answers, argv))
+    commands.forEach(function (command, commandIndex) {
+      allRuns = allRuns.then(function () {
+        const spinner = ora(`Command ${commandObject.name}:${command.name}`).start()
+        if (logIs('DEBUG')) {
+          spinner.stopAndPersist({symbol: '▶'})
+        }
+        return Promise.resolve(command.run(answers, argv))
+        .then(
+          () => { spinner.succeed() },
+          (e) => {
+            if (e instanceof SubcommandSkip) {
+              spinner.info()
+              log(e.message)
+            } else {
+              spinner.fail()
+              if (e instanceof SubcommandError) {
+                e.failedCommand = commandIndex
+              }
+              throw e
+            }
+          }
+        )
+      })
     })
     return allRuns
+    .catch((e) => {
+      if (e instanceof SubcommandError) {
+        log('Execution failed. The following commands were not executed:')
+        const missingCommands = _.map(commands.slice(e.failedCommand, commands.length), 'name')
+        missingCommands.forEach((command) => log(`\tflynt ${commandObject.name} ${command}`))
+        log('Do not forget to add the flags used to run the current command.')
+        if (!logIs('DEBUG')) {
+          log('Run with `-v` flag to get more info.')
+        }
+      } else {
+        throw e
+      }
+    })
   }
 }
 
