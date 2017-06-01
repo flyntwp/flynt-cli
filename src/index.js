@@ -61,7 +61,10 @@ cli.option('skipReadConfig', {
   describe: 'Use verbose mode',
   type: 'boolean'
 })
-.locale('en')
 .help()
-.wrap()
+.wrap(null)
+.locale('en')
+.demandCommand(1, 'You have to specify a command.')
+.recommendCommands()
+.showHelpOnFail(true)
 .argv

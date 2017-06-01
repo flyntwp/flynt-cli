@@ -31,12 +31,12 @@
     "ora": "^1.2.0",
     "replace-in-file": "^2.2.2",
     "search-replace-db": "interconnectit/Search-Replace-DB",
-    "yargs": "^6.5.0"
+    "yargs": "^8.0.1"
   },
   "standard": {
     "parser": "babel-eslint",
     "ignore": [
-      "/lib/"
+      "./lib/**/*"
     ]
   },
   "phpDependencies": {
