@@ -1,6 +1,8 @@
 import path from 'path'
 import fs from 'fs'
+import Promise from 'bluebird'
 import exec from '../utils/executeCommand'
+import {SubcommandSkip} from '../utils/Errors'
 
 import * as allPrompts from '../prompts'
 
@@ -22,6 +24,6 @@ export function run (answers) {
     ]
     return exec(cmds)
   } else {
-    console.log(`Skipping bower update. No bower.json found in ${themePath}`)
+    return Promise.reject(new SubcommandSkip('bower', `Skipping bower update. No bower.json found in ${themePath}`))
   }
 }

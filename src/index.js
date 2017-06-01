@@ -55,6 +55,12 @@ cli.option('skipReadConfig', {
   describe: 'Force execution in current directory',
   type: 'boolean'
 })
+.option('v', {
+  alias: 'verbose',
+  global: true,
+  describe: 'Use verbose mode',
+  type: 'boolean'
+})
 .locale('en')
 .help()
 .wrap()
