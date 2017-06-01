@@ -14,19 +14,22 @@ export const projectName = {
   }
 }
 
-export const themeName = {
-  name: 'themeName',
-  message: 'theme (folder) name',
-  validate: function (input) {
-    if (/^[a-zA-Z0-9-]+$/.exec(input)) {
-      return true
-    } else {
-      return 'The theme name may only contain alphanumerical values and dashes.'
-    }
-  },
-  default: function (answers) {
-    if (answers.projectName) {
-      return answers.projectName
+export const themeName = function (config) {
+  return {
+    name: 'themeName',
+    message: 'theme (folder) name',
+    validate: function (input) {
+      if (/^[a-zA-Z0-9-]+$/.exec(input)) {
+        return true
+      } else {
+        return 'The theme name may only contain alphanumerical values and dashes.'
+      }
+    },
+    default: function (answers) {
+      let projectName = answers.projectName || config.projectName
+      if (projectName) {
+        return projectName
+      }
     }
   }
 }
@@ -112,12 +115,15 @@ export const rsyncFlags = {
   default: '-chavzP --stats --delete'
 }
 
-export const wpSiteurl = {
-  name: 'wpSiteurl',
-  message: 'WordPress site url',
-  default: function (answers) {
-    if (answers.projectName) {
-      return `http://${answers.projectName}.dev/wp`
+export const wpSiteurl = function (config) {
+  return {
+    name: 'wpSiteurl',
+    message: 'WordPress site url',
+    default: function (answers) {
+      let projectName = answers.projectName || config.projectName
+      if (projectName) {
+        return `http://${projectName}.dev/wp`
+      }
     }
   }
 }
@@ -159,15 +165,15 @@ export const composerPackages = {
   filter: (input) => input.length ? input.split(' ') : null
 }
 
-function basePathConfigFn (env, isRemote) {
+function basePathConfigFn (config, env, isRemote) {
   return {
     name: `basePath${isRemote ? 'Remote' : ''}`,
     message: `${env} base path (should be relative for local environment)`,
-    default: (answers) => env === 'local' ? '.' : null
+    default: (answers) => env === 'local' ? '.' : process.cwd()
   }
 }
 
-function uploadsPathConfigFn (env, isRemote) {
+function uploadsPathConfigFn (config, env, isRemote) {
   return {
     name: `uploadsPath${isRemote ? 'Remote' : ''}`,
     message: `relative (to base path) ${env} uploads path`,
@@ -175,15 +181,15 @@ function uploadsPathConfigFn (env, isRemote) {
   }
 }
 
-function deployPathConfigFn (env, isRemote) {
+function deployPathConfigFn (config, env, isRemote) {
   return {
     name: `deployPath${isRemote ? 'Remote' : ''}`,
-    message: `relative (to base path) ${env} deploy path if it differs from base path`,
+    message: `relative (to base path) ${env} deploy path if it differs from base path (default is empty)`,
     default: ''
   }
 }
 
-function dbHostConfigFn (env, isRemote) {
+function dbHostConfigFn (config, env, isRemote) {
   return {
     name: `dbHost${isRemote ? 'Remote' : ''}`,
     message: `${env} db host`,
@@ -191,21 +197,21 @@ function dbHostConfigFn (env, isRemote) {
   }
 }
 
-function dbNameConfigFn (env, isRemote) {
+function dbNameConfigFn (config, env, isRemote) {
   return {
     name: `dbName${isRemote ? 'Remote' : ''}`,
     message: `${env} db name`
   }
 }
 
-function dbUserConfigFn (env, isRemote) {
+function dbUserConfigFn (config, env, isRemote) {
   return {
     name: `dbUser${isRemote ? 'Remote' : ''}`,
     message: `${env} db user`
   }
 }
 
-function dbPasswordConfigFn (env, isRemote) {
+function dbPasswordConfigFn (config, env, isRemote) {
   return {
     name: `dbPassword${isRemote ? 'Remote' : ''}`,
     message: `${env} db password`,
@@ -213,14 +219,14 @@ function dbPasswordConfigFn (env, isRemote) {
   }
 }
 
-function dbRootUserConfigFn (env, isRemote) {
+function dbRootUserConfigFn (config, env, isRemote) {
   return {
     name: `dbRootUser${isRemote ? 'Remote' : ''}`,
     message: `${env} db root user`
   }
 }
 
-function dbRootPasswordConfigFn (env, isRemote) {
+function dbRootPasswordConfigFn (config, env, isRemote) {
   return {
     name: `dbRootPassword${isRemote ? 'Remote' : ''}`,
     message: `${env} db root password`,
@@ -228,7 +234,7 @@ function dbRootPasswordConfigFn (env, isRemote) {
   }
 }
 
-function sshHostConfigFn (env, isRemote) {
+function sshHostConfigFn (config, env, isRemote) {
   return {
     name: `sshHost${isRemote ? 'Remote' : ''}`,
     message: `${env} ssh host`,
@@ -236,7 +242,7 @@ function sshHostConfigFn (env, isRemote) {
   }
 }
 
-function sshUserConfigFn (env, isRemote) {
+function sshUserConfigFn (config, env, isRemote) {
   return {
     name: `sshUser${isRemote ? 'Remote' : ''}`,
     message: `${env} ssh user`,
@@ -244,7 +250,7 @@ function sshUserConfigFn (env, isRemote) {
   }
 }
 
-function sshPortConfigFn (env, isRemote) {
+function sshPortConfigFn (config, env, isRemote) {
   return {
     name: `sshPort${isRemote ? 'Remote' : ''}`,
     message: `${env} ssh port`,
@@ -252,19 +258,20 @@ function sshPortConfigFn (env, isRemote) {
   }
 }
 
-function wpHomeConfigFn (env, isRemote) {
+function wpHomeConfigFn (config, env, isRemote) {
   return {
     name: `wpHome${isRemote ? 'Remote' : ''}`,
     message: `${env} WordPress home url (http://your.domain)`,
     default: (answers) => {
-      if (answers.projectName && env === 'local') {
-        return `http://${answers.projectName}.dev`
+      let projectName = answers.projectName || config.projectName
+      if (projectName && env === 'local') {
+        return `http://${projectName}.dev`
       }
     }
   }
 }
 
-function searchReplaceStringsConfigFn (env, isRemote) {
+function searchReplaceStringsConfigFn (config, env, isRemote) {
   return {
     name: `searchReplaceStrings${isRemote ? 'Remote' : ''}`,
     message: `${isRemote ? 'replace' : 'search'} strings for db search & replace, in addition to wpHome and basePath (JSON array of strings)`,
@@ -273,8 +280,8 @@ function searchReplaceStringsConfigFn (env, isRemote) {
 }
 
 function multiEnvPrompt (name, configFn, isRemote) {
-  return function (fromEnv, toEnv) {
+  return function (config, fromEnv, toEnv) {
     const env = isRemote ? toEnv : fromEnv
-    return configFn(env, isRemote)
+    return configFn(config, env, isRemote)
   }
 }
