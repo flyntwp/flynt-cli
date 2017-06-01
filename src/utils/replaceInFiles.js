@@ -15,8 +15,8 @@ export default function replaceInFiles (replacements) {
     const replaceWith = searchFor.map((sf) => replacements[file][sf])
     return replace({
       files: file,
-      replace: searchFor,
-      with: replaceWith
+      from: searchFor,
+      to: replaceWith
     })
   }))
 }
