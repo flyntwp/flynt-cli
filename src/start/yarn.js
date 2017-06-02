@@ -3,7 +3,7 @@ import streamFilter from 'through2-filter'
 import stripAnsi from 'strip-ansi'
 
 import exec from '../utils/executeCommand'
-import log, {is as logIs} from '../utils/log'
+import {is as logIs} from '../utils/log'
 
 import * as allPrompts from '../prompts'
 import * as allRequirements from '../requirements'
