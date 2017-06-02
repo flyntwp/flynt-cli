@@ -95,8 +95,12 @@ function runCommands (commands, argv, commandObject) {
     commands.forEach(function (command, commandIndex) {
       allRuns = allRuns.then(function () {
         const spinner = ora(`Command ${commandObject.name}:${command.name}`).start()
-        if (logIs('DEBUG')) {
+        if (command.message || logIs('DEBUG')) {
           spinner.stopAndPersist({symbol: '▶'})
+        }
+        if (command.message && !logIs('DEBUG')) {
+          spinner.text = command.message
+          spinner.start()
         }
         return Promise.resolve(command.run(answers, argv))
         .then(
