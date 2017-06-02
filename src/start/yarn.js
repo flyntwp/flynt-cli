@@ -39,7 +39,8 @@ function notify (stdout, stderr) {
   const onBrowserSync = streamFilter({wantStrings: true}, function (chunk) {
     const strippedChunk = stripAnsi(chunk)
     if (_.startsWith(strippedChunk, '[BS]')) {
-      log('')
+      process.stdout.clearLine()
+      process.stdout.cursorTo(0)
       activated = true
     } else if (activated && _.startsWith(strippedChunk, '[')) {
       activated = false
