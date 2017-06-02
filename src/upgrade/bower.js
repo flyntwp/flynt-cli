@@ -8,6 +8,8 @@ import * as allPrompts from '../prompts'
 
 export const description = 'upgrade theme dependencies with bower'
 
+export const runMessage = 'Upgrading bower dependencies...'
+
 export const requirements = [
 ]
 

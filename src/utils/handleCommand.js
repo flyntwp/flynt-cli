@@ -36,7 +36,8 @@ export default function handleCommand (commandObject, fromEnv, toEnv, subCommand
       const whenToSaveConfigIndex = getWhenToSaveConfigIndex(validCommandsValues)
       commandsToRun.splice(whenToSaveConfigIndex, 0, {
         run: saveConfig(argv, config, fromEnv, toEnv),
-        name: 'saveConfig'
+        name: 'saveConfig',
+        runMessage: 'Saving config'
       })
 
       Promise.resolve(validCommandsValues)
@@ -94,13 +95,10 @@ function runCommands (commands, argv, commandObject) {
     let allRuns = Promise.resolve()
     commands.forEach(function (command, commandIndex) {
       allRuns = allRuns.then(function () {
-        const spinner = ora(`Command ${commandObject.name}:${command.name}`).start()
-        if (command.message || logIs('DEBUG')) {
+        const runMessage = command.runMessage || `Command ${commandObject.name}:${command.name}`
+        const spinner = ora(runMessage).start()
+        if (logIs('DEBUG')) {
           spinner.stopAndPersist({symbol: '▶'})
-        }
-        if (command.message && !logIs('DEBUG')) {
-          spinner.text = command.message
-          spinner.start()
         }
         return Promise.resolve(command.run(answers, argv))
         .then(

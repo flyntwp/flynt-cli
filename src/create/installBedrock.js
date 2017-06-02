@@ -9,6 +9,8 @@ import phpDependencies from '../utils/phpDependencies'
 
 export const description = 'composer create-project with roots/bedrock'
 
+export const runMessage = 'Installing Bedrock...'
+
 export const requirements = [
   allRequirements.composer
 ]

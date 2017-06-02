@@ -5,6 +5,8 @@ import * as allRequirements from '../requirements'
 
 export const description = 'clone media files between environments'
 
+export const runMessage = 'Cloning uploads...'
+
 export const requirements = [
   allRequirements.rsync
 ]

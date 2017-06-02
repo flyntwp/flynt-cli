@@ -3,6 +3,8 @@ import addLinesToFiles from '../utils/addLinesToFiles'
 
 export const description = 'add paths to gitignore'
 
+export const runMessage = 'Adding paths to .gitignore...'
+
 export const requirements = [
 ]
 

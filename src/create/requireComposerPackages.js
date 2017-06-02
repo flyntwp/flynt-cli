@@ -11,6 +11,8 @@ import phpDependencies from '../utils/phpDependencies'
 
 export const description = 'install additional PHP composer packages'
 
+export const runMessage = 'Installing PHP composer dependencies...'
+
 export const requirements = [
   allRequirements.composer
 ]

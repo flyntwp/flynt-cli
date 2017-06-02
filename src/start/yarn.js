@@ -10,6 +10,8 @@ import * as allRequirements from '../requirements'
 
 export const description = 'run yarn start for flynt theme'
 
+export const runMessage = 'Watching files...'
+
 export const requirements = [
   allRequirements.yarn,
   allRequirements.gulp
@@ -31,8 +33,6 @@ export function run (answers) {
     return exec(cmds, notify)
   }
 }
-
-export const message = 'Watching Files...'
 
 function notify (stdout, stderr) {
   let activated = false

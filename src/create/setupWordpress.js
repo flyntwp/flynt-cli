@@ -6,7 +6,9 @@ import * as notifier from '../utils/notifier'
 import * as allPrompts from '../prompts'
 import * as allRequirements from '../requirements'
 
-export const description = 'set dotenv values and isntall WordPress db'
+export const description = 'set dotenv values and install WordPress db'
+
+export const runMessage = 'Installing WordPress...'
 
 export const requirements = [
   allRequirements.wpCli,

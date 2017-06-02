@@ -5,6 +5,8 @@ import * as allRequirements from '../requirements'
 
 export const description = 'create the database with root user for specified user'
 
+export const runMessage = 'Creating database...'
+
 export const requirements = [
   allRequirements.mysql
 ]

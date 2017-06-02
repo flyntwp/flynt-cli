@@ -5,6 +5,8 @@ import * as allRequirements from '../requirements'
 
 export const description = 'setup new theme from flynt-theme repo'
 
+export const runMessage = 'Setting up new theme...'
+
 export const requirements = [
   allRequirements.git,
   allRequirements.yarn
