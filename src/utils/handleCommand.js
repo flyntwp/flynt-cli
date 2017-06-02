@@ -79,7 +79,7 @@ function promptMissingConfig (answersFromConfig, fromEnv, toEnv) {
     prompts = _.union(...prompts)
     .map(function (prompt) {
       if (_.isFunction(prompt)) {
-        return prompt(fromEnv, toEnv)
+        return prompt(answersFromConfig, fromEnv, toEnv)
       }
       return prompt
     })

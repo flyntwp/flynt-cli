@@ -16,7 +16,7 @@ export default function (cmds, notify) {
     }
 
     if (log.is('DEBUG')) {
-      console.log('')
+      log.default('')
     }
 
     const isWin = process.platform === 'win32'
