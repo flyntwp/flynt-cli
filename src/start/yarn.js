@@ -10,7 +10,8 @@ import * as allRequirements from '../requirements'
 
 export const description = 'run yarn start for flynt theme'
 
-export const runMessage = 'Watching files...'
+export const runMessage = 'Starting development environment...'
+const runMessageWatching = 'Watching files...'
 
 export const requirements = [
   allRequirements.yarn,
@@ -21,7 +22,7 @@ export const prompts = [
   allPrompts.themeName
 ]
 
-export function run (answers) {
+export function run (answers, arv, spinner) {
   const themePath = `web/app/themes/${answers.themeName}`
   let cmds = [
     `cd ${themePath}`,
@@ -30,22 +31,27 @@ export function run (answers) {
   if (logIs('DEBUG')) {
     return exec(cmds)
   } else {
-    return exec(cmds, notify)
+    return exec(cmds, notify(spinner))
   }
 }
 
-function notify (stdout, stderr) {
-  let activated = false
-  const onBrowserSync = streamFilter({wantStrings: true}, function (chunk) {
-    const strippedChunk = stripAnsi(chunk)
-    if (_.startsWith(strippedChunk, '[BS]')) {
-      process.stdout.clearLine()
-      process.stdout.cursorTo(0)
-      activated = true
-    } else if (activated && _.startsWith(strippedChunk, '[')) {
-      activated = false
-    }
-    return activated
-  })
-  stdout.pipe(onBrowserSync).pipe(process.stdout)
+function notify (spinner) {
+  return function (stdout, stderr) {
+    let activated = false
+    const onBrowserSync = streamFilter({wantStrings: true}, function (chunk) {
+      const strippedChunk = stripAnsi(chunk)
+      if (_.includes(strippedChunk, "Finished 'default'")) {
+        spinner.text = runMessageWatching
+      }
+      if (_.startsWith(strippedChunk, '[BS]')) {
+        process.stdout.clearLine()
+        process.stdout.cursorTo(0)
+        activated = true
+      } else if (activated && _.startsWith(strippedChunk, '[')) {
+        activated = false
+      }
+      return activated
+    })
+    stdout.pipe(onBrowserSync).pipe(process.stdout)
+  }
 }

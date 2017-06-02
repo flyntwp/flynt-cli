@@ -100,7 +100,7 @@ function runCommands (commands, argv, commandObject) {
         if (logIs('DEBUG')) {
           spinner.stopAndPersist({symbol: '▶'})
         }
-        return Promise.resolve(command.run(answers, argv))
+        return Promise.resolve(command.run(answers, argv, spinner))
         .then(
           () => { spinner.succeed() },
           (e) => {
