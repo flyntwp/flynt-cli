@@ -4,6 +4,8 @@ import * as allRequirements from '../requirements'
 
 export const description = 'install project dependencies with composer'
 
+export const runMessage = 'Installing PHP composer dependencies...'
+
 export const requirements = [
   allRequirements.composer
 ]

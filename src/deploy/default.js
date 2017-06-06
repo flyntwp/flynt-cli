@@ -6,6 +6,8 @@ import * as allRequirements from '../requirements'
 
 export const description = 'deploy source code from local to any environment'
 
+export const runMessage = 'Deploying source code...'
+
 export const requirements = [
   allRequirements.rsync
 ]

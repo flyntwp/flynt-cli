@@ -5,6 +5,8 @@ import * as allRequirements from '../requirements'
 
 export const description = 'run yarn build for flynt theme'
 
+export const runMessage = 'Building theme...'
+
 export const requirements = [
   allRequirements.yarn,
   allRequirements.gulp

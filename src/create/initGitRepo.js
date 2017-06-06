@@ -5,6 +5,8 @@ import * as allRequirements from '../requirements'
 
 export const description = 'initialize new git repo and push to origin'
 
+export const runMessage = 'Initializing git repo...'
+
 export const requirements = [
   allRequirements.git
 ]

@@ -3,6 +3,8 @@ import * as allPrompts from '../prompts'
 
 export const description = 'replace project specific strings in theme files'
 
+export const runMessage = 'Replacing strings in theme files...'
+
 export const requirements = [
 ]
 

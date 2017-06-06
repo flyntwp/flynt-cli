@@ -8,6 +8,8 @@ import * as allRequirements from '../requirements'
 
 export const description = 'clone database content between environments'
 
+export const runMessage = 'Cloning database...'
+
 export const requirements = [
   allRequirements.mysql,
   allRequirements.mysqldump,

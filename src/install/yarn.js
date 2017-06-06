@@ -5,6 +5,8 @@ import * as allRequirements from '../requirements'
 
 export const description = 'install theme dependencies with yarn'
 
+export const runMessage = 'Installing node dependencies...'
+
 export const requirements = [
   allRequirements.yarn
 ]
