@@ -15,8 +15,7 @@ export const requirements = [
   allRequirements.mysqldump,
   allRequirements.php,
   allRequirements.ssh,
-  allRequirements.scp,
-  allRequirements.sed
+  allRequirements.scp
 ]
 
 export const prompts = [
@@ -84,7 +83,8 @@ export function run (answers) {
   if (sourceRemote) {
     cmds.push(`scp ${answers.sshPort ? `-P ${answers.sshPort}` : ''} ${sourceSshId}:${answers.basePath}/${tmpDir}/${backupTransferFile} ${tmpDir}`)
   }
-  cmds.push(`sed -i '' 's/DEFINER=[^*]*\\*/\\*/g' ${tmpDir}/${backupTransferFile}`)
+  const replaceInFilePath = getReplaceInFilePath()
+  cmds.push(`${replaceInFilePath} '/DEFINER=[^*]*\\\\*/g' '' ${tmpDir}/${backupTransferFile} --isRegex`)
   if (destinationRemote) {
     cmds.push(`scp ${answers.sshPortRemote ? `-P ${answers.sshPortRemote}` : ''} ${tmpDir}/${backupTransferFile} ${destinationSshId}:${answers.basePathRemote}/${tmpDir}`)
     cmds.push(`rm ${tmpDir}/${backupTransferFile}`)
@@ -125,4 +125,12 @@ export function run (answers) {
   }
 
   return exec(cmds)
+}
+
+function getReplaceInFilePath () {
+  const moduleMainPath = require.resolve('replace-in-file')
+  const modulePath = path.dirname(moduleMainPath)
+  const packageJsonPath = path.join(modulePath, 'package.json')
+  const packageJson = require(packageJsonPath)
+  return path.join(modulePath, packageJson.bin)
 }
