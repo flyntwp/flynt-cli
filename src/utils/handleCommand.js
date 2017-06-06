@@ -37,7 +37,7 @@ export default function handleCommand (commandObject, fromEnv, toEnv, subCommand
       commandsToRun.splice(whenToSaveConfigIndex, 0, {
         run: saveConfig(argv, config, fromEnv, toEnv),
         name: 'saveConfig',
-        runMessage: 'Saving config'
+        runMessage: 'Saving config...'
       })
 
       Promise.resolve(validCommandsValues)
