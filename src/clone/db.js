@@ -130,7 +130,5 @@ export function run (answers) {
 function getReplaceInFilePath () {
   const moduleMainPath = require.resolve('replace-in-file')
   const modulePath = path.dirname(moduleMainPath)
-  const packageJsonPath = path.join(modulePath, 'package.json')
-  const packageJson = require(packageJsonPath)
-  return path.join(modulePath, packageJson.bin)
+  return path.join(modulePath, 'bin', 'cli.js')
 }
