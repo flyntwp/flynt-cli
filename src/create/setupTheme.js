@@ -20,6 +20,7 @@ export function run (answers) {
   const themePath = `web/app/themes/${answers.themeName}`
   let cmds = [
     `git clone --depth=1 "git@github.com:bleech/wp-starter-theme.git" ${themePath}`,
+    `ln -nfs ${themePath} theme`,
     `cd ${themePath}`,
     'rm -rf .git'
   ]
