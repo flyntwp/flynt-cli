@@ -10,6 +10,7 @@ import * as installYarn from '../install/yarn'
 import * as installBower from '../install/bower'
 import * as buildYarn from '../build/yarn'
 import * as activateWordpress from './activateWordpress'
+import * as removeDotEnv from './removeDotEnv'
 
 export const commands = {
   installBedrock,
@@ -21,6 +22,7 @@ export const commands = {
   installYarn,
   installBower,
   buildYarn,
+  removeDotEnv,
   setupWordpress,
   activateWordpress,
   initGitRepo
