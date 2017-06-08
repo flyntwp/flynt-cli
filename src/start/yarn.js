@@ -37,18 +37,30 @@ export function run (answers, arv, spinner) {
 
 function notify (spinner) {
   return function (stdout, stderr) {
-    let activated = false
     const onBrowserSync = streamFilter({wantStrings: true}, function (chunk) {
+      const ignoredLines = [
+        "Finished '",
+        "Starting '",
+        '$ check-node-version',
+        'node:',
+        'npm:',
+        'yarn:',
+        'yarn start',
+        'Using gulpfile',
+        '[webpack:build] Completed',
+        '[emitted]'
+      ]
       const strippedChunk = stripAnsi(chunk)
+      let activated
       if (_.includes(strippedChunk, "Finished 'default'")) {
         spinner.text = runMessageWatching
       }
-      if (_.startsWith(strippedChunk, '[BS]')) {
+      if (_.some(ignoredLines, ignoredLine => _.includes(strippedChunk, ignoredLine))) {
+        activated = false
+      } else {
         process.stdout.clearLine()
         process.stdout.cursorTo(0)
         activated = true
-      } else if (activated && _.startsWith(strippedChunk, '[')) {
-        activated = false
       }
       return activated
     })
