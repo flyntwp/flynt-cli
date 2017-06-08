@@ -34,25 +34,24 @@ The initial installation only requires [node](https://nodejs.org) and [npm](http
 - [php](https://secure.php.net/)
 - [mysql](https://www.mysql.com/)
 - [composer](https://getcomposer.org/)
-- [wp-cli](https://wp-cli.org/),[new page](https://make.wordpress.org/cli/)
+- [wp-cli](https://wp-cli.org/)
 - [wp-cli dotenv](https://aaemnnost.tv/wp-cli-commands/dotenv/)
 - [git](https://git-scm.com/)
 - [yarn](https://yarnpkg.com/)
 - [gulp](http://gulpjs.com/)
 - [ssh, scp](https://www.openssh.com/)
-- [sed](https://www.gnu.org/software/sed/)
 - [rsync](https://rsync.samba.org/)
 
 The used node version should be `^6`. If you use a node version manager (e.g. [nave](https://github.com/isaacs/nave)), use `npm` to install globally:
 
 ```bash
-$ npm i -g bleech/flynt-cli
+$ npm i -g @flyntwp/flynt-cli
 ```
 
 Otherwise you can use yarn as well:
 
 ```bash
-$ yarn global add git+ssh://git@github.com/bleech/flynt-cli
+$ yarn global add @flyntwp/flynt-cli
 ```
 
 ## Usage
@@ -60,6 +59,8 @@ $ yarn global add git+ssh://git@github.com/bleech/flynt-cli
 flynt-cli consists of several commands. A command is a collection of subcommands that are executed. If you do not specify a subcommand, all subcommands are executed in the pre-defined order. It is also possible to execute a single subcommand.
 
 The `--help` flag displays a general help or help for a specific command, including all subcommands in the correct order.
+
+By default almost all messages from the executed scripts are surpressed. To enable the verbose mode use the `-v` flag.
 
 ### CLI
 
@@ -75,7 +76,7 @@ $ flynt [<command>] --help
 
 ## Maintainers
 
-This project is maintained by [bleech](https://github.com/bleech).
+This project is maintained by [bleech](https://bleech.de).
 
 Main people in charge of the repo are:
 
@@ -84,10 +85,10 @@ Main people in charge of the repo are:
 
 ## Contribute
 
-To contribute, please use github [issues](https://github.com/bleech/flynt-cli/issues). PRs accepted.
+To contribute, please use github [issues](https://github.com/flyntwp/flynt-cli/issues). PRs accepted.
 
 Small note: If editing the README, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
 
 ## License
 
-MIT © bleech
+MIT © [bleech](https://bleech.de)
