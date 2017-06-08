@@ -3,14 +3,17 @@
   "version": "0.0.1",
   "description": "CLI tool for the WordPress Flynt framework",
   "main": "src/index.js",
-  "repository": "https://github.com/bleech/flynt-cli.git",
+  "repository": "https://github.com/flyntwp/flynt-cli.git",
   "author": "bleech",
   "license": "MIT",
   "scripts": {
     "build": "npm run lint && npm run clean && babel src -d lib",
     "watch": "npm run clean && babel src --watch -d lib",
     "clean": "rm -rf ./lib",
-    "lint": "./node_modules/standard/bin/cmd.js --parser babel-eslint ./src/**/*.js"
+    "lint": "./node_modules/standard/bin/cmd.js --parser babel-eslint ./src/**/*.js",
+    "release": "standard-version",
+    "releaseGithub": "conventional-github-releaser -p angular",
+    "prepublish": "npm run build"
   },
   "bin": {
     "flynt": "lib/index.js"
@@ -20,8 +23,10 @@
     "babel-eslint": "^7.1.1",
     "babel-preset-env": "^1.5.1",
     "babel-preset-stage-2": "^6.22.0",
+    "conventional-github-releaser": "^1.1.11",
     "eslint": "^3.12.1",
-    "standard": "^8.6.0"
+    "standard": "^8.6.0",
+    "standard-version": "^4.0.0"
   },
   "dependencies": {
     "bluebird": "^3.4.6",
