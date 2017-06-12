@@ -64,14 +64,37 @@ By default almost all messages from the executed scripts are surpressed. To enab
 
 ### CLI
 
-```bash
-$ flynt <command> [<subcommand>] [options]
-```
-
 To display instructions on how to use a certain command use
 
 ```bash
 $ flynt [<command>] --help
+```
+
+These following commands are currently available:
+
+```
+$ flynt --help
+Usage: flynt <command> [<subcommand>] [options]
+
+Commands:
+  create   create a new flynt project
+  setup    setup an existing flynt project
+  install  install flynt dependencies (composer, yarn, bower)
+  upgrade  upgrade flynt dependencies (composer, yarn, bower)
+  start    run yarn start for flynt theme
+  build    run yarn build for flynt theme
+  clone    clone database and media files between environments
+  deploy   deploy source code from local to any environment
+
+Options:
+  --skipReadConfig          Do not read config from file  [boolean]
+  --skipWriteConfig         Do not write config to file  [boolean]
+  --configPath              File to read from and save config to.  [string] [default: "./.flynt.json"]
+  -e, --env, --environment  Specify current environment  [string] [default: "local"]
+  -f, --force               Force execution in current directory  [boolean]
+  -v, --verbose             Use verbose mode  [boolean]
+  --version                 Show version number  [boolean]
+  --help                    Show help  [boolean]
 ```
 
 ## Maintainers
