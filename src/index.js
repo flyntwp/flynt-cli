@@ -61,6 +61,7 @@ cli.option('skipReadConfig', {
   describe: 'Use verbose mode',
   type: 'boolean'
 })
+.version()
 .help()
 .wrap(null)
 .locale('en')
