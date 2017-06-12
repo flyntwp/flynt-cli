@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.1"></a>
+## [0.1.1](https://github.com/flyntwp/flynt-cli/compare/v0.1.0...v0.1.1) (2017-06-12)
+
+
+### Bug Fixes
+
+* **cloneDb:** display search replace mismatch in non-verbose mode (#56) ([998189b](https://github.com/flyntwp/flynt-cli/commit/998189b)), closes [#54](https://github.com/flyntwp/flynt-cli/issues/54)
+
+
+### Features
+
+* **version:** add --version flag (#55) ([79128d5](https://github.com/flyntwp/flynt-cli/commit/79128d5))
+
+
+
 <a name="0.1.0"></a>
 # 0.1.0 (2017-06-08)
 
