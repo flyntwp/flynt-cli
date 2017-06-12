@@ -2,6 +2,7 @@ import exec from '../utils/executeCommand'
 import path from 'path'
 import unionWith from 'lodash/unionWith'
 import isEqual from 'lodash/isEqual'
+import {error} from '../utils/log'
 
 import * as allPrompts from '../prompts'
 import * as allRequirements from '../requirements'
@@ -44,8 +45,9 @@ export const prompts = [
 export function run (answers) {
   if (answers.searchReplaceStrings.length !== answers.searchReplaceStringsRemote.length) {
     const cmds = [
-      'echo "\x1B[0;31mError in cloneDb. Number of search and replace strings do not match."'
+      'exit 1'
     ]
+    error('Error in cloneDb. Number of search and replace strings do not match.')
     return exec(cmds)
   }
   const tmpDir = './tmp/flynt-cli'
