@@ -22,6 +22,14 @@ export default function log (message, level = 0) {
   }
 }
 
+export function error (message, inline) {
+  if (!inline) {
+    process.stdout.clearLine()
+    process.stdout.cursorTo(0)
+  }
+  console.error(message)
+}
+
 export function setLevel (level) {
   currentLevel = convertLevel(level)
   return getLevel
