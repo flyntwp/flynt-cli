@@ -59,7 +59,8 @@ cli.option('skipReadConfig', {
   alias: 'verbose',
   global: true,
   describe: 'Use verbose mode',
-  type: 'boolean'
+  type: 'boolean',
+  default: true
 })
 .version()
 .help()
