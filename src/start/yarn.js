@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import streamFilter from 'through2-filter'
 import stripAnsi from 'strip-ansi'
+import readline from 'readline'
 
 import exec from '../utils/executeCommand'
 import {is as logIs} from '../utils/log'
@@ -58,8 +59,8 @@ function notify (spinner) {
       if (_.some(ignoredLines, ignoredLine => _.includes(strippedChunk, ignoredLine))) {
         activated = false
       } else {
-        process.stdout.clearLine()
-        process.stdout.cursorTo(0)
+        readline.clearLine(process.stdout)
+        readline.cursorTo(process.stdout, 0)
         activated = true
       }
       return activated
