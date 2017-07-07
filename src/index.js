@@ -42,14 +42,14 @@ proxyCommandsRoot.forEach(function (command) {
   cli = cli.command(command,
     `Run ${command} in project folder`,
     {},
-    function (argv) { proxyCommand(command) }
+    proxyCommand(command)
   )
 })
 proxyCommandsTheme.forEach(function (command) {
   cli = cli.command(command,
     `Run ${command} in theme folder`,
     {},
-    function (argv) { proxyCommand(command, 'theme') }
+    proxyCommand(command, 'theme')
   )
 })
 cli.option('skipReadConfig', {
