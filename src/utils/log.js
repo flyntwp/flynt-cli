@@ -1,4 +1,5 @@
 import isString from 'lodash/isString'
+import readline from 'readline'
 
 let currentLevel = 0
 
@@ -24,8 +25,8 @@ export default function log (message, level = 0) {
 
 export function error (message, inline) {
   if (!inline) {
-    process.stdout.clearLine()
-    process.stdout.cursorTo(0)
+    readline.clearLine(process.stdout)
+    readline.cursorTo(process.stdout, 0)
   }
   console.error(message)
 }
