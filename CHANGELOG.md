@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.2"></a>
+## [0.1.2](https://github.com/flyntwp/flynt-cli/compare/v0.1.1...v0.1.2) (2017-08-04)
+
+
+### Bug Fixes
+
+* **cloneDb:** use correct username for import (#63) ([835c254](https://github.com/flyntwp/flynt-cli/commit/835c254))
+
+
+### Features
+
+* **proxyCommands:** add simple version of proxy commands (#64) ([8f318a1](https://github.com/flyntwp/flynt-cli/commit/8f318a1))
+* **readline:** use readline wrapper instead of stdout functions (#66) ([f700851](https://github.com/flyntwp/flynt-cli/commit/f700851))
+* **verboseMode:** default to true (#65) ([d9ffa1f](https://github.com/flyntwp/flynt-cli/commit/d9ffa1f))
+
+
+
 <a name="0.1.1"></a>
 ## [0.1.1](https://github.com/flyntwp/flynt-cli/compare/v0.1.0...v0.1.1) (2017-06-12)
 
