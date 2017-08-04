@@ -3,6 +3,7 @@ import yargs from 'yargs'
 
 import handleCommand from './utils/handleCommand'
 import buildArguments from './utils/buildArguments'
+import proxyCommand from './utils/proxyCommand'
 
 const commands = [
   'create',
@@ -15,6 +16,17 @@ const commands = [
   'deploy'
 ]
 
+const proxyCommandsRoot = [
+  'composer',
+  'wp'
+]
+
+const proxyCommandsTheme = [
+  'yarn',
+  'bower',
+  'gulp'
+]
+
 let cli = yargs
 .usage('Usage: $0 <command> [<subcommand>] [options]')
 
@@ -24,6 +36,20 @@ commands.forEach(function (command) {
     cmdObject.description,
     buildArguments(cmdObject, cmdObject.srcEnv || 'argv.env', cmdObject.destEnv, cmdObject.options),
     handleCommand(cmdObject, cmdObject.srcEnv || 'argv.env', cmdObject.destEnv)
+  )
+})
+proxyCommandsRoot.forEach(function (command) {
+  cli = cli.command(command,
+    `Run ${command} in project folder`,
+    {},
+    proxyCommand(command)
+  )
+})
+proxyCommandsTheme.forEach(function (command) {
+  cli = cli.command(command,
+    `Run ${command} in theme folder`,
+    {},
+    proxyCommand(command, 'theme')
   )
 })
 cli.option('skipReadConfig', {
