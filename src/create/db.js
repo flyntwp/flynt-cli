@@ -17,12 +17,14 @@ export const prompts = [
   allPrompts.dbRootPassword,
   allPrompts.dbName,
   allPrompts.dbUser,
-  allPrompts.dbPassword
+  allPrompts.dbPassword,
+  allPrompts.dbPort,
+  allPrompts.dbSocket
 ]
 
 export function run (answers) {
   let cmds = [
-    `mysql --host=${answers.dbHost} --user=${answers.dbRootUser} --password=${answers.dbRootPassword} -e \
+    `mysql --host=${answers.dbHost} --user=${answers.dbRootUser} --password=${answers.dbRootPassword} ${answers.dbPort ? `--port ${answers.dbPort}` : ''} ${answers.dbSocket ? `--socket ${answers.dbSocket}` : ''} -e \
       "CREATE DATABASE IF NOT EXISTS ${answers.dbName}; \
       CREATE USER '${answers.dbUser}'@'${answers.dbHost}' IDENTIFIED BY '${answers.dbPassword}'; \
       GRANT ALL PRIVILEGES ON ${answers.dbName} . * TO '${answers.dbUser}'@'${answers.dbHost}'; \

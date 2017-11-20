@@ -33,13 +33,17 @@ export const prompts = [
   allPrompts.dbUser,
   allPrompts.dbName,
   allPrompts.dbPassword,
+  allPrompts.dbPort,
+  allPrompts.dbSocket,
   allPrompts.sshHostRemote,
   allPrompts.sshUserRemote,
   allPrompts.sshPortRemote,
   allPrompts.dbHostRemote,
   allPrompts.dbUserRemote,
   allPrompts.dbNameRemote,
-  allPrompts.dbPasswordRemote
+  allPrompts.dbPasswordRemote,
+  allPrompts.dbPortRemote,
+  allPrompts.dbSocketRemote
 ]
 
 export function run (answers) {
@@ -69,14 +73,14 @@ export function run (answers) {
     `mkdir -p ${backupDir}`
   ]
 
-  const destinationBackupCmd = `mysqldump --host=${answers.dbHostRemote} -u${answers.dbUserRemote} -p${answers.dbPasswordRemote} ${answers.dbNameRemote} > ${answers.basePathRemote}/${backupDir}/backup_${Date.now()}.sql`
+  const destinationBackupCmd = `mysqldump --host=${answers.dbHostRemote} -u${answers.dbUserRemote} -p${answers.dbPasswordRemote} ${answers.dbPortRemote ? `--port ${answers.dbPortRemote}` : ''} ${answers.dbSocketRemote ? `--socket ${answers.dbSocketRemote}` : ''} ${answers.dbNameRemote} > ${answers.basePathRemote}/${backupDir}/backup_${Date.now()}.sql`
   if (destinationRemote) {
     cmds.push(`ssh ${answers.sshPortRemote ? `-p ${answers.sshPortRemote}` : ''} -t ${destinationSshId} 'mkdir -p ${answers.basePathRemote}/${backupDir} && mkdir -p ${answers.basePathRemote}/${tmpDir} && ${destinationBackupCmd}'`)
   } else {
     cmds.push(destinationBackupCmd)
   }
 
-  const sourceDumpCmd = `mysqldump --host=${answers.dbHost} -u${answers.dbUser} -p${answers.dbPassword} ${answers.dbName} > ${answers.basePath}/${tmpDir}/${backupTransferFile}`
+  const sourceDumpCmd = `mysqldump --host=${answers.dbHost} -u${answers.dbUser} -p${answers.dbPassword} ${answers.dbPort ? `--port ${answers.dbPort}` : ''} ${answers.dbSocket ? `--socket ${answers.dbSocket}` : ''} ${answers.dbName} > ${answers.basePath}/${tmpDir}/${backupTransferFile}`
   if (sourceRemote) {
     cmds.push(`ssh ${answers.sshPort ? `-p ${answers.sshPort}` : ''} -t ${sourceSshId} 'mkdir -p ${answers.basePath}/${tmpDir} && ${sourceDumpCmd}'`)
   } else {
@@ -95,7 +99,7 @@ export function run (answers) {
     cmds.push(`ssh ${answers.sshPort ? `-p ${answers.sshPort}` : ''} -t ${sourceSshId} 'rm ${answers.basePath}/${tmpDir}/${backupTransferFile}'`)
   }
 
-  const destinationImportCmd = `mysql --host=${answers.dbHostRemote} -u${answers.dbUserRemote} -p${answers.dbPasswordRemote} ${answers.dbNameRemote} < ${answers.basePathRemote}/${tmpDir}/${backupTransferFile} && rm ${answers.basePathRemote}/${tmpDir}/${backupTransferFile}`
+  const destinationImportCmd = `mysql --host=${answers.dbHostRemote} -u${answers.dbUserRemote} -p${answers.dbPasswordRemote} ${answers.dbPortRemote ? `--port ${answers.dbPortRemote}` : ''} ${answers.dbSocketRemote ? `--socket ${answers.dbSocketRemote}` : ''} ${answers.dbNameRemote} < ${answers.basePathRemote}/${tmpDir}/${backupTransferFile} && rm ${answers.basePathRemote}/${tmpDir}/${backupTransferFile}`
   if (destinationRemote) {
     cmds.push(`ssh ${answers.sshPortRemote ? `-p ${answers.sshPortRemote}` : ''} -t ${destinationSshId} '${destinationImportCmd}'`)
   } else {
@@ -116,7 +120,7 @@ export function run (answers) {
     cmds.push(`scp -r ${answers.sshPortRemote ? `-P ${answers.sshPortRemote}` : ''} ${path.join(srdbPath, '..')} ${destinationSshId}:${answers.basePathRemote}/${tmpDir}`)
     searchStrings.forEach(function (searchString, i) {
       const replaceString = replaceStrings[i]
-      const destinationReplaceCmd = `php ${path.join(answers.basePathRemote, tmpDir, 'search-replace-db', path.basename(srdbPath))} -h ${answers.dbHostRemote} -u ${answers.dbUserRemote} -p ${answers.dbPasswordRemote} -n ${answers.dbNameRemote} -s '${searchString}' -r '${replaceString}'`
+      const destinationReplaceCmd = `php ${path.join(answers.basePathRemote, tmpDir, 'search-replace-db', path.basename(srdbPath))} -h ${answers.dbHostRemote} -u ${answers.dbUserRemote} -p ${answers.dbPasswordRemote} ${answers.dbPortRemote ? `--port ${answers.dbPortRemote}` : ''} ${answers.dbSocketRemote ? `--socket ${answers.dbSocketRemote}` : ''} -n ${answers.dbNameRemote} -s '${searchString}' -r '${replaceString}'`
       cmds.push(`ssh ${answers.sshPortRemote ? `-p ${answers.sshPortRemote}` : ''} -t ${destinationSshId} '${destinationReplaceCmd}'`)
     })
   } else {
