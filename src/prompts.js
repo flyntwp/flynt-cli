@@ -55,6 +55,12 @@ export const dbUserRemote = multiEnvPrompt('dbUser', dbUserConfigFn, true)
 export const dbPassword = multiEnvPrompt('dbPassword', dbPasswordConfigFn)
 export const dbPasswordRemote = multiEnvPrompt('dbPassword', dbPasswordConfigFn, true)
 
+export const dbPort = multiEnvPrompt('dbPort', dbPortConfigFn)
+export const dbPortRemote = multiEnvPrompt('dbPort', dbPortConfigFn, true)
+
+export const dbSocket = multiEnvPrompt('dbSocket', dbSocketConfigFn)
+export const dbSocketRemote = multiEnvPrompt('dbSocket', dbSocketConfigFn, true)
+
 export const dbRootUser = multiEnvPrompt('dbRootUser', dbRootUserConfigFn)
 
 export const dbRootPassword = multiEnvPrompt('dbRootPassword', dbRootPasswordConfigFn)
@@ -216,6 +222,21 @@ function dbPasswordConfigFn (config, env, isRemote) {
     name: `dbPassword${isRemote ? 'Remote' : ''}`,
     message: `${env} db password`,
     type: 'password'
+  }
+}
+
+function dbPortConfigFn (config, env, isRemote) {
+  return {
+    name: `dbPort${isRemote ? 'Remote' : ''}`,
+    message: `${env} db port`,
+    default: 3306
+  }
+}
+
+function dbSocketConfigFn (config, env, isRemote) {
+  return {
+    name: `dbSocket${isRemote ? 'Remote' : ''}`,
+    message: `${env} db socket`
   }
 }
 

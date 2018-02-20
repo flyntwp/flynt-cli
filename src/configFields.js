@@ -12,6 +12,8 @@ export const mapping = {
   dbName: 'db.name',
   dbUser: 'db.user',
   dbPassword: 'db.password',
+  dbPort: 'db.port',
+  dbSocket: 'db.socket',
   sshHost: 'ssh.host',
   sshUser: 'ssh.user',
   sshPort: 'ssh.port',
