@@ -76,7 +76,7 @@ export function run (answers) {
 const repos = {
   flyntCore: {
     type: 'git',
-    url: 'git@github.com:bleech/wp-starter-plugin.git'
+    url: 'https://github.com/flyntwp/flynt-core.git'
   },
   acfPro: {
     type: 'package',
