@@ -7,7 +7,6 @@ import * as initGitRepo from './initGitRepo'
 import * as db from './db'
 import * as setupWordpress from './setupWordpress'
 import * as installYarn from '../install/yarn'
-import * as installBower from '../install/bower'
 import * as buildYarn from '../build/yarn'
 import * as activateWordpress from './activateWordpress'
 import * as removeDotEnv from './removeDotEnv'
@@ -20,7 +19,6 @@ export const commands = {
   replaceProjectSpecificStrings,
   db,
   installYarn,
-  installBower,
   buildYarn,
   removeDotEnv,
   setupWordpress,
