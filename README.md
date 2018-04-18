@@ -19,7 +19,7 @@ This CLI tool takes care of multiple tasks when working with the Flynt framework
 
 It helps you create a new project based on Flynt, facilitates a multi-environment WordPress development setup and offers shortcuts for running external dependencies of the build process.
 
-Theoretically only the `create` command is Flynt specific. All other tasks could be used with any WordPress project that uses `composer`, `yarn`, `gulp`, and optionally `bower`.
+Theoretically only the `create` command is Flynt specific. All other tasks could be used with any WordPress project that uses `composer`, `yarn` and `gulp`.
 
 The `clone` and `deploy` commands are especially useful if you follow the proposed multi-environment development setup. This means a developer always works on his local environment and has everything running on his machine (i.e. Apache, MySQL, etc). In addition there is a 'public' development server. This server is the single point of truth for the local environment. While you can make any changes during development on your local environment, you should always do a `flynt clone` before you start working on something new, or when you want to revert your local changes. When you are done with a new feature, run `flynt build && flynt deploy` to publish the changes to the development server. The `deploy` command is just a wrapper for rsync, so that you do not need to remember the exact command yourself. You can also use `deploy` for other environments (e.g. staging or production) but it is recommended that you use a more sophisticated approach at least for production.
 
@@ -79,8 +79,8 @@ Usage: flynt <command> [<subcommand>] [options]
 Commands:
   create   create a new flynt project
   setup    setup an existing flynt project
-  install  install flynt dependencies (composer, yarn, bower)
-  upgrade  upgrade flynt dependencies (composer, yarn, bower)
+  install  install flynt dependencies (composer, yarn)
+  upgrade  upgrade flynt dependencies (composer, yarn)
   start    run yarn start for flynt theme
   build    run yarn build for flynt theme
   clone    clone database and media files between environments

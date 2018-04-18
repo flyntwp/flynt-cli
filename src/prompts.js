@@ -109,7 +109,6 @@ export const deployExcludes = {
     '/web/.htpasswd',
     '/web/app/uploads',
     '/web/usage',
-    'bower_components',
     'node_modules'
   ]),
   filter: filterJsonArray

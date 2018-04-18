@@ -23,7 +23,6 @@ const proxyCommandsRoot = [
 
 const proxyCommandsTheme = [
   'yarn',
-  'bower',
   'gulp'
 ]
 
