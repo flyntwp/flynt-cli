@@ -128,7 +128,7 @@ export const wpSiteurl = function (config) {
     default: function (answers) {
       let projectName = answers.projectName || config.projectName
       if (projectName) {
-        return `http://${projectName}.dev/wp`
+        return `http://${projectName}.test/wp`
       }
     }
   }
@@ -286,7 +286,7 @@ function wpHomeConfigFn (config, env, isRemote) {
     default: (answers) => {
       let projectName = answers.projectName || config.projectName
       if (projectName && env === 'local') {
-        return `http://${projectName}.dev`
+        return `http://${projectName}.test`
       }
     }
   }
