@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.2.0"></a>
+# [0.2.0](https://github.com/flyntwp/flynt-cli/compare/v0.1.2...v0.2.0) (2018-04-18)
+
+
+### Bug Fixes
+
+* **create:** remove flynt core package from custom repos ([#77](https://github.com/flyntwp/flynt-cli/issues/77)) ([1a3548c](https://github.com/flyntwp/flynt-cli/commit/1a3548c))
+* **create:** use .test instead of .dev for default local domain ([#74](https://github.com/flyntwp/flynt-cli/issues/74)) ([c58f9d6](https://github.com/flyntwp/flynt-cli/commit/c58f9d6))
+* **create:** use https url for theme instead of ssh ([#78](https://github.com/flyntwp/flynt-cli/issues/78)) ([c3bc8f7](https://github.com/flyntwp/flynt-cli/commit/c3bc8f7))
+
+
+### Code Refactoring
+
+* **bower:** remove bower from create, install and upgrade tasks ([#76](https://github.com/flyntwp/flynt-cli/issues/76)) ([0f89a68](https://github.com/flyntwp/flynt-cli/commit/0f89a68))
+
+
+### Features
+
+* **create:** update composer php dependencies ([#75](https://github.com/flyntwp/flynt-cli/issues/75)) ([d7ff25b](https://github.com/flyntwp/flynt-cli/commit/d7ff25b))
+* **dbConfig:** allow using different ports and sockets for db connections ([#70](https://github.com/flyntwp/flynt-cli/issues/70)) ([a610ae9](https://github.com/flyntwp/flynt-cli/commit/a610ae9))
+
+
+### BREAKING CHANGES
+
+* **bower:** Going forward, bower will not be supported by the flynt-cli anymore.
+
+
+
 <a name="0.1.2"></a>
 ## [0.1.2](https://github.com/flyntwp/flynt-cli/compare/v0.1.1...v0.1.2) (2017-08-04)
 
