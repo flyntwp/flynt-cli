@@ -115,18 +115,18 @@ export function run (answers) {
     path.resolve(answers.basePathRemote)
   ], answers.searchReplaceStringsRemote, isEqual)
 
-  const srdbPath = require.resolve('search-replace-db')
+  const wpCliPath = path.resolve(__dirname, '../..', 'bin/wp-cli.phar')
   if (destinationRemote) {
-    cmds.push(`scp -r ${answers.sshPortRemote ? `-P ${answers.sshPortRemote}` : ''} ${path.join(srdbPath, '..')} ${destinationSshId}:${answers.basePathRemote}/${tmpDir}`)
+    cmds.push(`scp -r ${answers.sshPortRemote ? `-P ${answers.sshPortRemote}` : ''} ${path.join(wpCliPath, '..')} ${destinationSshId}:${answers.basePathRemote}/${tmpDir}`)
     searchStrings.forEach(function (searchString, i) {
       const replaceString = replaceStrings[i]
-      const destinationReplaceCmd = `php ${path.join(answers.basePathRemote, tmpDir, 'search-replace-db', path.basename(srdbPath))} -h ${answers.dbHostRemote} -u ${answers.dbUserRemote} -p ${answers.dbPasswordRemote} ${answers.dbPortRemote ? `--port ${answers.dbPortRemote}` : ''} ${answers.dbSocketRemote ? `--socket ${answers.dbSocketRemote}` : ''} -n ${answers.dbNameRemote} -s '${searchString}' -r '${replaceString}'`
+      const destinationReplaceCmd = `php ${path.join(answers.basePathRemote, tmpDir, 'bin', path.basename(wpCliPath))} search-replace '${searchString}' '${replaceString}' --all-tables`
       cmds.push(`ssh ${answers.sshPortRemote ? `-p ${answers.sshPortRemote}` : ''} -t ${destinationSshId} '${destinationReplaceCmd}'`)
     })
   } else {
     searchStrings.forEach(function (searchString, i) {
       const replaceString = replaceStrings[i]
-      cmds.push(`php ${srdbPath} -h ${answers.dbHostRemote} -u ${answers.dbUserRemote} -p ${answers.dbPasswordRemote} -n ${answers.dbNameRemote} -s '${searchString}' -r '${replaceString}'`)
+      cmds.push(`php ${wpCliPath} search-replace '${searchString}' '${replaceString}' --all-tables`)
     })
   }
 

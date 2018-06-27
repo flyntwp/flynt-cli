@@ -35,7 +35,6 @@
     "lodash": "^4.17.2",
     "ora": "^1.2.0",
     "replace-in-file": "^2.2.2",
-    "search-replace-db": "interconnectit/Search-Replace-DB",
     "strip-ansi": "^3.0.1",
     "through2-filter": "^2.0.0",
     "yargs": "^8.0.1"
