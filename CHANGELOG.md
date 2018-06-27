@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.2.1"></a>
+## [0.2.1](https://github.com/flyntwp/flynt-cli/compare/v0.2.0...v0.2.1) (2018-06-27)
+
+
+### Features
+
+* **clone:** use wp cli instead of srdb for string replacements ([d1ab2b4](https://github.com/flyntwp/flynt-cli/commit/d1ab2b4))
+
+
+
 <a name="0.2.0"></a>
 # [0.2.0](https://github.com/flyntwp/flynt-cli/compare/v0.1.2...v0.2.0) (2018-04-18)
 
