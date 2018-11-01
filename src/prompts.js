@@ -98,6 +98,7 @@ export const deployExcludes = {
     '/.env.example',
     '/.env',
     '/.flynt.json',
+    '/.vscode',
     '/backup',
     '/CHANGELOG.md',
     '/LICENSE.md',
@@ -109,7 +110,11 @@ export const deployExcludes = {
     '/web/.htpasswd',
     '/web/app/uploads',
     '/web/usage',
-    'node_modules'
+    'node_modules',
+    '/web/app/advanced-cache.php',
+    '/web/app/wp-cache-config.php',
+    '/web/app/cache',
+    '/web/app/wflogs'
   ]),
   filter: filterJsonArray
 }
