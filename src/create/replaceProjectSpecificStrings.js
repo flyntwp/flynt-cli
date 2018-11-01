@@ -22,7 +22,7 @@ function getReplacements (answers) {
   return {
     [`web/app/themes/${answers.themeName}/gulpfile.js/config.js`]: {
       "const host = 'flynt.test'": `const host = '${answers.wpHome}'`,
-      "sourceRoot: '/app/themes/flynt-theme/'": `sourceRoot: 'app/themes/${answers.themeName}'`
+      "sourceRoot: '/app/themes/flynt-starter-theme/'": `sourceRoot: 'app/themes/${answers.themeName}'`
     }
   }
 }
