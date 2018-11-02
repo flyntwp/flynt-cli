@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.2.2"></a>
+## [0.2.2](https://github.com/flyntwp/flynt-cli/compare/v0.2.1...v0.2.2) (2018-11-02)
+
+
+### Bug Fixes
+
+* **create/replaceProjectSpecificStrings:** replace correct source maps string ([#87](https://github.com/flyntwp/flynt-cli/issues/87)) ([daa34a6](https://github.com/flyntwp/flynt-cli/commit/daa34a6))
+* **package.json:** set specific ACF version ([9f22b63](https://github.com/flyntwp/flynt-cli/commit/9f22b63))
+
+
+### Features
+
+* **gitignore, deploy:** adjust excludes ([#88](https://github.com/flyntwp/flynt-cli/issues/88)) ([481d4eb](https://github.com/flyntwp/flynt-cli/commit/481d4eb))
+
+
+
 <a name="0.2.1"></a>
 ## [0.2.1](https://github.com/flyntwp/flynt-cli/compare/v0.2.0...v0.2.1) (2018-06-27)
 
