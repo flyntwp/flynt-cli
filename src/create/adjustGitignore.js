@@ -30,7 +30,11 @@ function getLinesToAdd () {
     '.gitignore': {
       lines: [
         '/tmp/',
-        '/backup/'
+        '/backup/',
+        'web/app/wflogs',
+        'web/app/cache',
+        'web/app/advanced-cache.php',
+        'web/app/wp-cache-config.php'
       ],
       prepend: true
     }
