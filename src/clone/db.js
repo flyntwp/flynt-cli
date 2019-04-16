@@ -121,7 +121,7 @@ export function run (answers) {
     searchStrings.forEach(function (searchString, i) {
       const replaceString = replaceStrings[i]
       const destinationReplaceCmd = `php ${path.join(answers.basePathRemote, tmpDir, 'bin', path.basename(wpCliPath))} search-replace '${searchString}' '${replaceString}' --all-tables`
-      cmds.push(`ssh ${answers.sshPortRemote ? `-p ${answers.sshPortRemote}` : ''} -t ${destinationSshId} '${destinationReplaceCmd}'`)
+      cmds.push(`ssh ${answers.sshPortRemote ? `-p ${answers.sshPortRemote}` : ''} -t ${destinationSshId} 'cd ${answers.basePathRemote}; ${destinationReplaceCmd}'`);
     })
   } else {
     searchStrings.forEach(function (searchString, i) {
